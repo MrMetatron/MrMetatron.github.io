@@ -70,7 +70,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>Metatron's blog</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -243,7 +243,7 @@
 <p><em>Port Based</em></p>
 <p>An automated port based scan is generally one of the first steps in a traditional penetration test because it helps obtain a basic overview of what may be available on the target network or host. Port based scanners check to determine whether a port on a remote host is able to receive a connection. Generally, this will involve the protocols which utilize IP (such as TCP, UDP, ICMP, etc.), However, ports on other network protocols could be present as well dependent on the environment (for example, it’s quite common in large mainframe environments for SNA to be in use). Typically, a port can have one of two possible states:</p>
 <p>基于端口的自动扫描通常是传统渗透测试的第一步，因为它有助于获得目标网络或主机上可能可用内容的基本概述。 基于端口的扫描程序检查以确定远程主机上的端口是否能够接收连接。 通常，这将涉及利用IP的协议（例如TCP，UDP，ICMP等），但是，其他网络协议上的端口也可能取决于环境而存在（例如，在大型主机环境中很常见） 以便使用SNA）。 通常，端口可以具有以下两种可能状态之一：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Open - the port is able to receive data</span><br><span class="line">Closed - the port is not able to receive data</span><br></pre></td></tr></table></figure>
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vhdl"><span class="hljs-keyword">Open</span> - the <span class="hljs-keyword">port</span> <span class="hljs-keyword">is</span> able <span class="hljs-keyword">to</span> receive data<br>Closed - the <span class="hljs-keyword">port</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> able <span class="hljs-keyword">to</span> receive data<br></code></pre></td></tr></table></figure>
 
 <p>A scanner may list other states, such as “filtered”, if it is unable to accurately determine whether a given port is open or closed.</p>
 <p>如果扫描仪无法准确确定给定端口是打开还是关闭，它可能会列出其他状态，例如“已过滤”。</p>
@@ -288,7 +288,7 @@
 <p>WebDAV</p>
 <p>WebDAV is a component of the Microsoft Internet Information Server (IIS). WebDAV stands for “Web-based Distributed Authoring and Versioning” and is used for editing and file management. WebDAV extensions are used by administrators to manage and edit Web content remotely on IIS Web servers and can include PROPFIND, COPY, MOVE, PROPPATCH, MKCOL, LOCK, and UNLOCK .WebDAV interacts with core operating system components, which can expose a system to several possible vulnerabilities. Some of these potential risks include:</p>
 <p>WebDAV是Microsoft Internet信息服务器（IIS）的组件。 WebDAV代表“基于Web的分布式创作和版本控制”，并用于编辑和文件管理。 管理员使用WebDAV扩展来在IIS Web服务器上远程管理和编辑Web内容，其中可以包括PROPFIND，COPY，MOVE，PROPPATCH，MKCOL，LOCK和UNLOCK。WebDAV与核心操作系统组件进行交互，从而使系统暴露于多个可能的漏洞。 这些潜在风险包括：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Buffer overflow conditions due to improper handling of user requests</span><br><span class="line">Denial-of-service conditions from malformed requests</span><br><span class="line">Domain based scripting attacks</span><br><span class="line">Privilege escalation</span><br><span class="line">Execution of arbitrary code</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css">Buffer <span class="hljs-attribute">overflow</span> conditions due <span class="hljs-selector-tag">to</span> improper handling of user requests<br>Denial-of-service conditions <span class="hljs-selector-tag">from</span> malformed requests<br>Domain based scripting attacks<br>Privilege escalation<br>Execution of arbitrary <span class="hljs-selector-tag">code</span><br></code></pre></td></tr></table></figure>
 
 <p>TRACE/TRACK</p>
 <p>Modern web servers support the TRACE HTTP method, which contains a flaw that can lead to unauthorized information disclosure. The TRACE method is used to debug web server connections and can allow the client to see what is being received at the other end of the request chain. Enabled by default in all major web servers, a remote attacker may abuse the HTTP TRACE functionality to disclose sensitive information resulting in a loss of confidentiality.</p>
