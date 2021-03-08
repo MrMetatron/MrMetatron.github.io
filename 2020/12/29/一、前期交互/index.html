@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="G3G4X5X6">
+  <meta name="keywords" content="">
+  
+  <title>一、前期交互 - MrMetatron&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"mrmetatron.github.io","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="一、前期交互">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-29 15:49" pubdate>
+        2020年12月29日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      100
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">一、前期交互</h1>
+            
+            <div class="markdown-body">
+              <h1 id="前期交互"><a href="#前期交互" class="headerlink" title="前期交互"></a>前期交互</h1><h1 id="0x00-概要"><a href="#0x00-概要" class="headerlink" title="0x00 概要"></a>0x00 概要</h1><p>渗透测试执行标准这一部分的目的是介绍和解释可用的工具和技术，这些工具和技术有助于渗透测试前期交互步骤的成功。本节中的信息是世界上一些最成功的渗透测试人员多年经验总结的结果。</p>
+<p>如果您是寻求渗透测试的客户，我们强烈建议您阅读本文档的“一般问题”部分。它涵盖了在测试开始之前应该回答的主要问题。<strong>请记住，渗透测试不应该是对抗性的。也不应该是一个看看测试人员是否可以“破解”你的活动。</strong>它应该是识别与之相关的业务风险和攻击。</p>
+<p>要获得最大价值，请确保涵盖本文档中的问题。此外，随着范围界定活动的开展，一个优秀的测试公司将开始提出为您的组织量身定制的其他问题。</p>
+<h1 id="0x01-范围简介"><a href="#0x01-范围简介" class="headerlink" title="0x01 范围简介"></a>0x01 范围简介</h1><p>定义范围可以说是渗透测试中最重要的组成部分之一，但它也是最容易被忽视的组成部分之一。虽然已经写了许多关于可用于访问网络的不同工具和技术的书，但在渗透之前的主题：“准备阶段”上写的却很少。忽视正确完成前期交互活动有可能使渗透测试员（或他的公司）面临一些令人头疼的问题，包括范围蔓延，不满意的客户，甚至是法律问题。项目的范围专门定义了要测试的内容。如何进行测试的各个方面将在“规则约定”部分中介绍。</p>
+<p>确定参与范围的一个关键组成部分是概述测试人员应该如何花时间。例如，客户要求以100,000美元的价格测试100个IP地址。这意味着客户每个IP地址提供1000美元的测试。但是，这种成本结构仅在该数量上仍然有效。一些测试人员常见的陷阱是在整个测试过程中保持线性成本。如果客户只要求以相同的定价结构（1,000美元）测试一个业务关键型应用程序，而测试人员仍然只攻击单个IP，则工作量会急剧增加。根据完成的工作改变成本非常重要。否则，公司很容易发现自己的服务收费不足，这促使他们做一份不完整的工作。</p>
+<p>尽管拥有稳固的定价结构，但这个过程并非全是黑白分明。客户完全不知道他们需要测试的是什么并不罕见。客户也可能不知道如何有效地沟通他们对测试的期望。在前期交互阶段，测试人员可以作为客户在未知领域的指导，这一点非常重要。测试人员必须了解专注于具有严重强度(severe intensity)的单个应用程序的测试与客户端提供广泛的IP地址以进行测试的测试之间的区别，从而简单地找到测试方法。</p>
+<h1 id="0x02-时间估计的度量标准"><a href="#0x02-时间估计的度量标准" class="headerlink" title="0x02 时间估计的度量标准"></a>0x02 时间估计的度量标准</h1><p>时间估计与某个领域的测试人员的经验直接相关。如果测试人员在某项测试中具有丰富的经验，他可能天生就能确定测试需要多长时间。如果测试人员在该领域的经验较少，重新阅读以前公司在类似测试中的电子邮件和扫描日志是估计当前参与的时间要求的一个很好的方法。一旦确定测试时间，添加20％的时间是谨慎的做法。</p>
+<p>时间值后端的额外20％称为填充(padding)。在顾问圈之外，这也被称为顾问开销。填充是任何测试的绝对必要条件。如果测试中发生任何中断，它会提供缓冲。通常会发生许多事件并阻碍测试过程。例如，网络段可能会出现故障，或者可能会发现一个重大漏洞，这些都需要与许多级别的管理层进行多次会议才能解决。这两个事件都很耗时，并且如果填充不到位，则会显著影响原始时间估计。</p>
+<p>如果20％的填充最终变得没有必要会发生什么？向客户收取未使用时间的费用将是非常不道德的，因此，如果达到参与时间限制，则由测试人员提供通常无法提供的额外价值。比如包括让公司安全团队走过利用漏洞的步骤，如果它不是原始可交付成果列表的一部分，则提供执行摘要，或者花费一些额外的时间来尝试破解初始测试期间难以捉摸的漏洞。</p>
+<p>时间指标和测试的另一个组成部分是每个项目都需要有一个明确结束日期的最后期限。所有好的项目都有明确的开端和结束。如果您已达到测试结束的具体日期，或者在该日期之后要求您进行任何其他测试或工作，则需要签署一份工作声明，说明工作和所需的工作时间。有些测试人员很难做到这一点，因为他们觉得在成本和工作时间方面他们太痛苦了。然而，作者的经验是，如果您为主要测试提供卓越的价值，客户将不会拒绝为您支付额外的工作费用。</p>
+<h1 id="0x03-范围会议"><a href="#0x03-范围会议" class="headerlink" title="0x03 范围会议"></a>0x03 范围会议</h1><p>在许多情况下，范围会议将在合同签订后进行。确实会发生这样的情况，其中许多与范围相关的主题可以在合同签署之前进行讨论，但它们很少而且难得一见。对于这些情况，建议在进行任何深入的范围界定讨论之前签署保密协议。</p>
+<p>范围界定会议的目标是讨论将要测试的内容。本次会议不涉及参与规则和费用。这些主题中的每一个都应该在会议中处理，每一块都是会议的焦点。这样做是因为如果没有明确说明重点，讨论很容易混淆和混乱。充当主持人并保持讨论主题，防止切线并在必要时宣布更适合离线讨论的某些主题非常重要。</p>
+<p>现在已经为项目建立了粗略的数量级（Rough Order of Magnitude-ROM）值，是时候与客户会面以验证假设。首先，需要明确确定IP范围的参与范围。对于客户来说，抵抗并且假设测试人员识别他们的网络并对其进行攻击是一种特权，以使测试尽可能真实，这种情况并不少见。这确实是一个理想的情况，但是，必须首先考虑可能的法律后果。因此，测试人员有责任向客户传达这些关注点，并向他们传授隐含范围的重要性。例如，在会议中，应验证客户是否拥有所有目标环境，包括：DNS服务器，电子邮件服务器，其Web服务器运行的实际硬件以及防火墙/ IDS / IPS解决方案。有许多公司将这些设备的管理外包给第三方。</p>
+<p>此外，必须确定目标环境所在的国家、省和州。各地区的法律各不相同，测试很可能受到这些法律的影响。例如，众所周知，属于欧盟的国家对个人隐私有非常严格的法律，这可以显著改变执行社会工程参与的方式。</p>
+<h1 id="0x04-基于小时费率的额外支持"><a href="#0x04-基于小时费率的额外支持" class="headerlink" title="0x04 基于小时费率的额外支持"></a>0x04 基于小时费率的额外支持</h1><p>任何未明确包含在约定范围内的事项都应谨慎处理。第一个原因是范围蔓延。随着范围的扩大，资源被消耗掉，为测试人员削减了利润，甚至可能给客户造成困惑和愤怒。还有一个问题，许多测试人员在特别的基础上进行额外的工作时没有想到：法律后果。许多特别请求没有得到适当的记录，因此在发生争议或法律诉讼时很难确定谁说了什么。此外，合同是一份法律文件，规定了要做的工作。它应该与允许测试备忘录紧密联系在一起。</p>
+<p>任何超出原始范围的请求都应以工作说明的形式记录下来，该工作说明清楚地指明了要做的工作。我们还建议在合同中明确规定，额外工作将以每小时固定费用完成，并明确规定，在签署和反签署的工作说明书到位之前，不能完成额外工作。</p>
+<h1 id="0x05-问卷调查"><a href="#0x05-问卷调查" class="headerlink" title="0x05 问卷调查"></a>0x05 问卷调查</h1><p>在与客户的初步沟通过程中，有几个问题需要客户回答，以便能够正确估计服务范围。这些问题旨在更好地了解客户希望从渗透测试中获得什么，客户为什么希望在其环境下进行渗透测试，以及他们是否希望在渗透测试期间执行某些类型的测试。以下是本阶段可能会提出的问题示例。</p>
+<h2 id="0x0500-一般问题"><a href="#0x0500-一般问题" class="headerlink" title="0x0500 一般问题"></a>0x0500 一般问题</h2><h3 id="0x050001-网络渗透测试"><a href="#0x050001-网络渗透测试" class="headerlink" title="0x050001 网络渗透测试"></a>0x050001 网络渗透测试</h3><ol>
+<li><p>为什么客户要对他们的环境进行渗透测试？</p>
+</li>
+<li><p>渗透测试是否需要特定的符合性要求？</p>
+</li>
+<li><p>客户希望什么时候进行渗透测试的活动部分(扫描、枚举、开发等？</p>
+</li>
+</ol>
+<p>  a. 上班时间？</p>
+<p>  b. 下班时间？</p>
+<p>  c. 在周末？</p>
+<ol start="4">
+<li>总共有多少个IP地址正在测试中？</li>
+</ol>
+<p>  a. 有多少内部IP地址，如果适用的话？</p>
+<p>  b. 如果适用，有多少外部IP地址？</p>
+<ol start="5">
+<li><p>是否有任何设备可能影响渗透测试的结果，如防火墙、入侵检测/防御系统、Web应用程序防火墙或负载均衡器？</p>
+</li>
+<li><p>如果系统被渗透，测试团队应该如何进行？</p>
+</li>
+</ol>
+<p>  a. 对受损机器进行本地漏洞评估？</p>
+<p>  b. 尝试获得最高权限（Unix计算机上的根用户、Windows上的系统或管理员机器）在受损机器上？</p>
+<p>  c. 对获得的本地密码散列执行无、最小、字典或详尽的密码攻击(例如，Unix机器上的/etc/shadow)？</p>
+<h3 id="0x050002-Web应用程序渗透测试"><a href="#0x050002-Web应用程序渗透测试" class="headerlink" title="0x050002 Web应用程序渗透测试"></a>0x050002 Web应用程序渗透测试</h3><ol>
+<li><p>有多少web应用程序正在被评估?</p>
+</li>
+<li><p>正在评估多少登录系统?</p>
+</li>
+<li><p>要评估多少静态页面?(近似)</p>
+</li>
+<li><p>要评估多少动态页面?(近似)</p>
+</li>
+<li><p>源代码是否容易获得?</p>
+</li>
+<li><p>会有任何类型的文件吗?</p>
+<p>a. 如果是，需要哪些文件?</p>
+</li>
+<li><p>将对该应用程序执行静态分析吗？</p>
+</li>
+<li><p>客户端是否希望针对此应用程序执行模糊处理？</p>
+</li>
+<li><p>客户端是否希望针对此应用程序执行基于角色的测试？</p>
+</li>
+<li><p>客户端是否需要对Web应用程序进行凭据扫描？</p>
+</li>
+</ol>
+<h3 id="0x050003-无线网络渗透测试"><a href="#0x050003-无线网络渗透测试" class="headerlink" title="0x050003 无线网络渗透测试"></a>0x050003 无线网络渗透测试</h3><ol>
+<li>有多少无线网络？</li>
+<li>是否使用客人无线网络？ 如果是：<ol>
+<li>客网是否需要认证？</li>
+<li>在无线网络上使用什么类型的加密？</li>
+<li>覆盖的面积是多少？</li>
+<li>是否需要列举流氓设备？</li>
+<li>团队会评估针对客户的无线攻击吗？</li>
+<li>大约有多少客户将使用无线网络？</li>
+</ol>
+</li>
+</ol>
+<h3 id="0x050004-物理渗透测试"><a href="#0x050004-物理渗透测试" class="headerlink" title="0x050004 物理渗透测试"></a>0x050004 物理渗透测试</h3><ol>
+<li> 正在评估多少个地点？</li>
+<li>这个物理位置是共享设施吗？ 如果是：<ol>
+<li> 有多少层在范围内？</li>
+<li> 哪些楼层在范围内？</li>
+</ol>
+</li>
+<li>是否有任何保安需要绕过？ 如果是：<ol>
+<li> 保安人员是通过第三方雇用的吗？</li>
+<li> 他们有武器吗？</li>
+<li> 他们允许使用武力吗？</li>
+</ol>
+</li>
+<li> 有多少个入口进入大楼？</li>
+<li> 是否允许使用锁镐或凸键？ （也考虑当地法律）</li>
+<li> 本测试的目的是验证是否符合现有政策和程序，还是进行审计？</li>
+<li> 范围内的面积是多少？</li>
+<li> 所有的物理安全措施都有记录吗？</li>
+<li>摄像机被使用了吗？<ol>
+<li>摄像机是客户所有的吗？ 如果是：<ol>
+<li> 团队是否应该尝试访问存储摄像机数据的位置？</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>是否正在使用武装警报系统？ 如果是：<ol>
+<li> 警报是无声警报吗？</li>
+<li> 警报是由运动触发的吗？</li>
+<li> 报警是否由打开门窗触发？</li>
+</ol>
+</li>
+</ol>
+<h3 id="0x050005-社会工程学"><a href="#0x050005-社会工程学" class="headerlink" title="0x050005 社会工程学"></a>0x050005 社会工程学</h3><ol>
+<li>客户是否有一个电子邮件地址列表，他们希望对社会工程攻击进行攻击？</li>
+<li>客户是否有一个电话号码列表，他们希望对社会工程进行攻击？</li>
+<li>社会工程是否为获得未经授权的物理访问而批准？ 如果是：</li>
+</ol>
+<p>  a. 会有多少人成为目标？</p>
+<p>应该指出，作为不同测试级别的一部分，可能不需要向业务单元经理、系统管理员和服务台人员提出问题。 然而，在这种情况下，有些问题是必要的，一些样本问题可以在下面找到。</p>
+<h2 id="0x0501-业务部门经理的问题"><a href="#0x0501-业务部门经理的问题" class="headerlink" title="0x0501 业务部门经理的问题"></a>0x0501 业务部门经理的问题</h2><ol>
+<li> 经理是否知道将要执行测试？</li>
+<li> 如果暴露、损坏或删除，对组织造成最大风险的主要基准是什么？</li>
+<li> 是否有测试和验证程序来验证业务应用程序是否正常运行？</li>
+<li> 测试人员是否可以从应用程序首次开发时起访问质量保证测试程序？</li>
+<li> 应用程序数据是否有灾后恢复程序？</li>
+</ol>
+<h2 id="0x0502-系统管理员的问题"><a href="#0x0502-系统管理员的问题" class="headerlink" title="0x0502 系统管理员的问题"></a>0x0502 系统管理员的问题</h2><ol>
+<li> 是否有任何系统可以被描述为脆弱的？ （有崩溃倾向的系统，较旧的操作系统，或未修补的系统）</li>
+<li> 网络上是否有客户端不拥有的系统，可能需要额外的批准才能测试？</li>
+<li> 变更管理程序是否到位？</li>
+<li> 修复系统中断的平均时间是多少？</li>
+<li> 是否有系统监控软件到位？</li>
+<li> 最关键的服务器和应用程序是什么？</li>
+<li> 备份是否定期测试？</li>
+<li> 上次恢复备份是什么时候？</li>
+</ol>
+<h1 id="0x06-范围蠕变"><a href="#0x06-范围蠕变" class="headerlink" title="0x06 范围蠕变"></a>0x06 范围蠕变</h1><p> 范围蠕变是使渗透测试公司退出业务的最有效的方法之一。 问题是，许多公司和经理几乎不知道如何识别它，或者如何重新定位  当它发生的时候。</p>
+<p>在对抗范围蔓延时需要记住几件事。首先，如果客户对特定约定的工作感到满意，那么他们通常会请求额外的工作。把这看作是一种恭维，请毫不犹豫地要求提供额外资金，以补偿所花费的额外时间。如果客户拒绝支付额外的工作，几乎就不值得留下来做那些工作。</p>
+<p>第二点更为关键。与现有客户打交道时，要注意保持较低的价格。利用有利条件哄抬价格，肯定能赶走回头客。考虑到可以降低价格，因为公司避免了获得客户的成本，如正式的RFP过程和寻找客户本身。此外，未来工作的最佳来源是通过现有的客户。善待他们，他们就会回来。</p>
+<h1 id="0x07-指定开始日期和结束日期"><a href="#0x07-指定开始日期和结束日期" class="headerlink" title="0x07 指定开始日期和结束日期"></a>0x07 指定开始日期和结束日期</h1><p> 另一个阻止范围蔓延的关键因素是明确地说明开始和结束日期。这使得项目有明确的结局。范围渐变最常见的地方之一是在重新测试期间。在签订合同时，重新测试听起来总是一个好主意。这表明该公司是关心和勤奋的，努力确保客户是安全的。当人们忘记了工作在完成之前是没有报酬的时候，问题就开始了。这包括重新测试。</p>
+<p> 为了减少这种风险，在合同中添加一个简单的声明，其中提到所有重新测试必须在最终报告交付后的一定时间内完成。 然后它就变成了责任  测试人员带头进行重新测试工作。 如果客户请求延期，始终允许这样做，条件是在最初指定的日期完成付款。 最后，  最重要的是，进行质量重测。 记住，未来工作的最佳来源是你现有的客户群。</p>
+<h1 id="0x08-指定IP范围和域"><a href="#0x08-指定IP范围和域" class="headerlink" title="0x08 指定IP范围和域"></a>0x08 指定IP范围和域</h1><p>在开始渗透测试之前，必须确定所有目标。这些目标应该在最初的问卷调查阶段从顾客那里获得。目标可以由客户以特定IP地址、网络范围或域名的形式给出。在某些情况下，客户提供的唯一目标是组织的名称，并期望测试人员能够自己识别其余的部分。重要的是要定义在测试者和最终目标之间的系统，如防火墙、IDS/IPS或网络设备，是否也是范围的一部分。无论上游供应商和其他第三方供应商是否在范围内，都应该标识和定义其他元素。</p>
+<h2 id="0x0800-验证范围"><a href="#0x0800-验证范围" class="headerlink" title="0x0800 验证范围"></a>0x0800 验证范围</h2><p><strong>至关重要的是，在开始攻击目标之前，必须验证目标实际上是您要执行测试的客户所拥有</strong>。 想一想，如果您开始攻击一台机器并成功侵入它，这可能会导致法律后果，只是后来才发现该机器实际上属于另一个组织（例如医院或政府机构）。</p>
+<h1 id="0x09-与第三方打交道"><a href="#0x09-与第三方打交道" class="headerlink" title="0x09 与第三方打交道"></a>0x09 与第三方打交道</h1><p>在许多情况下，参与将包括测试由第三方托管的服务或应用程序。 近年来，随着云服务变得越来越流行，这种情况变得越来越普遍。 <strong>要记住的最重要的一点是，尽管客户可能已经授予了许可，但他们并不代表第三方提供商。</strong> 因此，还必须从他们那里获得许可才能测试托管系统。 与往常一样，未能获得适当的许可会带来违反法律的可能性，这可能会引起无休止的头痛。</p>
+<h2 id="0x0900-云服务（Cloud-Services）"><a href="#0x0900-云服务（Cloud-Services）" class="headerlink" title="0x0900 云服务（Cloud Services）"></a>0x0900 云服务（Cloud Services）</h2><p>测试云服务的最大问题是，来自多个不同组织的数据存储在一个物理介质上。 通常，这些不同数据域之间的安全性非常宽松。 云服务提供商需要收到有关测试的警报，并且需要确认测试正在进行中，并授予测试组织进行测试的权限。 此外，在发现可能影响其他云客户的安全漏洞的情况下，需要在云服务提供商内部建立直接的安全联系以进行联系。 一些云提供商有针对渗透测试人员的特定程序，在开始测试之前，可能需要他们的请求表，时间表或明确的许可。</p>
+<h2 id="0x0901-网络服务提供商（ISP）"><a href="#0x0901-网络服务提供商（ISP）" class="headerlink" title="0x0901 网络服务提供商（ISP）"></a>0x0901 网络服务提供商（ISP）</h2><p>与客户确认ISP服务条款。 在许多商业情况下，ISP将有特定的测试规定。 发起攻击之前，请仔细阅读这些条款。 在某些情况下，ISP会回避并阻止某些被认为是恶意的流量。 客户可以批准此风险，但是在开始之前必须始终明确告知它。 网络托管与所有其他第三方一样，测试的范围和时间必须与网络托管提供商明确沟通。 另外，与客户沟通时，请确保清楚说明测试仅是在搜索网络漏洞时进行的。 该测试不会发现底层基础结构中的漏洞，这些漏洞仍可能提供危害应用程序的途径。</p>
+<h2 id="0x0902-托管安全服务提供商（MSSPs）"><a href="#0x0902-托管安全服务提供商（MSSPs）" class="headerlink" title="0x0902 托管安全服务提供商（MSSPs）"></a>0x0902 托管安全服务提供商（MSSPs）</h2><p>托管安全服务提供商也可能需要通知测试。 具体来说，在测试其拥有的系统和服务时将需要通知他们。 但是，在某些情况下不会通知MSSP。 如果确定MSSP的实际响应时间是测试的一部分，则通知MSSP当然不符合测试完整性的最大利益。 根据一般经验，每当测试MSSP明确拥有的设备或服务时，都需要通知它们。</p>
+<h2 id="0x0903-服务器所在国家（Countries-Where-Servers-are-Hosted）"><a href="#0x0903-服务器所在国家（Countries-Where-Servers-are-Hosted）" class="headerlink" title="0x0903 服务器所在国家（Countries Where Servers are Hosted）"></a>0x0903 服务器所在国家（Countries Where Servers are Hosted）</h2><p>检验服务器所在的国家/地区也符合测试人员的最大利益。 验证国家/地区之后，请在开始测试之前查看特定国家/地区的法律。 不应假定公司的法律团队会为测试人员提供完整的当地法律摘要。 也不应假定该公司应对测试人员违反的任何法律承担法律责任。 在开始测试之前，每个测试人员都有责任验证其测试所在地区的法律，因为最终将由测试人员来应对任何违法行为。</p>
+<h1 id="0x0A-定义可接受的社会工程托词"><a href="#0x0A-定义可接受的社会工程托词" class="headerlink" title="0x0A 定义可接受的社会工程托词"></a>0x0A 定义可接受的社会工程托词</h1><p>许多组织将希望以与当前攻击一致的方式测试其安全状态。 当今，许多攻击者广泛使用社会工程学和鱼叉式网络钓鱼攻击。 尽管大多数成功的攻击使用诸如性，毒品和摇滚乐（分别是色情，伟哥和免费iPod）之类的借口，但其中某些借口在公司环境中可能是不可接受的。 在开始测试之前，请确保以书面形式批准为测试选择的所有借口。</p>
+<h1 id="0x0B-DoS测试"><a href="#0x0B-DoS测试" class="headerlink" title="0x0B DoS测试"></a>0x0B DoS测试</h1><p>在开始参与之前，应讨论压力测试或拒绝服务测试。由于测试的潜在破坏性质，这可能是许多组织不满意的话题。如果组织仅担心其数据的机密性或完整性，则可能不需要进行压力测试。但是，如果组织还担心其服务的可用性，则应在与生产环境相同的非生产环境中进行压力测试</p>
+<h1 id="0x0C-付款条件"><a href="#0x0C-付款条件" class="headerlink" title="0x0C 付款条件"></a>0x0C 付款条件</h1><p>许多测试人员完全忘记的为测试做准备的另一方面是应如何付款。就像合同日期一样，应该有特定的付款日期和条件。大型组织尽可能延迟付款的情况并不罕见。以下是几种常见的付款方式。这些仅仅是示例。绝对建议每个组织创建和调整自己的定价结构，以更恰当地满足其客户和他们自己的需求。重要的是在测试开始之前一定要有某种结构。</p>
+<h2 id="0x0C00-Net-30"><a href="#0x0C00-Net-30" class="headerlink" title="0x0C00 Net 30"></a>0x0C00 Net 30</h2><p>总金额应在提交最终报告后的30天内支付。这通常与每月不付款的百分比罚款有关。这可以是您希望授予客户的任何天数（即45或60）。</p>
+<h2 id="0x0C01-预支付一半（Half-Upfront）"><a href="#0x0C01-预支付一半（Half-Upfront）" class="headerlink" title="0x0C01 预支付一半（Half Upfront）"></a>0x0C01 预支付一半（Half Upfront）</h2><p>在测试开始之前，要求先支付总账单的一半并不罕见。对于长期参与，这是很常见的。</p>
+<h2 id="0x0C02-定期分期付款（Recurring）"><a href="#0x0C02-定期分期付款（Recurring）" class="headerlink" title="0x0C02 定期分期付款（Recurring）"></a>0x0C02 定期分期付款（Recurring）</h2><p>定期付款时间表通常用于长期参与。例如，某些活动可能长达一两年。让客户全年定期分期付款并不罕见。</p>
+<h1 id="0x0D-目标（Goals）"><a href="#0x0D-目标（Goals）" class="headerlink" title="0x0D 目标（Goals）"></a>0x0D 目标（Goals）</h1><p>每个渗透测试都应以目标为导向。这就是说，测试的目的是确定导致损害客户业务或任务目标的特定漏洞。这与查找未修补的系统无关。这是关于确定将对组织产生不利影响的风险。</p>
+<h2 id="0x0D00-主要目标（Primary）"><a href="#0x0D00-主要目标（Primary）" class="headerlink" title="0x0D00 主要目标（Primary）"></a>0x0D00 主要目标（Primary）</h2><p>测试的主要目标不应由合规性驱动。这种推理有许多不同的理由。首先，合规性不等于安全性。应该理解，许多组织由于合规性而接受测试，但这不应成为测试的主要目标。例如，作为PCI-DSS要求的一部分，可以雇用一家公司完成渗透测试。</p>
+<p>不乏处理信用卡信息的公司。但是，如果目标组织被折衷，则会使目标组织在竞争激烈的市场中具有独特性和生存能力的特征将产生最大的影响。信用卡系统遭到入侵无疑将是一个严重的问题，但是信用卡号码以及所有相关的客户数据被泄漏将是灾难性的。</p>
+<h2 id="0x0D01-次要目标（Secondary）"><a href="#0x0D01-次要目标（Secondary）" class="headerlink" title="0x0D01 次要目标（Secondary）"></a>0x0D01 次要目标（Secondary）</h2><p>次要目标与合规性直接相关。首要目标和次要目标密切相关并不少见。例如，在PCI-DSS驱动测试的示例中，获得信用卡是次要目标。将数据泄露与组织的业务或任务推动者联系在一起是主要目标。次要目标意味着合规性和/或IT。主要目标引起高层管理人员的注意。</p>
+<h2 id="0x0D03-业务分析（Business-Analysis）"><a href="#0x0D03-业务分析（Business-Analysis）" class="headerlink" title="0x0D03 业务分析（Business Analysis）"></a>0x0D03 业务分析（Business Analysis）</h2><p>在执行渗透测试之前，确定客户安全状况的成熟度级别是有益的。有许多组织选择直接进入渗透测试，首先评估该成熟度。对于拥有非常不完善的安全程序的客户，通常最好先执行漏洞分析。</p>
+<p>一些测试人员认为，漏洞分析（VA）工作存在污名。这些测试人员忘记了目标是确定目标组织中的风险，而不是追求所谓的“摇滚明星”生活方式。如果一家公司还没有准备好进行全面的渗透测试，那么从良好的VA中获得的价值将比渗透测试要多得多。</p>
+<p>事先与客户建立有关他们将提供的系统的哪些信息。询问有关已记录的漏洞的信息也可能会有所帮助。通过不将测试发现与已知问题重叠，这将节省测试人员的时间并节省客户资金。同样，如果合规性并非绝对要求，则完全或部分白盒测试可能比黑盒测试为客户带来更多价值。</p>
+<h1 id="0x0E-建立沟通渠道"><a href="#0x0E-建立沟通渠道" class="headerlink" title="0x0E 建立沟通渠道"></a>0x0E 建立沟通渠道</h1><p>任何渗透测试最重要的方面之一就是与客户的沟通。您与客户互动的频率以及与客户打交道的方式可以极大地改善客户的满意度。下面是一个交流框架，有助于使客户对测试活动感到满意。</p>
+<h2 id="0x0E00-紧急联系信息"><a href="#0x0E00-紧急联系信息" class="headerlink" title="0x0E00 紧急联系信息"></a>0x0E00 紧急联系信息</h2><p>显然，在紧急情况下与客户或目标组织保持联系至关重要。可能会出现紧急情况，必须建立联系点以进行处理。创建紧急联系人列表。此列表应包括测试范围内所有各方的联系信息。创建后，紧急联系人列表应与列表中的所有联系人共享。请记住，目标组织可能不是客户。</p>
+<p>收集有关每个紧急联系人的以下信息：</p>
+<ol>
+<li>全名</li>
+<li>职称和运营责任</li>
+<li>授权讨论测试活动的详细信息（如果尚未指定）</li>
+<li>可能的两种24/7全天候联系方式，例如手机，寻呼机或家庭电话</li>
+<li>一种安全的批量数据传输形式，例如SFTP或加密的电子邮件</li>
+</ol>
+<p>注意：诸如服务台或操作中心之类的组的号码可以代替一个紧急联系人，但前提是必须配备24/7的工作人员。每次渗透测试的性质都会影响应该在紧急联系人列表中的人员。不仅需要提供客户和目标的联系信息，而且在紧急情况下他们可能还需要联系测试人员。该列表最好应包括以下人员：</p>
+<ol>
+<li>参与测试的所有渗透测试人员</li>
+<li>测试小组的经理</li>
+<li>每个目标组织有两个技术联系人</li>
+<li>客户的两个技术联系</li>
+<li>与客户的一位高层管理人员或业务联系人</li>
+</ol>
+<p>上面的列表中可能会有些重叠。例如，目标组织可能是客户，测试小组的经理也可能正在执行渗透测试，或者客户的技术联系人可能在高层管理人员中。还建议每个参与方指定一个联系人，由其领导并代表该联系人负责。</p>
+<h2 id="0x0E01-事件报告流程（Incident-Reporting-Process）"><a href="#0x0E01-事件报告流程（Incident-Reporting-Process）" class="headerlink" title="0x0E01 事件报告流程（Incident Reporting Process）"></a>0x0E01 事件报告流程（Incident Reporting Process）</h2><p>在参与之前，讨论组织当前的事件响应能力非常重要，这有几个原因。渗透测试的一部分不仅要测试组织已具备的安全性，还要测试其事件响应能力。</p>
+<p>如果在目标的内部安全团队从未注意到的情况下可以完成整个交战，则表明安全态势存在重大差距。同样重要的是要确保在测试开始之前，目标组织中的某人知道何时进行测试，以便事件响应团队不会在半夜开始致电高层管理人员的每一个成员，因为他们认为受到攻击或妥协。</p>
+<h2 id="0x0E02-事件定义（Incident-Definition）"><a href="#0x0E02-事件定义（Incident-Definition）" class="headerlink" title="0x0E02 事件定义（Incident Definition）"></a>0x0E02 事件定义（Incident Definition）</h2><p>美国国家标准技术研究院（NIST）对事件的定义如下：“违反或迫在眉睫的违反计算机安全策略，可接受的使用策略或标准安全惯例的行为。” （计算机安全事件处理指南-特殊出版物800-61 Rev 1）。事故也可能发生在物理层面上，其中人可以通过任何方式未经授权地物理访问该区域。目标组织对于不同类型的事件应具有不同的类别和级别。</p>
+<h2 id="0x0E03-状态报告频率（Status-Report-Frequency）"><a href="#0x0E03-状态报告频率（Status-Report-Frequency）" class="headerlink" title="0x0E03 状态报告频率（Status Report Frequency）"></a>0x0E03 状态报告频率（Status Report Frequency）</h2><p>状态报告的频率差异很大。影响报告进度的一些因素包括测试的总时间，测试范围和目标的安全成熟度。有效的时间表可以使客户感到参与。被忽略的客户是前客户。</p>
+<p>设置状态报告的频率和时间表后，就必须兑现。推迟或延迟状态报告可能是必要的，但不应成为长期报告。如有必要，可能会要求客户同意新的时间表。完全跳过状态报告是不专业的，应尽可能避免。</p>
+<h2 id="0x0E04-PGP和其他替代品（PGP-and-Other-Alternatives）"><a href="#0x0E04-PGP和其他替代品（PGP-and-Other-Alternatives）" class="headerlink" title="0x0E04 PGP和其他替代品（PGP and Other Alternatives）"></a>0x0E04 PGP和其他替代品（PGP and Other Alternatives）</h2><p>加密不是可选的。与客户的沟通是任何渗透测试项目中必不可少的部分，由于该项目的敏感性，必须对敏感信息的通信进行加密，尤其是最终报告。在测试开始之前，必须与客户端建立一种安全的通信方式。几种常见的加密方法如下：</p>
+<ol>
+<li>PGP / GPG既可以用于通过电子邮件进行通信，也可以用于加密最终报告（请记住主题行以明文形式通过）</li>
+<li>客户网络上托管的安全邮箱</li>
+<li>电话</li>
+<li>面对面会议</li>
+<li>要提供最终报告，您还可以将报告存储在AES加密的存档文件中，但是请确保您的存档实用程序支持使用CBC进行AES加密。</li>
+</ol>
+<p>还要问哪些信息可以用书面形式写出，哪些应该仅以口头形式传达。一些组织有很好的理由来限制以书面形式向其发送哪些安全信息。</p>
+<h1 id="0x0F-参与规则（Rules-of-Engagement）"><a href="#0x0F-参与规则（Rules-of-Engagement）" class="headerlink" title="0x0F 参与规则（Rules of Engagement）"></a>0x0F 参与规则（Rules of Engagement）</h1><p>范围定义了将要测试的内容，而参与规则则定义了如何进行测试。这是两个不同方面，需要彼此独立处理。</p>
+<h2 id="0x0F00-时间线（Timeline）"><a href="#0x0F00-时间线（Timeline）" class="headerlink" title="0x0F00 时间线（Timeline）"></a>0x0F00 时间线（Timeline）</h2><p>应该为参与制定明确的时间表。范围定义了参与的开始和结束，而参与规则则定义了参与之间的一切。应该理解的是，时间表会随着测试的进行而改变。但是，制定严格的时间表并不是创建时间表的目标。相反，在测试开始时制定时间表将使每个参与人员都能更清楚地确定要完成的工作以及负责该工作的人员。 GANTT图表和工作分解结构通常用于定义工作以及每个特定工作所需的时间。查看以这种方式分解的时间表可以帮助那些参与人员确定需要在何处应用资源，还可以帮助客户确定在测试过程中可能遇到的障碍。</p>
+<p>互联网上有许多免费的GANTT Chart工具。许多管理人员与这些工具密切相关。因此，它们是与目标组织的高层管理人员进行沟通的极佳媒介。</p>
+<h2 id="0x0F01-地点（Locations）"><a href="#0x0F01-地点（Locations）" class="headerlink" title="0x0F01 地点（Locations）"></a>0x0F01 地点（Locations）</h2><p>任何给定参与度的重要参数是提前与客户建立联系，这是测试人员在测试期间需要前往的任何目的地。这可能与识别本地酒店一样简单，也可能与识别特定目标国家/地区的适用法律一样复杂。</p>
+<p>一个组织在多个位置和地区开展业务并不罕见，并且需要选择一些选定的站点进行测试。在这种情况下，应避免前往每个客户位置，而是应确定到站点的VPN连接是否可用于远程测试。敏感信息的披露。</p>
+<p>虽然给定参与的目标之一可能是获得对敏感信息的访问权，但实际上不应查看或下载某些信息。对于较新的测试人员来说，这似乎很奇怪，但是，在许多情况下，测试人员不应该拥有目标数据。例如，根据《健康保险可移植性和责任法案》（HIPAA）的个人健康信息（PHI），此数据必须受到保护。在某些情况下，目标系统可能没有保护它的防火墙或防病毒（AV）。在这种情况下，应绝对避免测试人员拥有任何和所有个人身份信息（PII）。</p>
+<p>但是，如果无法通过物理或虚拟方式获取数据，那么如何证明测试人员确实可以访问信息呢？该问题已经以多种方式解决。有很多方法可以证明金库门是打开的而没有花任何钱。例如，只要在文件名中看不到PII，就可以截取数据库模式和文件权限的屏幕快照，或者可以显示文件本身而无需打开文件来显示内容。</p>
+<p>测试人员在给定的约定上应有多谨慎，这是一个需要与客户讨论的参数，但是进行测试的公司应始终确保从法律角度保护自己，无论客户意见如何。无论假定暴露于敏感数据如何，每次参与之后，都应充分擦洗所有报告模板和测试仪机器。作为特别说明，如果测试人员发现了非法数据（例如儿童色情内容），则应立即通知适当的执法人员，然后通知客户。不要听从客户的指示。</p>
+<h2 id="0x0F02-证据处理（Evidence-Handling）"><a href="#0x0F02-证据处理（Evidence-Handling）" class="headerlink" title="0x0F02 证据处理（Evidence Handling）"></a>0x0F02 证据处理（Evidence Handling）</h2><p>在处理测试证据和报告的不同阶段时，极其小心地对待数据非常重要。在每次测试之间，请始终使用加密并清理测试计算机。切勿在安全会议上分发带有测试报告的USB记忆棒。无论您做什么，都不要将其他客户参与的报告用作模板！在文档中保留对另一个组织的引用是非常不专业的。</p>
+<h2 id="0x0F03-定期会议（Regular-Status-Meetings）"><a href="#0x0F03-定期会议（Regular-Status-Meetings）" class="headerlink" title="0x0F03 定期会议（Regular Status Meetings）"></a>0x0F03 定期会议（Regular Status Meetings）</h2><p>在整个测试过程中，与客户定期开会以告知他们测试的总体进度至关重要。这些会议应每天举行，并且应尽可能短。会议应遵循三个概念：计划，进度和问题。</p>
+<p>通常讨论计划，以便在重大计划外变更或中断期间不进行测试。进展只是对客户的最新更新。在本次会议上也应该讨论问题，但是为了简洁起见，有关解决方案的对话几乎应该总是脱机进行。</p>
+<h2 id="0x0F04-一天中的测试时间（Time-of-the-Day-to-Test）"><a href="#0x0F04-一天中的测试时间（Time-of-the-Day-to-Test）" class="headerlink" title="0x0F04 一天中的测试时间（Time of the Day to Test）"></a>0x0F04 一天中的测试时间（Time of the Day to Test）</h2><p>某些客户要求在工作时间以外进行所有测试。对于大多数测试人员而言，这可能意味着深夜。在开始测试之前，应与客户充分确定一天中的时间要求。</p>
+<h2 id="0x0F05-回避处理（Dealing-with-Shunning）"><a href="#0x0F05-回避处理（Dealing-with-Shunning）" class="headerlink" title="0x0F05 回避处理（Dealing with Shunning）"></a>0x0F05 回避处理（Dealing with Shunning）</h2><p>有时回避是完全可以接受的，有时也可能不符合测试的精神。例如，如果您要进行全面的黑盒测试，则不仅要测试技术，还要测试目标组织的安全团队的功能，那么回避就可以了。但是，当您与目标组织的安全团队协作测试大量系统时，避开攻击可能并不符合测试的最大利益。</p>
+<h2 id="0x0F06-测试授权（Permission-to-Test）"><a href="#0x0F06-测试授权（Permission-to-Test）" class="headerlink" title="0x0F06 测试授权（Permission to Test）"></a>0x0F06 测试授权（Permission to Test）</h2><p>渗透测试需要获得的最重要的文件之一是“测试许可”文件。本文档说明了范围，并包含一个签名，该签名确认了对测试人员活动的认识。此外，应明确指出测试可能导致系统不稳定，并且测试人员将采取一切适当的措施，以免使系统在此过程中崩溃。但是，由于测试可能导致不稳定，因此客户不应对测试仪对任何系统不稳定或崩溃负责。在客户签署本文档之前，不要开始测试是至关重要的。</p>
+<p>另外，某些服务提供商在测试其系统之前需要事先通知和/或单独的许可。例如，亚马逊有一个必须填写的在线请求表，在扫描云上的任何主机之前，必须先批准该请求。如果需要，它应该是文档的一部分。</p>
+<h2 id="0x0F07-法律考虑因素（Legal-Considerations）"><a href="#0x0F07-法律考虑因素（Legal-Considerations）" class="headerlink" title="0x0F07 法律考虑因素（Legal Considerations）"></a>0x0F07 法律考虑因素（Legal Considerations）</h2><p>渗透测试中常见的某些活动可能违反当地法律。因此，建议在要执行工作的位置检查常见的渗透测试任务的合法性。例如，在渗透测试过程中捕获的任何VOIP呼叫都可能在某些区域被视为窃听。</p>
+<h1 id="0x10-到位的能力和技术"><a href="#0x10-到位的能力和技术" class="headerlink" title="0x10 到位的能力和技术"></a>0x10 到位的能力和技术</h1><p>良好的渗透测试不仅仅是检查未修补的系统。他们还测试目标组织的功能。为此，下面列出了您可以在测试时进行基准测试的事项：</p>
+<p>  a. 能够检测和响应信息收集</p>
+<p>  b. 能够检测并响应足印</p>
+<p>  c. 能够检测并响应扫描和漏洞分析</p>
+<p>  d. 能够检测并响应渗透（攻击）</p>
+<p>  e. 能够检测和响应数据聚合</p>
+<p>  f. 能够检测并响应数据过滤</p>
+<p>在跟踪此信息时，请务必收集时间信息。例如，如果检测到扫描，则应通知您，并记下您当时正在执行的扫描级别。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A0%87%E5%87%86/">标准</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Google%E7%BF%BB%E8%AF%91/">Google翻译</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%89%8D%E6%9C%9F%E4%BA%A4%E4%BA%92/">前期交互</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E4%BA%8C%E3%80%81%E6%83%85%E6%8A%A5%E6%90%9C%E9%9B%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">二、情报搜集</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E9%9B%B6-%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C%E6%A0%87%E5%87%86/">
+                        <span class="hidden-mobile">零-渗透测试执行标准</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

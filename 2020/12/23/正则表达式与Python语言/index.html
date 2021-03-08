@@ -1,0 +1,571 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="G3G4X5X6">
+  <meta name="keywords" content="">
+  
+  <title>正则表达式与Python语言 - MrMetatron&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"mrmetatron.github.io","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="正则表达式与Python语言">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-23 21:38" pubdate>
+        2020年12月23日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">正则表达式与Python语言</h1>
+            
+            <div class="markdown-body">
+              <h1 id="一、简介-动机"><a href="#一、简介-动机" class="headerlink" title="一、简介/动机"></a>一、简介/动机</h1><blockquote>
+<p>正则表达式为高级的文本模式匹配、抽取、与/或文本形式的搜索和替换功能提供了基础。简单地说，正则表达式（简称为regex）是一些由字符和特殊符号组成的字符串，它们描述了模式的重复或者表述多个字符，于是正则表达式能按照某种模式匹配一系列有相似特征的字符串。</p>
+</blockquote>
+<h1 id="二、特殊符号和字符"><a href="#二、特殊符号和字符" class="headerlink" title="二、特殊符号和字符"></a>二、特殊符号和字符</h1><p>完整的正则表达式由两种字符构成：特殊字符（special characters）称为“元字符”（metacharacters），其他为“文字”（literal），或是普通文本字符（normal text characters）。</p>
+<p>常见正则表达式符号表</p>
+<table>
+<thead>
+<tr>
+<th align="left">符号</th>
+<th>描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">literal</td>
+<td>匹配文本字符串的字面值literal</td>
+<td>foo</td>
+</tr>
+<tr>
+<td align="left">re1**|**re2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>.</strong></td>
+<td>匹配任何字符（除了\n之外）</td>
+<td>b.b</td>
+</tr>
+<tr>
+<td align="left">^</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">$</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">*</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">+</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">?</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">{N}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">{M,N}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">[…]</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">[…x-y…]</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">[^…]</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">(*|+|?|{})?</td>
+<td>用于匹配上面频繁出现/重复出现符号的非贪婪版本（*、+、?、{}）</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">(…)</td>
+<td>匹配封闭的正则表达式，然后另存为子组</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>常见特殊字符表</p>
+<table>
+<thead>
+<tr>
+<th>特殊字符</th>
+<th>描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\d</td>
+<td>匹配任意十进制数</td>
+<td></td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配任意字母数字字符</td>
+<td></td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配任何空格字符，与[\n\t\r\v\f]相同（\S与之相反）</td>
+<td></td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配任何单词边界（\B与之相反）</td>
+<td></td>
+</tr>
+<tr>
+<td>\N</td>
+<td>匹配已保存的子组N</td>
+<td></td>
+</tr>
+<tr>
+<td>\c</td>
+<td>逐字匹配任何特殊字符c（即，仅按照字面意义匹配）</td>
+<td></td>
+</tr>
+<tr>
+<td>\A (\Z)</td>
+<td>匹配字符串的起始（结束）</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="三、正则表达式与Python语言"><a href="#三、正则表达式与Python语言" class="headerlink" title="三、正则表达式与Python语言"></a>三、正则表达式与Python语言</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\<span class="number">18312</span>&gt; python</span><br><span class="line">Python <span class="number">3.9</span><span class="number">.0</span> (tags/v3<span class="number">.9</span><span class="number">.0</span>:9cf6752, Oct  <span class="number">5</span> <span class="number">2020</span>, <span class="number">15</span>:<span class="number">34</span>:<span class="number">40</span>) [MSC v<span class="number">.1927</span> <span class="number">64</span> bit (AMD64)] on win32</span><br><span class="line">Type <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> <span class="keyword">or</span> <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">help</span>(re)</span><br><span class="line">Help on module re:</span><br><span class="line"></span><br><span class="line">NAME</span><br><span class="line">    re - Support <span class="keyword">for</span> regular expressions (RE).</span><br><span class="line"></span><br><span class="line">MODULE REFERENCE</span><br><span class="line">    https://docs.python.org/<span class="number">3.9</span>/library/re</span><br><span class="line"></span><br><span class="line">    The following documentation <span class="keyword">is</span> automatically generated <span class="keyword">from</span> the Python</span><br><span class="line">    source files.  It may be incomplete, incorrect <span class="keyword">or</span> include features that</span><br><span class="line">    are considered implementation detail <span class="keyword">and</span> may vary between Python</span><br><span class="line">    implementations.  When <span class="keyword">in</span> doubt, consult the module reference at the</span><br><span class="line">    location listed above.</span><br><span class="line"></span><br><span class="line">DESCRIPTION</span><br><span class="line">    This module provides regular expression matching operations similar to</span><br><span class="line">    those found <span class="keyword">in</span> Perl.  It supports both <span class="number">8</span>-bit <span class="keyword">and</span> Unicode strings; both</span><br><span class="line">    the pattern <span class="keyword">and</span> the strings being processed can contain null <span class="built_in">bytes</span> <span class="keyword">and</span></span><br><span class="line">    characters outside the US ASCII <span class="built_in">range</span>.</span><br><span class="line"></span><br><span class="line">    Regular expressions can contain both special <span class="keyword">and</span> ordinary characters.</span><br><span class="line">    Most ordinary characters, like <span class="string">&quot;A&quot;</span>, <span class="string">&quot;a&quot;</span>, <span class="keyword">or</span> <span class="string">&quot;0&quot;</span>, are the simplest</span><br><span class="line">    regular expressions; they simply match themselves.  You can</span><br><span class="line">    concatenate ordinary characters, so last matches the string <span class="string">&#x27;last&#x27;</span>.</span><br><span class="line"></span><br><span class="line">    The special characters are:</span><br><span class="line">        <span class="string">&quot;.&quot;</span>      Matches <span class="built_in">any</span> character <span class="keyword">except</span> a newline.</span><br><span class="line">        <span class="string">&quot;^&quot;</span>      Matches the start of the string.</span><br><span class="line">        <span class="string">&quot;$&quot;</span>      Matches the end of the string <span class="keyword">or</span> just before the newline at</span><br><span class="line">                 the end of the string.</span><br><span class="line">        <span class="string">&quot;*&quot;</span>      Matches <span class="number">0</span> <span class="keyword">or</span> more (greedy) repetitions of the preceding RE.</span><br><span class="line">                 Greedy means that it will match <span class="keyword">as</span> many repetitions <span class="keyword">as</span> possible.</span><br><span class="line">        <span class="string">&quot;+&quot;</span>      Matches <span class="number">1</span> <span class="keyword">or</span> more (greedy) repetitions of the preceding RE.</span><br><span class="line">        <span class="string">&quot;?&quot;</span>      Matches <span class="number">0</span> <span class="keyword">or</span> <span class="number">1</span> (greedy) of the preceding RE.</span><br><span class="line">        *?,+?,?? Non-greedy versions of the previous three special characters.</span><br><span class="line">        &#123;m,n&#125;    Matches <span class="keyword">from</span> m to n repetitions of the preceding RE.</span><br><span class="line">        &#123;m,n&#125;?   Non-greedy version of the above.</span><br><span class="line">        <span class="string">&quot;\\&quot;</span>     Either escapes special characters <span class="keyword">or</span> signals a special sequence.</span><br><span class="line">        []       Indicates a <span class="built_in">set</span> of characters.</span><br><span class="line">                 A <span class="string">&quot;^&quot;</span> <span class="keyword">as</span> the first character indicates a complementing <span class="built_in">set</span>.</span><br><span class="line">        <span class="string">&quot;|&quot;</span>      A|B, creates an RE that will match either A <span class="keyword">or</span> B.</span><br><span class="line">        (...)    Matches the RE inside the parentheses.</span><br><span class="line">                 The contents can be retrieved <span class="keyword">or</span> matched later <span class="keyword">in</span> the string.</span><br><span class="line">        (?aiLmsux) The letters set the corresponding flags defined below.</span><br><span class="line">        (?:...)  Non-grouping version of regular parentheses.</span><br><span class="line">        (?P&lt;name&gt;...) The substring matched by the group is accessible by name.</span><br><span class="line">        (?P=name)     Matches the text matched earlier by the group named name.</span><br><span class="line">        (?#...)  A comment; ignored.</span><br><span class="line">        (?=...)  Matches if ... matches next, but doesn&#x27;t consume the string.</span><br><span class="line">        (?!...)  Matches if ... doesn&#x27;t match next.</span><br><span class="line">        (?&lt;=...) Matches if preceded by ... (must be fixed length).</span><br><span class="line">        (?&lt;!...) Matches if not preceded by ... (must be fixed length).</span><br><span class="line">        (?(id/name)yes|no) Matches yes pattern if the group with id/name matched,</span><br><span class="line">                           the (optional) no pattern otherwise.</span><br><span class="line"></span><br><span class="line">    The special sequences consist of <span class="string">&quot;\\&quot;</span> <span class="keyword">and</span> a character <span class="keyword">from</span> the <span class="built_in">list</span></span><br><span class="line">    below.  If the ordinary character <span class="keyword">is</span> <span class="keyword">not</span> on the <span class="built_in">list</span>, then the</span><br><span class="line">    resulting RE will match the second character.</span><br><span class="line">        \number  Matches the contents of the group of the same number.</span><br><span class="line">        \A       Matches only at the start of the string.</span><br><span class="line">        \Z       Matches only at the end of the string.</span><br><span class="line">        \b       Matches the empty string, but only at the start <span class="keyword">or</span> end of a word.</span><br><span class="line">        \B       Matches the empty string, but <span class="keyword">not</span> at the start <span class="keyword">or</span> end of a word.</span><br><span class="line">        \d       Matches <span class="built_in">any</span> decimal digit; equivalent to the <span class="built_in">set</span> [<span class="number">0</span>-<span class="number">9</span>] <span class="keyword">in</span></span><br><span class="line">                 <span class="built_in">bytes</span> patterns <span class="keyword">or</span> string patterns <span class="keyword">with</span> the ASCII flag.</span><br><span class="line">                 In string patterns without the ASCII flag, it will match the whole</span><br><span class="line">                 <span class="built_in">range</span> of Unicode digits.</span><br><span class="line">        \D       Matches <span class="built_in">any</span> non-digit character; equivalent to [^\d].</span><br><span class="line">        \s       Matches <span class="built_in">any</span> whitespace character; equivalent to [ \t\n\r\f\v] <span class="keyword">in</span></span><br><span class="line">                 <span class="built_in">bytes</span> patterns <span class="keyword">or</span> string patterns <span class="keyword">with</span> the ASCII flag.</span><br><span class="line">                 In string patterns without the ASCII flag, it will match the whole</span><br><span class="line">                 <span class="built_in">range</span> of Unicode whitespace characters.</span><br><span class="line">        \S       Matches <span class="built_in">any</span> non-whitespace character; equivalent to [^\s].</span><br><span class="line">        \w       Matches <span class="built_in">any</span> alphanumeric character; equivalent to [a-zA-Z0-9_]</span><br><span class="line">                 <span class="keyword">in</span> <span class="built_in">bytes</span> patterns <span class="keyword">or</span> string patterns <span class="keyword">with</span> the ASCII flag.</span><br><span class="line">                 In string patterns without the ASCII flag, it will match the</span><br><span class="line">                 <span class="built_in">range</span> of Unicode alphanumeric characters (letters plus digits</span><br><span class="line">                 plus underscore).</span><br><span class="line">                 With LOCALE, it will match the <span class="built_in">set</span> [<span class="number">0</span>-9_] plus characters defined</span><br><span class="line">                 <span class="keyword">as</span> letters <span class="keyword">for</span> the current locale.</span><br><span class="line">        \W       Matches the complement of \w.</span><br><span class="line">        \\       Matches a literal backslash.</span><br><span class="line"></span><br><span class="line">    This module exports the following functions:</span><br><span class="line">        match     Match a regular expression pattern to the beginning of a string.</span><br><span class="line">        fullmatch Match a regular expression pattern to <span class="built_in">all</span> of a string.</span><br><span class="line">        search    Search a string <span class="keyword">for</span> the presence of a pattern.</span><br><span class="line">        sub       Substitute occurrences of a pattern found <span class="keyword">in</span> a string.</span><br><span class="line">        subn      Same <span class="keyword">as</span> sub, but also <span class="keyword">return</span> the number of substitutions made.</span><br><span class="line">        split     Split a string by the occurrences of a pattern.</span><br><span class="line">        findall   Find <span class="built_in">all</span> occurrences of a pattern <span class="keyword">in</span> a string.</span><br><span class="line">        finditer  Return an iterator yielding a Match <span class="built_in">object</span> <span class="keyword">for</span> each match.</span><br><span class="line">        <span class="built_in">compile</span>   Compile a pattern into a Pattern <span class="built_in">object</span>.</span><br><span class="line">        purge     Clear the regular expression cache.</span><br><span class="line">        escape    Backslash <span class="built_in">all</span> non-alphanumerics <span class="keyword">in</span> a string.</span><br><span class="line"></span><br><span class="line">    Each function other than purge <span class="keyword">and</span> escape can take an optional <span class="string">&#x27;flags&#x27;</span> argument</span><br><span class="line">    consisting of one <span class="keyword">or</span> more of the following module constants, joined by <span class="string">&quot;|&quot;</span>.</span><br><span class="line">    A, L, <span class="keyword">and</span> U are mutually exclusive.</span><br><span class="line">        A  ASCII       For string patterns, make \w, \W, \b, \B, \d, \D</span><br><span class="line">                       match the corresponding ASCII character categories</span><br><span class="line">                       (rather than the whole Unicode categories, which <span class="keyword">is</span> the</span><br><span class="line">                       default).</span><br><span class="line">                       For <span class="built_in">bytes</span> patterns, this flag <span class="keyword">is</span> the only available</span><br><span class="line">                       behaviour <span class="keyword">and</span> needn<span class="string">&#x27;t be specified.</span></span><br><span class="line"><span class="string">        I  IGNORECASE  Perform case-insensitive matching.</span></span><br><span class="line"><span class="string">        L  LOCALE      Make \w, \W, \b, \B, dependent on the current locale.</span></span><br><span class="line"><span class="string">        M  MULTILINE   &quot;^&quot; matches the beginning of lines (after a newline)</span></span><br><span class="line"><span class="string">                       as well as the string.</span></span><br><span class="line"><span class="string">                       &quot;$&quot; matches the end of lines (before a newline) as well</span></span><br><span class="line"><span class="string">                       as the end of the string.</span></span><br><span class="line"><span class="string">        S  DOTALL      &quot;.&quot; matches any character at all, including the newline.</span></span><br><span class="line"><span class="string">        X  VERBOSE     Ignore whitespace and comments for nicer looking RE&#x27;</span>s.</span><br><span class="line">        U  UNICODE     For compatibility only. Ignored <span class="keyword">for</span> string patterns (it</span><br><span class="line">                       <span class="keyword">is</span> the default), <span class="keyword">and</span> forbidden <span class="keyword">for</span> <span class="built_in">bytes</span> patterns.</span><br><span class="line"></span><br><span class="line">    This module also defines an exception <span class="string">&#x27;error&#x27;</span>.</span><br><span class="line"></span><br><span class="line">CLASSES</span><br><span class="line">    builtins.Exception(builtins.BaseException)</span><br><span class="line">        error</span><br><span class="line">    builtins.<span class="built_in">object</span></span><br><span class="line">        Match</span><br><span class="line">        Pattern</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Match</span>(<span class="params">builtins.<span class="built_in">object</span></span>)</span></span><br><span class="line"><span class="class">     |  <span class="title">The</span> <span class="title">result</span> <span class="title">of</span> <span class="title">re</span>.<span class="title">match</span>() <span class="title">and</span> <span class="title">re</span>.<span class="title">search</span>().</span></span><br><span class="line"><span class="class">     该类部分内容已删除</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">FUNCTIONS</span></span></span><br><span class="line"><span class="class">    <span class="title">compile</span>(<span class="params">pattern, flags=<span class="number">0</span></span>)</span></span><br><span class="line">        Compile a regular expression pattern, returning a Pattern object.</span><br><span class="line"></span><br><span class="line">    escape(pattern)</span><br><span class="line">        Escape special characters <span class="keyword">in</span> a string.</span><br><span class="line"></span><br><span class="line">    findall(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line">        Return a <span class="built_in">list</span> of <span class="built_in">all</span> non-overlapping matches <span class="keyword">in</span> the string.</span><br><span class="line"></span><br><span class="line">        If one <span class="keyword">or</span> more capturing groups are present <span class="keyword">in</span> the pattern, <span class="keyword">return</span></span><br><span class="line">        a <span class="built_in">list</span> of groups; this will be a <span class="built_in">list</span> of tuples <span class="keyword">if</span> the pattern</span><br><span class="line">        has more than one group.</span><br><span class="line"></span><br><span class="line">        Empty matches are included <span class="keyword">in</span> the result.</span><br><span class="line"></span><br><span class="line">    finditer(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line">        Return an iterator over <span class="built_in">all</span> non-overlapping matches <span class="keyword">in</span> the</span><br><span class="line">        string.  For each match, the iterator returns a Match <span class="built_in">object</span>.</span><br><span class="line"></span><br><span class="line">        Empty matches are included <span class="keyword">in</span> the result.</span><br><span class="line"></span><br><span class="line">    fullmatch(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line">        Try to apply the pattern to <span class="built_in">all</span> of the string, returning</span><br><span class="line">        a Match <span class="built_in">object</span>, <span class="keyword">or</span> <span class="literal">None</span> <span class="keyword">if</span> no match was found.</span><br><span class="line"></span><br><span class="line">    match(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line">        Try to apply the pattern at the start of the string, returning</span><br><span class="line">        a Match <span class="built_in">object</span>, <span class="keyword">or</span> <span class="literal">None</span> <span class="keyword">if</span> no match was found.</span><br><span class="line"></span><br><span class="line">    purge()</span><br><span class="line">        Clear the regular expression caches</span><br><span class="line"></span><br><span class="line">    search(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line">        Scan through string looking <span class="keyword">for</span> a match to the pattern, returning</span><br><span class="line">        a Match <span class="built_in">object</span>, <span class="keyword">or</span> <span class="literal">None</span> <span class="keyword">if</span> no match was found.</span><br><span class="line"></span><br><span class="line">    split(pattern, string, maxsplit=<span class="number">0</span>, flags=<span class="number">0</span>)</span><br><span class="line">        Split the source string by the occurrences of the pattern,</span><br><span class="line">        returning a <span class="built_in">list</span> containing the resulting substrings.  If</span><br><span class="line">        capturing parentheses are used <span class="keyword">in</span> pattern, then the text of <span class="built_in">all</span></span><br><span class="line">        groups <span class="keyword">in</span> the pattern are also returned <span class="keyword">as</span> part of the resulting</span><br><span class="line">        <span class="built_in">list</span>.  If maxsplit <span class="keyword">is</span> nonzero, at most maxsplit splits occur,</span><br><span class="line">        <span class="keyword">and</span> the remainder of the string <span class="keyword">is</span> returned <span class="keyword">as</span> the final element</span><br><span class="line">        of the <span class="built_in">list</span>.</span><br><span class="line"></span><br><span class="line">    sub(pattern, repl, string, count=<span class="number">0</span>, flags=<span class="number">0</span>)</span><br><span class="line">        Return the string obtained by replacing the leftmost</span><br><span class="line">        non-overlapping occurrences of the pattern <span class="keyword">in</span> string by the</span><br><span class="line">        replacement repl.  repl can be either a string <span class="keyword">or</span> a <span class="built_in">callable</span>;</span><br><span class="line">        <span class="keyword">if</span> a string, backslash escapes <span class="keyword">in</span> it are processed.  If it <span class="keyword">is</span></span><br><span class="line">        a <span class="built_in">callable</span>, it<span class="string">&#x27;s passed the Match object and must return</span></span><br><span class="line"><span class="string">        a replacement string to be used.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    subn(pattern, repl, string, count=0, flags=0)</span></span><br><span class="line"><span class="string">        Return a 2-tuple containing (new_string, number).</span></span><br><span class="line"><span class="string">        new_string is the string obtained by replacing the leftmost</span></span><br><span class="line"><span class="string">        non-overlapping occurrences of the pattern in the source</span></span><br><span class="line"><span class="string">        string by the replacement repl.  number is the number of</span></span><br><span class="line"><span class="string">        substitutions that were made. repl can be either a string or a</span></span><br><span class="line"><span class="string">        callable; if a string, backslash escapes in it are processed.</span></span><br><span class="line"><span class="string">        If it is a callable, it&#x27;</span>s passed the Match <span class="built_in">object</span> <span class="keyword">and</span> must</span><br><span class="line">        <span class="keyword">return</span> a replacement string to be used.</span><br><span class="line"></span><br><span class="line">    template(pattern, flags=<span class="number">0</span>)</span><br><span class="line">        Compile a template pattern, returning a Pattern <span class="built_in">object</span></span><br><span class="line"></span><br><span class="line">DATA</span><br><span class="line">    A = re.ASCII</span><br><span class="line">    ASCII = re.ASCII</span><br><span class="line">    DOTALL = re.DOTALL</span><br><span class="line">    I = re.IGNORECASE</span><br><span class="line">    IGNORECASE = re.IGNORECASE</span><br><span class="line">    L = re.LOCALE</span><br><span class="line">    LOCALE = re.LOCALE</span><br><span class="line">    M = re.MULTILINE</span><br><span class="line">    MULTILINE = re.MULTILINE</span><br><span class="line">    S = re.DOTALL</span><br><span class="line">    U = re.UNICODE</span><br><span class="line">    UNICODE = re.UNICODE</span><br><span class="line">    VERBOSE = re.VERBOSE</span><br><span class="line">    X = re.VERBOSE</span><br><span class="line">    __all__ = [<span class="string">&#x27;match&#x27;</span>, <span class="string">&#x27;fullmatch&#x27;</span>, <span class="string">&#x27;search&#x27;</span>, <span class="string">&#x27;sub&#x27;</span>, <span class="string">&#x27;subn&#x27;</span>, <span class="string">&#x27;split&#x27;</span>, <span class="string">&#x27;fi...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">VERSION</span></span><br><span class="line"><span class="string">    2.2.1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">FILE</span></span><br><span class="line"><span class="string">    d:\python\python39\lib\re.py</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&gt;&gt;&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="四、正则表达式示例"><a href="#四、正则表达式示例" class="headerlink" title="四、正则表达式示例"></a>四、正则表达式示例</h1><h1 id="五、更长的正则表达式示例"><a href="#五、更长的正则表达式示例" class="headerlink" title="五、更长的正则表达式示例"></a>五、更长的正则表达式示例</h1>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B/Python%E7%BC%96%E7%A8%8B/">Python编程</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Python/">Python</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

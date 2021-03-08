@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="G3G4X5X6">
+  <meta name="keywords" content="">
+  
+  <title>三、威胁建模 - MrMetatron&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"mrmetatron.github.io","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="三、威胁建模">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-29 15:49" pubdate>
+        2020年12月29日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      105
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">三、威胁建模</h1>
+            
+            <div class="markdown-body">
+              <h1 id="威胁建模"><a href="#威胁建模" class="headerlink" title="威胁建模"></a>威胁建模</h1><h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>This section defines a threat modeling approach as required for a correct execution of a penetration testing. The standard does not use a specific model, but instead requires that the model used be consistent in terms of its representation of threats, their capabilities, their qualifications as per the organization being tested, and the ability to repeatedly be applied to future tests with the same results.</p>
+<p>本部分定义了正确执行渗透测试所需的威胁建模方法。 该标准不使用特定模型，而是要求所使用的模型在威胁的表示，威胁的能力，根据被测组织的资格方面以及与被测组织重复应用于未来测试的能力方面必须保持一致。 相同的结果。</p>
+<p>The standard focuses on two key elements of traditional threat modeling - assets and attacker (threat community/agent). Each one is respectively broken down into business assets and business processes and the threat communities and their capabilities.</p>
+<p>该标准侧重于传统威胁建模的两个关键元素-资产和攻击者（威胁社区/代理）。 每一个都细分为业务资产和业务流程以及威胁社区及其功能。</p>
+<p>As a minimum, all four elements should be clearly identified and documented in every penetration test.</p>
+<p>至少，在每个渗透测试中，所有四个要素都应明确标识并记录在案。</p>
+<p>When modeling the attacker side, on top of the threat community (which is mostly semantic and can be tied back to the organization’s business SWOT analysis), and the capabilities (which is mostly technical), additional aspects of motivation modeling should also be provided. These additional points essentially take into account the value of the different assets available at the target and are combined with the cost of acquiring it. As a complementary model, impact modeling should also be performed for the organization in order to provide a more accurate view of the “what-if?” scenario surrounding the loss event of each of the identified assets. This should take into account the assets “net” value, its intrinsic value, and other indirectly incurred costs associated with a loss event.</p>
+<p>在对攻击者进行建模时，除了要在威胁社区（主要是语义上，可以将其绑定到组织的业务SWOT分析）和功能（主要是技术上的）之外，还应提供动机建模的其他方面。 这些额外点基本上考虑了目标处可用的不同资产的价值，并与获取资产的成本结合在一起。 作为补充模型，还应该为组织执行影响建模，以提供“假设条件”的更准确视图。 每个已识别资产的损失事件的场景。 这应考虑到资产的“净值”，其内在价值以及与损失事件相关的其他间接费用。</p>
+<p>The threat modeling phase of any penetration testing engagement is critical for both the testers, as well as the organization. It provides clarity as far as the organization’s risk appetite and prioritization (which assets are more important than others? what threat communities are more relevant than others?). Additionally, it enables the tester to focus on delivering an engagement that closely emulates the tools, techniques, capabilities, accessibility and general profile of the attacker, while keeping in mind what are the actual targets inside the organization such that the more relevant controls, processes, and infrastructure are put to the test rather than an inventory list of IT elements. The threat model should be constructed in coordination with the organization being tested whenever possible, and even in a complete black-box situation where the tester does not have any prior information on the organization, the tester should create a threat model based on the attacker’s view in combination with OSINT related to the target organization.</p>
+<p>任何渗透测试活动的威胁建模阶段对于测试人员和组织都至关重要。它提供了有关组织风险偏好和优先级的清晰信息（哪些资产比其他资产更重要？哪些威胁社区比其他资产更重要？）。此外，它使测试人员能够专注于提供与攻击者的工具，技术，功能，可访问性和一般概况紧密相似的互动，同时牢记组织内部的实际目标是什么，以便更相关的控制，流程和基础设施而不是IT元素清单清单进行测试。威胁模型的构建应尽可能与被测组织协调，甚至在测试人员没有组织的任何先验信息的完全黑箱情况下，测试人员也应根据攻击者的观点创建威胁模型。结合与目标组织有关的OSINT。</p>
+<p>The model should be clearly documented, and be delivered as part of the final report as the findings in the report will reference the threat model in order to create a more accurate relevance and risk score that is specific to the organization (rather than a generic technical one).</p>
+<p>该模型应清楚地记录在案，并作为最终报告的一部分提供，因为报告中的发现将参考威胁模型，以便创建针对组织的更准确的相关性和风险评分（而不是通用技术指标） 之一）。</p>
+<h2 id="0x0000-高级威胁建模过程"><a href="#0x0000-高级威胁建模过程" class="headerlink" title="0x0000 高级威胁建模过程"></a>0x0000 高级威胁建模过程</h2><ol>
+<li>Gather relevant documentation</li>
+<li>Identify and categorize primary and secondary assets</li>
+<li>Identify and categorize threats and threat communities</li>
+<li>Map threat communities against primary and secondary assets</li>
+</ol>
+<h2 id="0x0001-示例"><a href="#0x0001-示例" class="headerlink" title="0x0001 示例"></a>0x0001 示例</h2><p>In the light of a PTES assessment the internally hosted CRM application may be in scope. The customer information stored in the back-end database is an easily identifiable primary asset as it is directly linked to the application in scope. However, by reviewing the technical design of the database server, it can also be identified that the HR database stored on the same back-end database server is a secondary asset. An attacker can use the CRM application as a stepping stone to obtain employee information. In a basic threat modeling exercise, certain threat communities may be identified as not relevant when mapped to the CRM application, but by identifying the secondary assets the threat landscape suddenly changes.</p>
+<p>根据PTES评估，内部托管的CRM应用程序可能会在范围内。 后端数据库中存储的客户信息是易于识别的主要资产，因为它直接与范围内的应用程序链接。 但是，通过查看数据库服务器的技术设计，还可以确定存储在同一后端数据库服务器上的HR数据库是辅助资产。 攻击者可以将CRM应用程序用作获取员工信息的垫脚石。 在基本的威胁建模练习中，某些威胁社区在映射到CRM应用程序时可能会被标识为不相关，但是通过标识次要资产，威胁态势会突然改变。</p>
+<h2 id="0x0002-高级建模工具"><a href="#0x0002-高级建模工具" class="headerlink" title="0x0002 高级建模工具"></a>0x0002 高级建模工具</h2><p>There are a variety of tools available to identify targets and map attack vectors. These normally focus on the business assets (what systems to target) and business processes (how to attack them.) Depending on the engagement, the penetration testing team may perform these exercises with no input from the customer; or they may spend a lot of time with customer stakeholders identifying targets of interest. Tools with a business asset focus usually require a quantitative input to describe how important each potential target is to test. The inputs may also be qualitative, such as a description by the customer’s CIO that a system is mission-critical. Tools focused on business processes, information flows and technical architecture are used to identify potential attack vectors and choose which are mostly likely to succed or most likely to be used by a certain class of adversary.</p>
+<p>有多种工具可用于识别目标和映射攻击媒介。 这些通常集中在业务资产（要针对的系统）和业务流程（如何攻击它们）上。根据参与情况，渗透测试团队可能在没有客户输入的情况下执行这些练习； 否则他们可能会与客户利益相关者花费大量时间来确定感兴趣的目标。 专注于业务资产的工具通常需要定量输入，以描述每个潜在目标要测试的重要性。 这些输入也可能是定性的，例如客户的CIO对系统至关重要的描述。 使用针对业务流程，信息流和技术体系结构的工具来识别潜在的攻击媒介，并选择最有可能成功或最有可能被某类攻击者使用的媒介。</p>
+<h1 id="0x01-企业资产分析"><a href="#0x01-企业资产分析" class="headerlink" title="0x01 企业资产分析"></a>0x01 企业资产分析</h1><p>During the business asset analysis part of the threat modeling exercise an asset-centric view is taken on all assets, and business processes they support them, included in the scope. By analyzing the gathered documentation and interviewing relevant personnel within the organization, the pentester is able to identify the assets that are most likely to be targeted by an attacker, what their value is and what the impact of their (partial) loss would be.</p>
+<p>在威胁建模练习的业务资产分析过程中，将对所有资产及其包含的业务流程（包括在范围内）采取以资产为中心的视图。 通过分析收集的文档并与组织内的相关人员进行访谈，pentester能够识别出最有可能成为攻击者目标的资产，其价值是什么以及（部分）损失的影响。</p>
+<h2 id="0x0100-组织数据"><a href="#0x0100-组织数据" class="headerlink" title="0x0100 组织数据"></a>0x0100 组织数据</h2><h3 id="0x010000-政策，计划和程序"><a href="#0x010000-政策，计划和程序" class="headerlink" title="0x010000 政策，计划和程序"></a>0x010000 政策，计划和程序</h3><p>Internal policies, plans, and procedures define how the organization does business. These documents are of particular interest as they can help identify key roles within an organization and critical business processes that keep a company running.</p>
+<p>内部政策，计划和程序定义了组织开展业务的方式。 这些文档特别有用，因为它们可以帮助确定组织内的关键角色以及使公司保持运转的关键业务流程。</p>
+<h3 id="0x010001-产品信息（例如商业秘密，研发数据）"><a href="#0x010001-产品信息（例如商业秘密，研发数据）" class="headerlink" title="0x010001 产品信息（例如商业秘密，研发数据）"></a>0x010001 产品信息（例如商业秘密，研发数据）</h3><p>Product related information includes any patents, trade secrets, future plans, source code, supporting systems that directly affect the product market value, algorithms, and any other information that the organization regards as a key factor to the business success of such product.</p>
+<p>与产品相关的信息包括任何专利，商业秘密，未来计划，源代码，直接影响产品市场价值的支持系统，算法以及组织认为是此类产品的业务成功的关键因素的任何其他信息。</p>
+<h3 id="0x010002-市场信息-计划、路线图等"><a href="#0x010002-市场信息-计划、路线图等" class="headerlink" title="0x010002 市场信息(计划、路线图等)"></a>0x010002 市场信息(计划、路线图等)</h3><p>Marketing plans for promotions, launches, product changes, positioning, partnerships, 3rd party providers, business plans related to activities inside or outside the organization. Additionally, PR related data such as details of partners, reporters, consulting firm, and any correspondence with such entities is also considered a highly sought after target.</p>
+<p>促销，发布，产品变更，定位，合作伙伴关系，第三方提供商，与组织内部或外部活动相关的商业计划的营销计划。 此外，与PR相关的数据（例如合作伙伴，记者，咨询公司的详细信息以及与此类实体的任何往来信息）也被视为极受欢迎的目标。</p>
+<h3 id="0x010003-财务信息（例如-银行、信贷、权益账户）"><a href="#0x010003-财务信息（例如-银行、信贷、权益账户）" class="headerlink" title="0x010003 财务信息（例如:银行、信贷、权益账户）"></a>0x010003 财务信息（例如:银行、信贷、权益账户）</h3><p>Financial information is often some of the most guarded information an organization possesses. This information can include bank account information, credit card account information and/or credit card numbers, and investment accounts, among others.</p>
+<p>财务信息通常是组织拥有的最受保护的信息。 该信息可以包括银行帐户信息，信用卡帐户信息和/或信用卡号以及投资帐户等。</p>
+<h3 id="0x010004-技术信息"><a href="#0x010004-技术信息" class="headerlink" title="0x010004 技术信息"></a>0x010004 技术信息</h3><p>Technical information about the organization, and the organization’s operations, is of unique interest to the penetration tester. Such information is often not the expected deliverable of a penetration test, however, it facilitates the testing process by feeding valuable information to other areas; infrastructure design information may provide valuable data to the Intelligence Gathering process.</p>
+<p>渗透测试人员对组织的技术信息以及组织的运营非常感兴趣。 这些信息通常不是渗透测试的预期结果，但是，它通过将有价值的信息提供给其他领域来促进测试过程。 基础架构设计信息可以为情报收集过程提供有价值的数据。</p>
+<ul>
+<li>Infrastructure Design Information 基础设施设计信息</li>
+</ul>
+<p>Infrastructure design related information pertains to all the core technologies and facilities used to run the organization. Building blueprints, technical wiring and connectivity diagrams, computing equipment/networking designs, and application level data processing are all considered infrastructure design information.</p>
+<p>与基础架构设计相关的信息与用于组织运行的所有核心技术和设施有关。 建筑蓝图，技术布线和连接图，计算设备/网络设计以及应用程序级别数据处理都被视为基础架构设计信息。</p>
+<ul>
+<li>System Configuration Information</li>
+</ul>
+<p>System configuration information includes configuration baseline documentation, configuration checklists and hardening procedures, group policy information, operating system images, software inventories, etc. This information could aid the discovery of vulnerabilities (such as through the knowledge of configuration errors or outdated software installations).</p>
+<p>系统配置信息包括配置基准文档，配置清单和强化过程，组策略信息，操作系统映像，软件清单等。此信息可以帮助发现漏洞（例如，通过了解配置错误或过时的软件安装）。</p>
+<ul>
+<li>User Account Credentials 用户帐户凭证</li>
+</ul>
+<p>User account credentials help facilitate access to the information system, at a non-privileged level, as long as a means to authenticate exists (e.g. VPN, web portal, etc.).</p>
+<p>只要存在身份验证手段（例如VPN，Web门户等），用户帐户凭据就可以帮助以非特权级别访问信息系统。</p>
+<ul>
+<li>Privileged User Account Credentials 特权用户帐户凭据</li>
+</ul>
+<p>Privileged user account credentials help facilitate access to the information system, at an elevated level of access, as long as a means to authenticate exists (e.g. VPN, web portal, etc.). Obtaining privileged user account credentials often leads to compromise of the information system being tested.</p>
+<p>只要存在身份验证手段（例如VPN，Web门户等），特权用户帐户凭据有助于以较高的访问级别促进对信息系统的访问。 获取特权用户帐户凭据通常会导致正在测试的信息系统受到损害。</p>
+<h3 id="0x010005-员工数据"><a href="#0x010005-员工数据" class="headerlink" title="0x010005 员工数据"></a>0x010005 员工数据</h3><p>Here employee data is being analyzed as any data that can have a DIRECT affect on the organization is obtained or compromised by an attacker. Organizations that have to adhere to some compliance which places fines on the loss or exposure of such data are obvious candidates for such a direct loss effect. Also, organizations who’s employees may be considered critical assets may also be subjected to such scrutiny (specific government bodies, specialized trade secret related employees/departments, etc…). The following list provides examples to information realms of personal data that may be considered business assets for the threat modeling.</p>
+<p>在这里，正在对员工数据进行分析，因为任何可能对组织产生直接影响的数据都会被攻击者获取或破坏。 那些必须遵守某些合规规定而对此类数据的丢失或暴露处以罚款的组织显然是这种直接损失影响的候选者。 另外，可能会将员工的组织视为重要资产（特定的政府机构，与商业秘密有关的特殊员工/部门等）也要接受此类审查。 以下列表提供了有关个人数据信息领域的示例，这些个人数据领域可能被视为威胁建模的业务资产。</p>
+<ul>
+<li>National Identification Numbers (SSNs, etc.)</li>
+<li>Personally Identifiable Information (PII)</li>
+<li>Protected Health Information (PHI)</li>
+<li>Financial Information (e.g. bank, credit accounts)</li>
+</ul>
+<h3 id="0x010006-客户数据"><a href="#0x010006-客户数据" class="headerlink" title="0x010006 客户数据"></a>0x010006 客户数据</h3><p>Much like employee data, customer data is considered a business asset in the threat modeling process when such information will incur a direct/indirect loss to the organization. On top of regulatory/compliance need (based on fines), an additional factor comes into play here when such data can be used to conduct fraud, where the organization may be held liable or sued for the losses related to the fraud (based on losing the customer information that enabled the fraud to take place). The following list provides examples of such information realms that may hold relevant customer data and should be considered business assets for the sake of the threat modeling</p>
+<p>与员工数据非常相似，客户数据在威胁建模过程中被视为企业资产，当此类信息将对组织造成直接/间接损失时。 除了法规/合规性需求（基于罚款）之外，当此类数据可用于进行欺诈时，这里还有一个其他因素在起作用，在这种情况下，组织可能因欺诈行为造成的损失而被追究责任或起诉（基于损失） 导致欺诈行为发生的客户信息）。 以下列表提供了此类信息领域的示例，这些信息领域可能包含相关的客户数据，出于威胁建模的考虑，应将其视为业务资产</p>
+<ul>
+<li>National Identification Numbers (SSN’s, etc.)</li>
+<li>Personally Identifiable Information (PII)</li>
+<li>Protected Health Information (PHI)</li>
+<li>Financial Accounts (e.g. bank, credit, equity accounts)</li>
+<li>Supplier Data</li>
+</ul>
+<p>Information related to suppliers that is considered critical to the organization (such as critical component manufacturers, agreements with suppliers that may be part of a trade secret, cost analysis of supplied components), as well as any data that may be used to affect the business operations of the organization through its suppliers is considered a business asset.</p>
+<ul>
+<li>Partner Data</li>
+<li>“Cloud” Service Account Information</li>
+</ul>
+<h2 id="0x0101-人力资产"><a href="#0x0101-人力资产" class="headerlink" title="0x0101 人力资产"></a>0x0101 人力资产</h2><p>When identifying human assets in an organization, we have to remember that the context is having such assets part of a greater effort to compromise the organization. As such, human assets that are identified as business assets are those that could be leveraged to divulge information, manipulated to make decisions or actions that would adversely affect the organization or enable an attacker to further compromise it. Human assets are not necessarily the highest up within the corporate hierarchy, but are more often key personnel that are related to previously identified business assets, or are in positions to enable access to such assets. This list can also include employees that normally would not be associated with access to restricted company assets, but may be in a position to grant physical access to a company that facilitates a breach of security or procedure. The following list provides some examples of such assets, and should be adapted to the organization being tested.</p>
+<p>在确定组织中的人力资产时，我们必须记住，上下文是此类资产的一部分，是对组织做出更大努力的一部分。 这样，被识别为业务资产的人力资产就是可以被用来泄露信息，被操纵以做出对组织产生不利影响或使攻击者能够进一步危害它的决策或行动的人力资产。 人力资产不一定是公司层次结构中最高的，但更经常是与先前确定的企业资产相关的关键人员，或者可以访问这些资产的人员。 该列表还可以包括通常不与访问受限制的公司资产相关联的员工，但可以授予对公司的物理访问权，以利于违反安全性或程序。 以下列表提供了此类资产的一些示例，并且应适合于要测试的组织。</p>
+<ul>
+<li>Executive Management</li>
+<li>Executive Assistants</li>
+<li>Middle Management</li>
+<li>Administrative Assistants</li>
+<li>Technical/Team Leads</li>
+<li>Engineers</li>
+<li>Technicians</li>
+<li>Human Resources</li>
+</ul>
+<h1 id="0x02-业务流程分析"><a href="#0x02-业务流程分析" class="headerlink" title="0x02 业务流程分析"></a>0x02 业务流程分析</h1><p>A business isn’t a business if it doesn’t make money. The way this happens is by having either raw goods or knowledge run through various processes to enhance them and create added value. This generates revenue. Business processes and the assets (people, technology, money) supporting them form value chains. By mapping these processes, identifying the critical vs. non-critical processes and eventually finding flaws in them we are able to understand how the business works, what makes them money and eventually how specific threat communities can make them lose money.</p>
+<p>如果一家企业不赚钱，那就不是一家企业。 发生这种情况的方式是使原材料或知识经过各种过程来增强它们并创造附加值。 这产生了收入。 业务流程和支持它们的资产（人员，技术，金钱）形成价值链。 通过映射这些流程，识别关键流程和非关键流程并最终发现它们中的缺陷，我们能够了解业务的运作方式，使它们赚钱的方式以及特定威胁社区如何使他们亏损的方式。</p>
+<p>In the business process analysis we differentiate between critical business processes, and non-critical processes. For each category the analysis is the same, and takes into account the same elements. The main difference is in the weighting that the threat from a critical business process is assigned with as opposed to a non-critical one. Nevertheless, it’s imperative to remember that an aggregation of a few non-critical business processes can be combined into a scenario that essentially forms a critical flaw within an element/process. Such threat scenarios should also be identified within this phase and mapped out for later use in the penetration test.</p>
+<p>在业务流程分析中，我们区分关键业务流程和非关键流程。 对于每个类别，分析都是相同的，并考虑了相同的元素。 主要区别在于权重来自关键业务流程，而不是非关键业务。 但是，必须记住，可以将一些非关键业务流程的聚合组合到一个场景中，该场景本质上会在元素/流程中形成关键缺陷。 还应在此阶段中识别出此类威胁情景，并进行规划，以供以后在渗透测试中使用。</p>
+<h2 id="0x0200-支持流程的技术基础架构"><a href="#0x0200-支持流程的技术基础架构" class="headerlink" title="0x0200 支持流程的技术基础架构"></a>0x0200 支持流程的技术基础架构</h2><p>As business processes are usually supported by IT infrastructure (such as computer networks, processing power, PCs for entering information and managing the business process, etc…), all those elements must be identified and mapped. Such mapping should be clear enough to be used later on in the process when translating the threat model to the vulnerability mapping and exploitation.</p>
+<p>由于业务流程通常受IT基础结构（例如计算机网络，处理能力，用于输入信息和管理业务流程的PC等）的支持，因此必须识别并映射所有这些元素。 这种映射应该足够清晰，以便在将威胁模型转换为漏洞映射和利用时在过程中稍后使用。</p>
+<h2 id="0x0201-支持流程的信息资产"><a href="#0x0201-支持流程的信息资产" class="headerlink" title="0x0201 支持流程的信息资产"></a>0x0201 支持流程的信息资产</h2><p>Contrary to technical infrastructure, information assets are existing knowledge bases in the organization that are used as either a reference, or as support material (decision making, legal, marketing, etc…). Such assets are usually identified in the business process already, and should be mapped alongside the technical infrastructure, as well as any additional technical infrastructure that supports the information assets themselves.</p>
+<p>与技术基础结构相反，信息资产是组织中的现有知识库，可用作参考或支持材料（决策，法律，市场营销等）。 通常在业务流程中已经标识了此类资产，并且应将其与技术基础结构以及支持信息资产本身的任何其他技术基础结构一起进行映射。</p>
+<h2 id="0x0202-支持流程的人力资源"><a href="#0x0202-支持流程的人力资源" class="headerlink" title="0x0202 支持流程的人力资源"></a>0x0202 支持流程的人力资源</h2><p>Identification of the HR that are involved in the business process should be made in conjunction with the process analysis itself (whether documented or not), and every person that has any kind of involvement (even if it does not relate to a specific information asset or a technical infrastructure element) should be documented and mapped in the process. Such HR assets are usually part of an approval sub-process, a verification sub-process, or even a reference (such as legal advice). These kinds of assets (especially ones that have no relation to information assets or technical infrastructure) would be later mapped to attack vectors that are more social than technical in nature.</p>
+<p>应当与流程分析本身（无论是否有文件记录）一起进行识别业务流程中涉及的人力资源，并且每个人都应参与其中（即使与特定的信息资产或资产无关）。 技术基础架构要素）应记录在案并在过程中进行映射。 这些人力资源资产通常是批准子流程，验证子流程甚至参考（例如法律建议）的一部分。 这些资产（特别是与信息资产或技术基础设施无关的资产）将在以后映射到本质上比技术更具社会性的攻击媒介。</p>
+<h2 id="0x0203-第三方集成或流程的使用"><a href="#0x0203-第三方集成或流程的使用" class="headerlink" title="0x0203 第三方集成或流程的使用"></a>0x0203 第三方集成或流程的使用</h2><p>Similar to human assets supporting the process, any 3rd party that has any involvement with the business process should be mapped as well. This category can be tricky to map out, as it could contain both human assets, as well as information/technical ones (such as a SaaS provider).</p>
+<p>与支持流程的人力资产相似，与业务流程有任何关系的任何第三方也应进行映射。 该类别很难标出，因为它既可以包含人力资产，也可以包含信息/技术资产（例如SaaS提供程序）。</p>
+<h1 id="0x03-威胁社区和代理分析"><a href="#0x03-威胁社区和代理分析" class="headerlink" title="0x03 威胁社区和代理分析"></a>0x03 威胁社区和代理分析</h1><p>When defining the relevant threat communities and agents, a clear identification of the threat should be provided in terms of location (internal / external to the organization), the specific community within the location, and any additional relevant information that would assist in establishing a capabilities/motivation profile for the specific agent/community. Where possible, specific agents should be identified. Otherwise, a more general community should be outlined, along-with any supporting material and intelligence. Some examples of threat agent/community classifications are:</p>
+<p>在定义相关威胁社区和代理商时，应根据位置（组织的内部/外部），位置内的特定社区以及有助于建立能力的任何其他相关信息，对威胁进行清晰的标识。 特定代理人/社区的/动机配置文件。 如有可能，应确定具体的代理商。 否则，应概述更广泛的社区以及所有支持材料和情报。 威胁代理/社区分类的一些示例是：</p>
+<table>
+<thead>
+<tr>
+<th align="center">内部</th>
+<th align="center">外部</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Employees</td>
+<td align="center">Business Partners</td>
+</tr>
+<tr>
+<td align="center">Management (executive, middle)</td>
+<td align="center">Competitors</td>
+</tr>
+<tr>
+<td align="center">Administrators (network, system, server)</td>
+<td align="center">Contractors</td>
+</tr>
+<tr>
+<td align="center">Developers</td>
+<td align="center">Suppliers</td>
+</tr>
+<tr>
+<td align="center">Engineers</td>
+<td align="center">Nation States</td>
+</tr>
+<tr>
+<td align="center">Technicians</td>
+<td align="center">Organized Crime</td>
+</tr>
+<tr>
+<td align="center">Contractors (with their external users)</td>
+<td align="center">Hacktivists</td>
+</tr>
+<tr>
+<td align="center">General user community</td>
+<td align="center">Script Kiddies (recreational/random hacking)</td>
+</tr>
+<tr>
+<td align="center">Remote Support</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="0x0300-员工"><a href="#0x0300-员工" class="headerlink" title="0x0300 员工"></a>0x0300 员工</h2><p>Persons working directly for the company under a part-time or full-time contract. In general they are not regarded as posing a severe threat as most of them are relying on the company to make a living and, assuming they are treated well, are inclined to protect the company rather than to hurt it. Oftentimes involved in data loss incidents or accidental compromise. In rare cases they may be motivated by outsiders to assist in intrusions or they may engage in malicious acts on their own (e.g. rogue traders). While the skill level may vary, it is usually low to medium.</p>
+<p>根据兼职或全职合同直接为公司工作的人员。 通常，他们不被视为构成严重威胁，因为他们中的大多数人都依靠公司为生，并且假设他们受到良好的对待，他们倾向于保护公司而不是伤害公司。 通常涉及数据丢失事件或意外泄露。 在极少数情况下，他们可能会受到局外人的动机来协助进行入侵，或者他们可能自己（例如流氓交易员）进行恶意行为。 尽管技能水平可能有所不同，但通常是中低水平。</p>
+<h2 id="0x0301-管理层（高管、中层）"><a href="#0x0301-管理层（高管、中层）" class="headerlink" title="0x0301 管理层（高管、中层）"></a>0x0301 管理层（高管、中层）</h2><p>Employees working directly for the company as described above. Given their position and function within the company they oftentimes have access to privileged information and may</p>
+<p>如上所述，直接为公司工作的员工。 鉴于他们在公司中的职位和职能，他们通常可以访问特权信息，并且可能</p>
+<h1 id="0x04-威胁能力分析"><a href="#0x04-威胁能力分析" class="headerlink" title="0x04 威胁能力分析"></a>0x04 威胁能力分析</h1><p>Once a threat community has been identified, the capabilities of said community must also be analyzed in order to build an accurate threat model that reflects the actual probability of such a community/agent to successfully act upon the organization and compromise it. This analysis requires both a technical analysis as well as an opportunity analysis (where applicable).</p>
+<p>一旦确定了威胁社区，就还必须分析该社区的能力，以建立一个准确的威胁模型，以反映这种社区/代理成功地对组织采取行动并做出妥协的实际可能性。 此分析需要技术分析和机会分析（如果适用）。</p>
+<h2 id="0x0400-分析使用中的工具"><a href="#0x0400-分析使用中的工具" class="headerlink" title="0x0400 分析使用中的工具"></a>0x0400 分析使用中的工具</h2><p>Any tools that are known to be available to the threat community/agent are to be included here. Additionally, tools that may be freely available should be analyzed for the required skill level needed to be able to utilize them to their potential, and mapped in the threat capability.</p>
+<p>威胁社区/代理已知的任何工具都将包含在此处。 此外，应针对可能需要免费使用的工具进行分析，以使其能够发挥其潜力所需的技能水平，并在威胁能力中进行映射。</p>
+<h2 id="0x0401-相关漏洞利用-exploits-或有效负载-payloads-的可用性"><a href="#0x0401-相关漏洞利用-exploits-或有效负载-payloads-的可用性" class="headerlink" title="0x0401 相关漏洞利用(exploits)或有效负载(payloads)的可用性"></a>0x0401 相关漏洞利用(exploits)或有效负载(payloads)的可用性</h2><p>The threat community/agent should be analyzed in terms of its capability to either obtain or develop exploits for the environment relevant to the organization. Additionally, accessibility to such exploits/payloads through 3rd parties, business partners, or underground communities should also be to taken into account in this analysis.</p>
+<p>应对威胁社区/代理进行分析，使其具有获取或开发与组织相关的环境的攻击的能力。 此外，在此分析中还应考虑通过第三方，业务合作伙伴或地下社区对此类漏洞利用/有效载荷的可访问性。</p>
+<h2 id="0x0402-沟通机制-Communication-mechanisms"><a href="#0x0402-沟通机制-Communication-mechanisms" class="headerlink" title="0x0402 沟通机制(Communication mechanisms)"></a>0x0402 沟通机制(Communication mechanisms)</h2><p>An analysis of communication mechanisms available to the threat agent/community should be made to evaluate the complexity of attacks against an organization. These communication mechanisms range from simple and openly available technologies such as encryption, through to specialist tools and services such as bulletproof hosting, use of drop-sites, and the use of known or unknown botnets to perform attacks or mask source information. For example, as part of testing we test to see what the overall attack surface for an organization is from the outside. However, there is another whole component that is often times missed. What types of threats can exist post exploitation? This falls under the context of detecting exfiltration channels. Coincidentally, penetration testers are uniquely situated to test an organizations capability to detect command and control channels of today’s modern malware. When this is in scope, we recommend the tester create a series of malware specimens that increase the level of obfuscation used to hide C2. The goal is to create malware that is easily detected, then increase the obfuscation to the point where detection no longer occurs.</p>
+<p>应该对威胁代理/社区可用的通信机制进行分析，以评估针对组织的攻击的复杂性。这些通信机制从简单和公开可用的技术（例如加密）到专业工具和服务（例如防弹托管，使用放置站点，以及使用已知或未知的僵尸网络进行攻击或掩盖源信息）不等。例如，作为测试的一部分，我们进行测试以查看组织的整体攻击面是从外部开始的。但是，还有其他整个组件经常被遗漏。开发后可以存在哪些类型的威胁？这属于检测渗出通道的范围。巧合的是，渗透测试仪的位置独特，可以测试组织检测当今现代恶意软件的命令和控制通道的能力。在此范围内，我们建议测试人员创建一系列恶意软件标本，以增加用于隐藏C2的混淆程度。目标是创建易于检测的恶意软件，然后将混淆程度提高到不再发生检测的程度。</p>
+<h2 id="0x0403-可访问性"><a href="#0x0403-可访问性" class="headerlink" title="0x0403 可访问性"></a>0x0403 可访问性</h2><p>The final element in the threat actor capability analysis is their accessibility to the organization and/or the specific assets in question. Completing the profile depicted above while factoring in accessibility analysis would enable the penetration test to create clear scenarios that are relevant to the organization’s risk.</p>
+<p>威胁参与者能力分析的最后一个要素是他们对组织和/或所讨论的特定资产的可访问性。 在完成可访问性分析的同时，完成上述配置文件，可以使渗透测试能够创建与组织风险相关的清晰方案。</p>
+<h1 id="0x05-建模动机"><a href="#0x05-建模动机" class="headerlink" title="0x05 建模动机"></a>0x05 建模动机</h1><p>The possible motivation of threat agents/communities should be noted for further analysis. Motivations of attackers are constantly changing, as can be seen by the increase in hacktivism branded attacks by groups such as Anonymous and Antisec. There will be subtle differences in unique motivations based on each organization and/or vertical market, some common motivations include :</p>
+<p>应该指出威胁因素/社区的可能动机，以进行进一步分析。 攻击者的动机正在不断变化，这可以从匿名者和Antisec之类的团体以黑客行为为品牌的攻击中看到。 根据每个组织和/或垂直市场的独特动机会有细微的差异，一些常见的动机包括：</p>
+<ul>
+<li>Profit (direct or indirect)</li>
+<li>Hacktivism</li>
+<li>Direct grudge</li>
+<li>Fun / Reputation</li>
+<li>Further access to partner/connected systems</li>
+</ul>
+<h1 id="0x06-寻找可比组织受到威胁的相关新闻"><a href="#0x06-寻找可比组织受到威胁的相关新闻" class="headerlink" title="0x06 寻找可比组织受到威胁的相关新闻"></a>0x06 寻找可比组织受到威胁的相关新闻</h1><p>In order to provide a complete threat model, a comparison to other organizations within the same industry vertical should be provided. This comparison should include any relevant incidents or news related to such organizations and the challenges they face. Such a comparison is used to validate the threat model and offer a baseline for the organization to compare itself to (taking into account that this publicly available information only represents a portion of the actual threats and incidents the compared organization actually face).</p>
+<p>为了提供完整的威胁模型，应提供与同一行业垂直领域内其他组织的比较。 这种比较应包括与此类组织及其面临的挑战有关的任何相关事件或新闻。 这种比较用于验证威胁模型，并为组织进行自我比较提供基准（考虑到此公开可用的信息仅代表被比较组织实际面临的部分实际威胁和事件）。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A0%87%E5%87%86/">标准</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Google%E7%BF%BB%E8%AF%91/">Google翻译</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A8%81%E8%83%81%E5%BB%BA%E6%A8%A1/">威胁建模</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E5%9B%9B%E3%80%81%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">四、漏洞分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E4%BA%8C%E3%80%81%E6%83%85%E6%8A%A5%E6%90%9C%E9%9B%86/">
+                        <span class="hidden-mobile">二、情报搜集</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

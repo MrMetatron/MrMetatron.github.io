@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="G3G4X5X6">
+  <meta name="keywords" content="">
+  
+  <title>六、后利用 - MrMetatron&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"mrmetatron.github.io","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="六、后利用">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-29 15:50" pubdate>
+        2020年12月29日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      117
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">六、后利用</h1>
+            
+            <div class="markdown-body">
+              <h1 id="后利用"><a href="#后利用" class="headerlink" title="后利用"></a>后利用</h1><h1 id="0x00-目的"><a href="#0x00-目的" class="headerlink" title="0x00 目的"></a>0x00 目的</h1><p>The purpose of the Post-Exploitation phase is to determine the value of the machine compromised and to maintain control of the machine for later use. The value of the machine is determined by the sensitivity of the data stored on it and the machines usefulness in further compromising the network. The methods described in this phase are meant to help the tester identify and document sensitive data, identify configuration settings, communication channels, and relationships with other network devices that can be used to gain further access to the network, and setup one or more methods of accessing the machine at a later time. In cases where these methods differ from the agreed upon Rules of Engagement, the Rules of Engagement must be followed.</p>
+<p>剥削后阶段的目的是确定受损机器的价值，并保持对机器的控制以备后用。 机器的价值取决于存储在其上的数据的敏感性以及机器在进一步危害网络方面的有用性。 此阶段中描述的方法旨在帮助测试人员识别和记录敏感数据，识别配置设置，通信通道以及与其他网络设备的关系，这些设备可用于获得对网络的进一步访问，并设置一种或多种 稍后再访问机器。 如果这些方法与商定的《接触规则》不同，则必须遵守《接触规则》。</p>
+<h1 id="0x01-Rules-of-Engagement"><a href="#0x01-Rules-of-Engagement" class="headerlink" title="0x01 Rules of Engagement"></a>0x01 Rules of Engagement</h1><p>The following Rules of Engagement are specific to the Post-Exploitation phase of a penetration test and are intended to ensure that the client’s systems are not subjected to unnecessary risk by the (direct or indirect) actions of the testers and to ensure a mutually agreed procedure to follow during the post-exploitation phase of the project.</p>
+<p>以下交战规则是针对渗透测试的后开发阶段的，旨在确保客户端系统不会因测试人员的(直接或间接)行动而受到不必要的风险。</p>
+<h2 id="0x0100-Protect-the-Client"><a href="#0x0100-Protect-the-Client" class="headerlink" title="0x0100 Protect the Client"></a>0x0100 Protect the Client</h2><p>The following rules are to be used as a guideline of rules to establish with a client to ensure that the day to day operations and data of the client are not exposed to risk:</p>
+<p>以下规则将作为与客户建立规则的指导原则，以确保客户的日常操作和数据不会暴露于风险之下:</p>
+<ul>
+<li><p>Unless previously agreed upon, there will be no modification of services which the client deems “critical” to their infrastructure. The purpose of modifying such services would be to demonstrate to the client how an attacker may:</p>
+<p>除非事先约定，否则不得对客户认为对其基础设施“至关重要”的服务进行修改。修改这些服务的目的是向客户端演示攻击者如何可能:</p>
+<ul>
+<li>Escalate privileges</li>
+<li>Gain access to specific data</li>
+<li>Cause denial of service</li>
+</ul>
+</li>
+<li><p>All modifications, including configuration changes, executed against a system must be documented. After finishing the intended purpose of the modification, all settings should be returned to their original positions if possible. The list of changes should be given to the client after the engagement to allow them to ensure all changes were properly undone. Changes that could not be returned to their original positions should be clearly differentiated from changes that were successfully reversed.</p>
+<p>必须记录对系统执行的所有修改，包括配置更改。完成修改的预期目的后，所有设置应尽可能返回其原始位置。订婚后，应将变更清单提供给客户，以确保他们正确撤消所有变更。不能返回到原始位置的更改应与成功撤销的更改区分开来。</p>
+</li>
+<li><p>A detailed list of actions taken against compromised systems must be kept. The list should include the action taken and the time period in which it occurred. Upon completion, this list should be included as an appendix to the final report.</p>
+<p>必须保留针对受到破坏的系统采取的措施的详细列表。该列表应包括所采取的措施及其发生的时间段。完成后，该清单应作为最终报告的附录。</p>
+</li>
+<li><p>Any and all private and/or personal user data (including passwords and system history) uncovered during the course of the penetration test may be used as leverage to gain further permissions or to execute other actions related to the test only if the following conditions are met:</p>
+<p>仅在满足以下条件的情况下，才能将渗透测试过程中发现的所有私人和/或个人用户数据（包括密码和系统历史记录）用作获得进一步许可或执行与该测试有关的其他操作的杠杆：</p>
+<ul>
+<li>The client’s Acceptable Use Policy states all systems are owned by the client and all data stored on those systems are the property of the client.</li>
+<li>The Acceptable Use Policy states connection to the client’s network is considered consent for the connected machine to be searched and analyzed (including all present data and configurations).</li>
+<li>The client has confirmation that all employees have read and understand the Acceptable Use Policy.</li>
+</ul>
+</li>
+<li><p>Passwords (including those in encrypted form) will not be included in the final report, or must be masked enough to ensure recipients of the report cannot recreate or guess the password. This is done to safeguard the confidentiality of the users the passwords belong to, as well as to maintain the integrity of the systems they protect.</p>
+<p>密码（包括加密形式的密码）将不包含在最终报告中，或者必须充分屏蔽以确保报告的接收者无法重新创建或猜测密码。这样做是为了保护密码所属用户的机密性，并维护其保护的系统的完整性。</p>
+</li>
+<li><p>Any method or device used to maintain access to compromised systems and that could affect the proper operation of the system or whose removal may cause downtime may not be implemented without the prior written consent of the client.</p>
+<p>未经客户事先书面同意，不得实施任何用于维持对受感染系统的访问的方法或设备，这些方法或设备可能会影响系统的正常运行，或者可能被删除而可能导致停机。</p>
+</li>
+<li><p>Any method or device which is used to maintain access to compromised systems must employ some form of user authentication such as digital certificates or login prompts. A reverse connection to a known controlled system is also acceptable.</p>
+<p>用于维持对受感染系统的访问的任何方法或设备都必须采用某种形式的用户身份验证，例如数字证书或登录提示。与已知受控系统的反向连接也是可以接受的。</p>
+</li>
+<li><p>All data gathered by the testers must be encrypted on the systems used by the testers.</p>
+<p>测试人员收集的所有数据必须在测试人员使用的系统上进行加密。</p>
+</li>
+<li><p>Any information included in the report that could contain sensitive data (screenshots, tables, figures) must be sanitized or masked using techniques that render the data permanently unrecoverable by recipients of the report.</p>
+<p>报告中包含的任何可能包含敏感数据（屏幕截图，表格，图形）的信息，都必须使用使报告接收者永久无法恢复的技术进行清理或屏蔽。</p>
+</li>
+<li><p>All data gathered will be destroyed once the client has accepted the final report. Method used and proof of destruction will be provided to the client.</p>
+<p>客户接受最终报告后，收集到的所有数据将被销毁。使用的方法和销毁证据将提供给客户。</p>
+</li>
+<li><p>If data gathered is regulated by any law, the systems used and their locations will be provided by the client to ensure that the data collected and processed does not violate any applicable laws. If the systems will be those of the penetration testing team the data may not be downloaded and stored on to their systems and only proof of access will be shown (File Permissions, Record Count, file names..etc).</p>
+<p>如果收集的数据受到任何法律的管制，则客户将提供所使用的系统及其位置，以确保收集和处理的数据不违反任何适用的法律。如果系统是渗透测试团队的系统，则可能不会下载数据并将其存储在他们的系统上，并且只会显示访问权限证明（文件许可，记录计数，文件名等）。</p>
+</li>
+<li><p>Third party services for password cracking will not be used, nor will there be sharing of any other type of data with third parties without the clients prior consent.</p>
+<p>未经客户事先同意，将不会使用用于密码破解的第三方服务，也不会与第三方共享任何其他类型的数据。</p>
+</li>
+<li><p>If evidence of a prior compromise if found in the assessed environment all logs with actions and times recorded during the assessment by the penetration team will be saved, hashed and provided to the client. The client can then determine how best to respond to and handle the incident response.</p>
+<p>如果在被评估的环境中发现有先发妥协的证据，则渗透团队在评估期间记录的所有日志以及操作和时间记录都将被保存，散列并提供给客户。然后，客户可以确定如何最好地响应和处理事件响应。</p>
+</li>
+<li><p>No logs should be removed, cleared or modified unless specifically authorized to do so by the client in the engagement contract/statement of work. If authorized, the logs must be backed up prior to any changes.</p>
+<p>除非客户在聘用合同/工作说明中有特别授权，否则不得删除，清除或修改日志。如果获得授权，则必须在进行任何更改之前备份日志。</p>
+</li>
+</ul>
+<h2 id="0x0101-Protecting-Yourself"><a href="#0x0101-Protecting-Yourself" class="headerlink" title="0x0101 Protecting Yourself"></a>0x0101 Protecting Yourself</h2><p>Due to the nature of a penetration test, you must ensure that you cover all your bases when dealing with the client and the tasks you will be performing. Discuss the following with the client to ensure a clear understanding of the roles and responsibilities of both client and provider prior to beginning any work.</p>
+<p>由于渗透测试的性质，在与客户打交道和要执行的任务时，必须确保覆盖所有基础。在开始任何工作之前，与客户讨论以下内容，以确保对客户和提供者的角色和职责有清晰的了解。</p>
+<ul>
+<li><p>Ensure that the contract and/or statement of work signed by both the client and provider that the actions taken on the systems being tested are on behalf and in representation of the client.</p>
+<p>确保由客户和提供者双方签署的合同和/或工作说明书，确保对被测系统采取的措施是代表客户并代表客户的。</p>
+</li>
+<li><p>Obtain a copy of the security policies that govern user use of company systems and infrastructure (often referred to as “Acceptable Use” policies) prior to starting the engagement. Verify that policy covers:</p>
+<p>开始参与之前，请获取一份控制用户使用公司系统和基础结构的安全策略的副本（通常称为“可接受的使用”策略）。验证政策是否涵盖：</p>
+<ul>
+<li>Personal use of equipment and storage of personal employee data on the client systems and ownership and rights on that data.</li>
+<li>Ownership of data stored on company equipment.</li>
+</ul>
+</li>
+<li><p>Confirm regulations and laws that govern the data that is managed and used by the client on their systems and the restrictions imposed on such data.</p>
+<p>确认用于管理客户在其系统上管理和使用的数据的法规和法律，以及对此类数据施加的限制。</p>
+</li>
+<li><p>Use full drive encryption for those systems and removable media that will receive and store client data.</p>
+<p>对将接收和存储客户端数据的系统和可移动介质使用完全驱动器加密。</p>
+</li>
+<li><p>Discuss and establish with the client the procedures to follow in the case that a compromise from a third party is found.</p>
+<p>与客户讨论并建立与第三方建立妥协的程序。</p>
+</li>
+<li><p>Check for laws concerning the capture and/or storage of audio and video since the use of this methods in post-exploitation may be considered a violation of local or country wiretap laws.</p>
+<p>检查有关音频和视频的捕获和/或存储的法律，因为在后期开发中使用此方法可能被视为违反了本地或国家的窃听法律。</p>
+</li>
+</ul>
+<h1 id="0x02-Infrastructure-Analysis"><a href="#0x02-Infrastructure-Analysis" class="headerlink" title="0x02 Infrastructure Analysis"></a>0x02 Infrastructure Analysis</h1><h2 id="0x0200-Network-Configuration"><a href="#0x0200-Network-Configuration" class="headerlink" title="0x0200 Network Configuration"></a>0x0200 Network Configuration</h2><p>The network configuration of a compromised machine can be used to identify additional subnets, network routers, critical servers, name servers and relationships between machine. This information can be used to identify additional targets to further penetrate the client’s network.</p>
+<h3 id="0x020000-Interfaces"><a href="#0x020000-Interfaces" class="headerlink" title="0x020000 Interfaces"></a>0x020000 Interfaces</h3><p>Identify all of the network interfaces on the machine along with their IP addresses, subnet masks, and gateways. By identifying the interfaces and settings, networks and services can be prioritized for targeting.</p>
+<h3 id="0x020001-Routing"><a href="#0x020001-Routing" class="headerlink" title="0x020001 Routing"></a>0x020001 Routing</h3><p>Knowledge of other subnets, filtering or addressing schemes could be leveraged to escape a segmented network, leading to additional hosts and/or networks to probe and enumerate. This data could come from a variety of sources on a particluar host or network including:</p>
+<ul>
+<li>Interfaces</li>
+<li>Routing tables, including static and dynamic routes</li>
+<li>ARP Tables, NetBios or other network protocols used for service and host discovery.</li>
+<li>For multi-homed hosts, determine if they are acting as a router.</li>
+</ul>
+<h3 id="0x020002-DNS-Servers"><a href="#0x020002-DNS-Servers" class="headerlink" title="0x020002 DNS Servers"></a>0x020002 DNS Servers</h3><p>Identify all DNS servers in use, by assessing host settings. DNS servers and information could then be used to develop and execute a plan for discovering additional hosts and services on the target network. In the case that a DNS Server is compromised, the DNS database will provide valueable information about hosts and services that can be used to prioritize targets for the remainder of the assessment. The modification and addition of new records could be used to intercept the data of services depending on DNS.</p>
+<h3 id="0x020003-Cached-DNS-Entries"><a href="#0x020003-Cached-DNS-Entries" class="headerlink" title="0x020003 Cached DNS Entries"></a>0x020003 Cached DNS Entries</h3><p>Identify high value DNS entries in the cache, which may include login pages for Intranet sites, management interfaces, or external sites. Cached interfaces provide information of the most recent and most used host used by the compromised host providing a view of the relations and interactions of the hosts providing information that could be used to prioritization of targets for further penetration of the target network and infrastructure. Modification of cached entries if permitted can be used to capture authentication credential, authentication tokens or to gain further information on services used by the compromised hosts leading to further penetration of the target network.</p>
+<h3 id="0x020004-Proxy-Servers"><a href="#0x020004-Proxy-Servers" class="headerlink" title="0x020004 Proxy Servers"></a>0x020004 Proxy Servers</h3><p>Identify network and application level proxy servers. Proxy servers make good targets when in enterprise-wide use by the client. In the case of application proxies, it may be possible to identify, modify and/or monitor the flow of traffic, or the traffic itself. Proxy attacks are often an effective means to show impact and risk to the customer.</p>
+<h3 id="0x020005-ARP-Entries"><a href="#0x020005-ARP-Entries" class="headerlink" title="0x020005 ARP Entries"></a>0x020005 ARP Entries</h3><p>Enumerate cached and static ARP table entries, which can reveal other hosts that interact with the compromised machine. Static ARP entries may represent critical machines. If the scope of the assessment allows for intercepting and modifying ARP entries, it is simple to show the possibility of disrupting, monitoring, or compromising a service in a manner that is usually not detected or protected against.</p>
+<h2 id="0x0201-Network-Services"><a href="#0x0201-Network-Services" class="headerlink" title="0x0201 Network Services"></a>0x0201 Network Services</h2><h3 id="0x020100-Listening-Services"><a href="#0x020100-Listening-Services" class="headerlink" title="0x020100 Listening Services"></a>0x020100 Listening Services</h3><p>Identify all the network services offered by the target machine. This may lead to the discovery of services not identified by initial scanning as well as the discovery of other machines and networks. The identification of services not shown in scanning can also provide information on possible filtering and control systems implemented in the network and/or host. In addition, the tester may be able to leverage these services to compromise other machines. Most operating system include a method of identifying TCP and UDP connections made to and from the machine. By checking both connections to and from a compromised machine it is possible to find relationships that were previously unknown. As well as the host the service should also be considered, this may reveal services listening on non-standard ports and indicate trust relationships such as keyless authentication for SSH.</p>
+<h3 id="0x020101-VPN-Connections"><a href="#0x020101-VPN-Connections" class="headerlink" title="0x020101 VPN Connections"></a>0x020101 VPN Connections</h3><p>All VPN connections into and out of the target machine or network should be identified. Outbound connections can provide paths into new systems which may have not previously been identified. Both inbound and outbound can identify new systems and possible business relationships. VPN connections often bypass firewalls and intrusion detection/prevention systems due to their inability to decrypt or inspect encrypted traffic. This fact makes VPNs ideal to launch attacks through. Any new targets should be verified as in scope before launching attacks against them. The presence of VPN client or server connections on the target host may also provide access to credentials previously not known that could be used to target other hosts and services.</p>
+<h3 id="0x020102-Directory-Services"><a href="#0x020102-Directory-Services" class="headerlink" title="0x020102 Directory Services"></a>0x020102 Directory Services</h3><p>A targeted host running directory services may provide an opportunity to enumerate user accounts, hosts and/or services that can be used in additional attacks or provide additional targets that may not have been previously discovered in the vulnerability analysis phase. Additionally, the details of users found in directory services could be used for Social Engineering and phishing campaign attacks, thus providing a possible higher success rate.</p>
+<h3 id="0x020103-Neighbors"><a href="#0x020103-Neighbors" class="headerlink" title="0x020103 Neighbors"></a>0x020103 Neighbors</h3><p>In todays network many services and operating systems use a number of protocols for neighbor discovery in an effort make the access of services, troubleshooting and configuration more convenient. Protocols vary depending on the type of target host. Networking equipment may use protocols like CDP (Cisco Discovery Protocol) and LLDP (Link Layer Discovery Protocol) to identify systems, configurations and other details to hosts directly connected to them or present in the same subnet. Similarly, desktop and server operating systems may use protocols like mDNS (Multicast Domain Name Service) and NetBios to find details of hosts and services in the same subnet.</p>
+<h1 id="0x03-Pillaging"><a href="#0x03-Pillaging" class="headerlink" title="0x03 Pillaging"></a>0x03 Pillaging</h1><p>Pillaging refers to obtaining information (i.e. files containing personal information, credit card information, passwords, etc.) from targeted hosts relevant to the goals defined in the pre-assessment phase. This information could be obtained for the purpose of satisfying goals or as part of the pivoting process to gain further access to the network. The location of this data will vary depending on the type of data, role of the host and other circumstances. Knowledge and basic familiarity with commonly used applications, server software and middleware is very important, as most applications store their data in many different formats and locations. Special tools may be necessary to obtain, extract or read the targeted data from some systems.</p>
+<h2 id="0x0300-Installed-Programs"><a href="#0x0300-Installed-Programs" class="headerlink" title="0x0300 Installed Programs"></a>0x0300 Installed Programs</h2><h3 id="0x030000-Startup-Items"><a href="#0x030000-Startup-Items" class="headerlink" title="0x030000 Startup Items"></a>0x030000 Startup Items</h3><p>Most systems will have applications that can run at system startup or at user logon that can provide information about the purpose of the system, software and services it interacts with. This information may reveal potential countermeasures that could be in place that may hinder further exploitation of a target network and it’s systems (e.g. HIDS/HIPS, Application Whitelisting, FIM). Information that should be gathered includes:</p>
+<ul>
+<li>List of the applications and their associated versions installed on the system.</li>
+<li>List of operating system updates applied to the system.</li>
+</ul>
+<h2 id="0x0301-Installed-Services"><a href="#0x0301-Installed-Services" class="headerlink" title="0x0301 Installed Services"></a>0x0301 Installed Services</h2><p>Services on a particular host may serve the host itself, or other hosts in the target network. It is necessary to create a profile of each targeted host, noting the configuration of these services, their purpose, and how they may potentially be used to achieve assessment goals or further penetrate the network.</p>
+<h3 id="0x030100-Security-Services"><a href="#0x030100-Security-Services" class="headerlink" title="0x030100 Security Services"></a>0x030100 Security Services</h3><p>Security services comprise the software designed to keep an attacker out of systems, and keep data safe. These include, but are not limited to network firewalls, host-based firewalls, IDS/IPS, HIDS/HIPS and anti-virus. Identifying any security services on a single targeted host gives an idea of what to expect when targeting other machines in the network. It also gives an idea of what alerts may have been triggered during the test, which can be discussed with the client during the project debrief, and may result in updates to Security Policies, UAC, SELinux, IPSec, windows security templates, or other security rulesets/configurations.</p>
+<h3 id="0x030101-File-Printer-Shares"><a href="#0x030101-File-Printer-Shares" class="headerlink" title="0x030101 File/Printer Shares"></a>0x030101 File/Printer Shares</h3><p>File and print servers often contain targeted data or provide an opportunity to further penetrate the target network and hosts. The information that should be targeted includes:</p>
+<ul>
+<li>Shares offered by File Servers - Any file shares offered by target systems should be examined. Even just the names and comments of shares can leak important information about the names of internal applications or projects (i.e. if only “Fred” and “Christine” have access to the “Accounting” folder, perhaps they are both accounting employees).</li>
+<li>Access Control Lists and permissions for shares. - From the client side, if it is possible to connect to the share, then it should be checked to see if the connection is read/only or read/write. Remember that if a share contains directories then different permissions may apply to different directories. From the server side both server configuration and file/directory permissions should be examined.</li>
+<li>File share file and content listings</li>
+<li>Identify files of interest from the file share listings. Look for interesting or targeted items such as:<ul>
+<li>Source Code</li>
+<li>Backups</li>
+<li>Installation Files</li>
+<li>Confidential Data (financial data in spreadsheets, bank reports in TXT/PDF, password files, etc.)</li>
+</ul>
+</li>
+<li>Place trojans or autorun files - Using clever naming, or by mimicking naming conventions already in use, users can be encouraged to execute these payloads, allowing the tester to further penetrate the network. If file server logs can be obtained, specific users may even be targeted.</li>
+</ul>
+<h3 id="0x030102-Database-Servers"><a href="#0x030102-Database-Servers" class="headerlink" title="0x030102 Database Servers"></a>0x030102 Database Servers</h3><p>Databases contain a wealth of information that may be targeted in an assessment.</p>
+<ul>
+<li>Databases - A list of database names can help the assessor to determine the purpose of the database and the types of data the database may contain. In an environment with many databases, this will help in prioritizing targets.</li>
+<li>Tables - Table names and metadata, such as comments, column names and types can also help the assessor choose targets and find targeted data.</li>
+<li>Table Content, row count for regulated content</li>
+<li>Columns - It is possible in many databases to search all column names of all tables with a single command. This can be leveraged to find targeted data (e.g. If credit card data is targeted on an Oracle database, try executing <em>select * from all_tab_columns where name = ‘%CCN%’;</em>.</li>
+<li>Database and Table Permissions</li>
+<li>Database Users, Passwords, Groups and Roles</li>
+</ul>
+<p>The information hosted on databases can be also be used to show risk, achieve assessment goals, determine configuration and function of services or to further penetrate a client network and hosts.</p>
+<h3 id="0x030103-Directory-Servers"><a href="#0x030103-Directory-Servers" class="headerlink" title="0x030103 Directory Servers"></a>0x030103 Directory Servers</h3><p>The main goals of a directory service is to provide information to services and hosts for reference or/and authentication. The compromise of this service can allow the control of all hosts that depend on the service and well as provide information that could be used to further an attack. Information to look for in a directory service are:</p>
+<ul>
+<li>List of objects (Users, passwords, Machines..etc)</li>
+<li>Connections to the system</li>
+<li>Identification of protocols and security level</li>
+</ul>
+<h3 id="0x030104-Name-Servers"><a href="#0x030104-Name-Servers" class="headerlink" title="0x030104 Name Servers"></a>0x030104 Name Servers</h3><p>Name server provide resolution to host and services depending on the types of records it servers. Enumeration of records and controls can provide a list of targets and services to prioritize and attack to further penetrate a clients network and hosts. The ability to modify and add records can be use to show risk of denial of services as well as aid in the interception of traffic and information on a customer network.</p>
+<h3 id="0x030105-Deployment-Services"><a href="#0x030105-Deployment-Services" class="headerlink" title="0x030105 Deployment Services"></a>0x030105 Deployment Services</h3><p>Identification of deployment services allows for the access and enumeration of:</p>
+<ul>
+<li>Unattended answer files</li>
+<li>Permission on files</li>
+<li>Updates included</li>
+<li>Applications and versions</li>
+</ul>
+<p>This information can be used to further penetrate a client network and hosts. The ability to modify the repositories and configuration of the service allows for</p>
+<ul>
+<li>Backdoor installation</li>
+<li>Modification of services to make them vulnerable to attack</li>
+</ul>
+<h3 id="0x030106-Certificate-Authority"><a href="#0x030106-Certificate-Authority" class="headerlink" title="0x030106 Certificate Authority"></a>0x030106 Certificate Authority</h3><p>Identification of Certificate Authority services on a compromised client host will allow for the access to</p>
+<ul>
+<li>Root CA</li>
+<li>Code Signing Certificates</li>
+<li>Encryption and Signing Certificates</li>
+</ul>
+<p>Control of the service will also allow for the</p>
+<ul>
+<li>Creation of new certificates for several tasks</li>
+<li>Revocation of certificates</li>
+<li>Modification of the Certificate Revocation List</li>
+<li>Insertion of Root CA Certificate</li>
+</ul>
+<p>The control of the services shows risk and allows for the compromise of data and services on a client’s network and hosts.</p>
+<h3 id="0x0301007-Source-Code-Management-Server"><a href="#0x0301007-Source-Code-Management-Server" class="headerlink" title="0x0301007 Source Code Management Server"></a>0x0301007 Source Code Management Server</h3><p>Identification of source code management systems via by the service running on the compromised host or the client part of the service provides the opportunity for:</p>
+<ul>
+<li>Enumerate projects - The project names can give away sensitive information on company projects.</li>
+<li>Verify access to source code files</li>
+<li>Modify source code files - If it is allowed in scope then modifying source code proves that an attacker could make changes that would affect the system</li>
+<li>Enumerate developers - Developers details can be use for social engineering attacks as well as as inputs for attacking other areas of the system</li>
+<li>Enumerate configuration</li>
+</ul>
+<h3 id="0x030108-Dynamic-Host-Configuration-Server"><a href="#0x030108-Dynamic-Host-Configuration-Server" class="headerlink" title="0x030108 Dynamic Host Configuration Server"></a>0x030108 Dynamic Host Configuration Server</h3><p>Identification of dynamic host configuration service or use of the service by the compromised host allows for:</p>
+<ul>
+<li>Enumeration leases given</li>
+<li>Enumeration configuration</li>
+<li>Enumeration Options</li>
+<li>Modification of configuration</li>
+<li>Consumption of all leases</li>
+</ul>
+<p>The control of the service can be used to show risk of denial of service and for use in man in the middle attacks of hosts and services on the compromised network.</p>
+<h3 id="0x030109-Virtualization"><a href="#0x030109-Virtualization" class="headerlink" title="0x030109 Virtualization"></a>0x030109 Virtualization</h3><p>Identification virtualization services or client software allow for:</p>
+<ul>
+<li>Enumerate Virtual Machines (name, configurations, OS)</li>
+<li>Enumerate passwords and digital certificates for administration systems.</li>
+<li>Enumerate virtualization software configuration</li>
+<li>Configuration of Hosts</li>
+<li>Show risk of denial of service with control of VM state</li>
+<li>Access to data hosted on VM’s</li>
+<li>Interception of traffic of virtual hosts or services hosted on the compromised host</li>
+</ul>
+<h3 id="0x03010A-Messaging"><a href="#0x03010A-Messaging" class="headerlink" title="0x03010A Messaging"></a>0x03010A Messaging</h3><p>Identification of services or client software for messaging provides the opportunity to</p>
+<ul>
+<li>Identify Directory Services</li>
+<li>Compromise of credentials</li>
+<li>Access to confidential information</li>
+<li>Identification of hosts on the network</li>
+<li>System and business relationships</li>
+</ul>
+<p>All of this information and actions can be used to show risk and to further penetrate a client’s network and hosts.</p>
+<h3 id="0x03010B-Monitoring-and-Management"><a href="#0x03010B-Monitoring-and-Management" class="headerlink" title="0x03010B Monitoring and Management"></a>0x03010B Monitoring and Management</h3><p>Identification of services or client software for the purpose of monitoring and/or management may provide identification of additional servers and services on the target network, in addition the configuration parameters gained may provide access to other targets host and to determine what actions performed by the tester can be detected by the client. Some services to look for:</p>
+<ul>
+<li>SNMP (Simple Network Management Protocol)</li>
+<li>Syslog</li>
+</ul>
+<p>Some Management Services and Software to look for to gain credentials, identify host and gain access to other services may be:</p>
+<ul>
+<li>SSH Server/Client</li>
+<li>Telnet Server/Client</li>
+<li>RDP (Remote Desktop Protocol) Client</li>
+<li>Terminal Server</li>
+<li>Virtual Environment Management Software</li>
+</ul>
+<h3 id="0x03010C-Backup-Systems"><a href="#0x03010C-Backup-Systems" class="headerlink" title="0x03010C Backup Systems"></a>0x03010C Backup Systems</h3><p>Identification of services or client software for the purpose of backing up data provide a great opportunity to an attacker since these system require access to the data and systems they need to backup providing an attacker:</p>
+<ul>
+<li>Enumeration of hosts and systems</li>
+<li>Enumeration of services</li>
+<li>Credentials to host and/or services</li>
+<li>Access to backup data</li>
+</ul>
+<p>The information gained from the service can be used to show risk to the confidentiality, integrity and access tot he system and their information. Access to the backups can also provide opportunity to introduce miss configuration, vulnerable software or backdoors in to the clients systems.</p>
+<h3 id="0x03010D-Networking-Services-RADIUS-TACACS-etc"><a href="#0x03010D-Networking-Services-RADIUS-TACACS-etc" class="headerlink" title="0x03010D Networking Services (RADIUS,TACACS..etc)"></a>0x03010D Networking Services (RADIUS,TACACS..etc)</h3><p>Identification of services or use of networking services allows for the:</p>
+<ul>
+<li>Enumeration of users</li>
+<li>Enumeration of hosts and systems</li>
+<li>Compromise of credentials</li>
+<li>Show risk of denial of service if alternate methods are not present</li>
+</ul>
+<h2 id="0x0302-Sensitive-Data"><a href="#0x0302-Sensitive-Data" class="headerlink" title="0x0302 Sensitive Data"></a>0x0302 Sensitive Data</h2><h3 id="0x030200-Key-logging"><a href="#0x030200-Key-logging" class="headerlink" title="0x030200 Key-logging"></a>0x030200 Key-logging</h3><p>By monitoring key strokes it is possible to detect sensitive information including passwords and PII - Don’t know what the legality of this is if the user is say chatting on private IM while also using company software, anyone know? If the company says that all data on the network can be monitored then this should be ok. If the second bullet point in Protect Yourself is present and it states that use of equipment can be monitored and no personal use is permitted yes, if policy does not cover personal user or ownership of data, no. It should be extended to cover Network also.</p>
+<h3 id="0x030201-Screen-capture"><a href="#0x030201-Screen-capture" class="headerlink" title="0x030201 Screen capture"></a>0x030201 Screen capture</h3><p>Screen capture can be use to show evidence of compromise as well as access to information that can shown on the screen and access thru other means is not possible. Great care should be taken with the data collected thru screen capture so as to nor show private data of employees of customers of the client.</p>
+<h3 id="0x030202-Network-traffic-capture"><a href="#0x030202-Network-traffic-capture" class="headerlink" title="0x030202 Network traffic capture"></a>0x030202 Network traffic capture</h3><p>Network traffic capture can be used depending on the controls on the network and medium used for capture can be used to:</p>
+<ul>
+<li>Identify hosts on the network</li>
+<li>Intercept data</li>
+<li>Identify services</li>
+<li>Identify relations between hosts in the network</li>
+<li>Capture of credentials</li>
+</ul>
+<p>Care should be taken to only capture traffic covered under the scope of the engagement and that the information captured does not fall under the control of local laws like the capture of Voice Over IP calls. Information retained and shown should be filtered so as to protect client’s customer and/or employee personal and confidential data.</p>
+<h3 id="0x030203-Previous-Audit-reports"><a href="#0x030203-Previous-Audit-reports" class="headerlink" title="0x030203 Previous Audit reports"></a>0x030203 Previous Audit reports</h3><h2 id="0x0303-User-Information"><a href="#0x0303-User-Information" class="headerlink" title="0x0303 User Information"></a>0x0303 User Information</h2><p>In this section the main focus is on the information present on the target system related to user accounts either present on the system or that have connected remotely and have left some trace that the personnel performing the assessment can gather and analyze for further penetration or provide the desired goal of the assessment.</p>
+<h3 id="0x030300-On-System"><a href="#0x030300-On-System" class="headerlink" title="0x030300 On System"></a>0x030300 On System</h3><p>General information that can be gather on a compromised system are:</p>
+<ul>
+<li>History files - History files store recent commands the user has executed. Reading through these can reveal system configuration information, important applications, data locations and other system *sensitive information.</li>
+<li>Encryption Keys (SSH, PGP/GPG)</li>
+<li>Interesting Documents (.doc/x, .xls/x , password.*) - Users often store passwords and other sensitive information in clear text documents. These can be located in two ways, either searching through file names for interesting words, such as password.txt, or searching through the documents themselves. Indexing services can help with this, for example the Linux locate database.</li>
+<li>User specific application configuration parameters</li>
+<li>Individual Application History (MRU Windows only, history files..etc)</li>
+<li>Enumerate removable media</li>
+<li>Enumerate network shares / domain permission (gpresult)</li>
+</ul>
+<h3 id="0x030301-Web-Browsers"><a href="#0x030301-Web-Browsers" class="headerlink" title="0x030301 Web Browsers"></a>0x030301 Web Browsers</h3><p>Information that can be gathered from web browsers that can be use to identify other hosts and systems as well as provide information to further penetrate a client’s network and hosts are:</p>
+<ul>
+<li>Browser History</li>
+<li>Bookmarks</li>
+<li>Download History</li>
+<li>Credentials</li>
+<li>Proxies</li>
+<li>Plugins/Extensions</li>
+</ul>
+<p>Great care should be taken that only data in scope for the engagement is capture since the information from a web browser may contain client’s employee confidential and private data. This data should be filtered from the data returned and report.</p>
+<h3 id="0x030302-IM-Clients"><a href="#0x030302-IM-Clients" class="headerlink" title="0x030302 IM Clients"></a>0x030302 IM Clients</h3><p>Information that can be gathered from IM Clients on a compromised system is:</p>
+<ul>
+<li>Enumerate Account Configuration (User, Password, Server, Proxy)</li>
+<li>Chat Logs</li>
+</ul>
+<p>Great care should be taken that only data in scope for the engagement is capture since the information from a web browser may contain client’s employee confidential and private data. This data should be filtered from the data returned and report.</p>
+<h2 id="0x0304-System-Configuration"><a href="#0x0304-System-Configuration" class="headerlink" title="0x0304 System Configuration"></a>0x0304 System Configuration</h2><h3 id="0x030400-Password-Policy"><a href="#0x030400-Password-Policy" class="headerlink" title="0x030400 Password Policy"></a>0x030400 Password Policy</h3><p>By enumerating the systems password policy the ability to brute force and crack passwords becomes much more efficient, for example knowing that the minimum password length is 8 characters you can remove any word less than 8 characters from a dictionary.</p>
+<h3 id="0x030401-Security-Policies"><a href="#0x030401-Security-Policies" class="headerlink" title="0x030401 Security Policies"></a>0x030401 Security Policies</h3><h3 id="0x030402-Configured-Wireless-Networks-and-Keys"><a href="#0x030402-Configured-Wireless-Networks-and-Keys" class="headerlink" title="0x030402 Configured Wireless Networks and Keys"></a>0x030402 Configured Wireless Networks and Keys</h3><p>By finding the targets wireless information it becomes possible to launch physical attacks through the companies wifi when on site. It can also allow a fake AP to be set up to lure targets to connect when away from site.</p>
+<h1 id="0x04-High-Value-Profile-Targets"><a href="#0x04-High-Value-Profile-Targets" class="headerlink" title="0x04 High Value/Profile Targets"></a>0x04 High Value/Profile Targets</h1><p>High value/profile targets can be identified and further expanded from the targets identified in the pre-engagement meetings thru the analysis of the data gathered from the compromised systems and the interactions of those systems and the services that run on them This view of the the operation and interactions of these high value/profile targets helps in the identification and measurement of of impact that can be gained to the business do to the data and processes and to the overall integrity of the client’s infrastructure and services.</p>
+<h1 id="0x05-Data-Exfiltration"><a href="#0x05-Data-Exfiltration" class="headerlink" title="0x05 Data Exfiltration"></a>0x05 Data Exfiltration</h1><h2 id="0x0500-Mapping-of-all-possible-exfiltration-paths"><a href="#0x0500-Mapping-of-all-possible-exfiltration-paths" class="headerlink" title="0x0500 Mapping of all possible exfiltration paths"></a>0x0500 Mapping of all possible exfiltration paths</h2><p>from each of the areas where access has been achieved, a full exfiltration paths should be created. This includes secondary and tertiary means of getting to the outside world (through different accessible subnetc, etc). Once the mapping is provided, the actual exfiltration testing should be commenced.</p>
+<h2 id="0x0501-Testing-exfiltration-paths"><a href="#0x0501-Testing-exfiltration-paths" class="headerlink" title="0x0501 Testing exfiltration paths"></a>0x0501 Testing exfiltration paths</h2><p>Per exfiltration paths mapping, data should be exfiltrated from the organization being tested. This should already be covered in the <a target="_blank" rel="noopener" href="http://www.pentest-standard.org/index.php/Pre-engagement">Pre-engagement</a> scoping and adequate infrastructure should have been setup which adheres to the customer’s acceptable engagement policy (i.e. data being exfiltrated is usually exfiltrated to a server in the full control of the tester, and will access and ownership right to the tested organization). The exfiltration itself should simulate real-world exfiltration strategies used by the threat actors that correspond to the <a target="_blank" rel="noopener" href="http://www.pentest-standard.org/index.php/Threat_Modeling_Standard">Threat Modeling Standard</a> relevant for the organization (i.e. if criminal mostly then “standard” exfiltration using a staging area inside the network where data is archived inside zip/7z encrypted files and then sent to FTP/HTTP servers on the Internet, if a more sophisticated threat actor then using means that simulate such strategies and tactics used for exfiltration).</p>
+<h2 id="0x0502-Measuring-control-strengths"><a href="#0x0502-Measuring-control-strengths" class="headerlink" title="0x0502 Measuring control strengths"></a>0x0502 Measuring control strengths</h2><p>When performing exfiltration testing, the main goal of the test is to see whether the current controls for detecting and blocking sensitive information from leaving the organization actually work, as well as exercise the response teams if anything has been detected in terms of how they react to such alerts and how are the events being investigated and mitigated.</p>
+<h1 id="0x06-Persistence"><a href="#0x06-Persistence" class="headerlink" title="0x06 Persistence"></a>0x06 Persistence</h1><ul>
+<li>Installation of backdoor that requires authentication.</li>
+<li>Installation and/or modification of services to connect back to system. User and complex password should be used as a minimum; use of certificates or cryptographic keys is preferred where possible. (SSH, ncat, RDP). Reverse connections limited to a single IP may be used.</li>
+<li>Creation of alternate accounts with complex passwords.</li>
+<li>When possible backdoor must survive reboots.</li>
+</ul>
+<h1 id="0x07-Further-Penetration-Into-Infrastructure"><a href="#0x07-Further-Penetration-Into-Infrastructure" class="headerlink" title="0x07 Further Penetration Into Infrastructure"></a>0x07 Further Penetration Into Infrastructure</h1><p>Pivoting is the action in which the tester will use his presence of on the compromised system to further enumerate and gain access to other systems on the client’s infrastructure. This action can be executed from the compromised host it self using local resourced or tools uploaded to the compromised system.</p>
+<h2 id="0x0700-From-Compromised-System"><a href="#0x0700-From-Compromised-System" class="headerlink" title="0x0700 From Compromised System"></a>0x0700 From Compromised System</h2><p>Actions that can be taken from a compromised system:</p>
+<ul>
+<li>Upload tools</li>
+<li>Use local system tools</li>
+<li>ARP Scan</li>
+<li>Ping Sweep</li>
+<li>DNS Enumeration of internal network</li>
+<li>Directory Services Enumeration</li>
+<li>Brute force attacks</li>
+<li>Enumeration and Management thru Management Protocols and compromised credentials (WinRM, WMI, SMB, SNMP..etc)</li>
+<li>Abuse of compromised credentials and keys (Webpages, Databases..etc)</li>
+<li>Execute Remote Exploits</li>
+</ul>
+<p>The action that will be executed will depend on the information needed to show specific risk and/or further penetrating the client’s network and hosts. Regular planning sessions are recommended to re-evaluate the information gather and decide the best approach to continue the post exploitation until the set goals are meet.</p>
+<h2 id="0x0701-Thru-Compromised-System"><a href="#0x0701-Thru-Compromised-System" class="headerlink" title="0x0701 Thru Compromised System"></a>0x0701 Thru Compromised System</h2><p>Actions that can be taken thru a compromised system:</p>
+<ul>
+<li>Port Forwarding</li>
+<li>Proxy to internal network (SSH)</li>
+<li>VPN to internal network</li>
+<li>Execute Remote Exploit</li>
+<li>Abuse of compromised credentials and keys (Webpages, Databases..etc)</li>
+</ul>
+<p>The action that will be executed will depend on the information needed to show specific risk and/or further penetrating the client’s network and hosts. Regular planning sessions are recommended to re-evaluate the information gather and decide the best approach to continue the post exploitation until the set goals are meet.</p>
+<h1 id="0x08-Cleanup"><a href="#0x08-Cleanup" class="headerlink" title="0x08 Cleanup"></a>0x08 Cleanup</h1><p>The cleanup process covers the requirements for cleaning up systems once the penetration test has been completed. This will include all user accounts and binaries used during the test.</p>
+<ul>
+<li>Remove all executable, scripts and temporary file from a compromised system. If possible use secure delete method for removing the files and folders.</li>
+<li>Return to original values system settings and application configuration parameters if they where modified during the assessment.</li>
+<li>Remove all backdoors and/or rootkits installed.</li>
+<li>Remove any user accounts created for connecting back to compromise systems.</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A0%87%E5%87%86/">标准</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Google%E7%BF%BB%E8%AF%91/">Google翻译</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%90%8E%E5%88%A9%E7%94%A8/">后利用</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E4%B8%83%E3%80%81%E6%8A%A5%E5%91%8A%E8%BE%93%E5%87%BA/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">七、报告输出</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E4%BA%94%E3%80%81%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/">
+                        <span class="hidden-mobile">五、漏洞利用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

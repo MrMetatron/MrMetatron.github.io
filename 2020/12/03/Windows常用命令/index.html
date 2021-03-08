@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="G3G4X5X6">
+  <meta name="keywords" content="">
+  
+  <title>Windows常用命令 - MrMetatron&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"mrmetatron.github.io","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Windows常用命令">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-03 11:48" pubdate>
+        2020年12月3日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      40
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Windows常用命令</h1>
+            
+            <div class="markdown-body">
+              <h1 id="一、操作系统相关"><a href="#一、操作系统相关" class="headerlink" title="一、操作系统相关"></a>一、操作系统相关</h1><h2 id="0x0000-systeminfo"><a href="#0x0000-systeminfo" class="headerlink" title="0x0000 systeminfo"></a>0x0000 systeminfo</h2><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>该工具显示本地或远程机器(包括服务包级别)的操作系统配置的信息。一般用于查看当前计算机的详细信息，如：主机名、OS版本、系统启动时间和<strong>修补程序</strong>（补丁）等等。</p>
+<h3 id="使用帮助"><a href="#使用帮助" class="headerlink" title="使用帮助"></a>使用帮助</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\Security&gt; systeminfo /?</span><br><span class="line">SYSTEMINFO [/<span class="type">S</span> <span class="type">system</span> [/<span class="type">U</span> <span class="type">username</span> [/<span class="type">P</span> [<span class="type">password</span>]]]] [/<span class="type">FO</span> <span class="type">format</span>] [/<span class="type">NH</span>]</span><br><span class="line">描述:</span><br><span class="line">    该工具显示本地或远程机器(包括服务包级别)的操作系统配置的信息。</span><br><span class="line">参数列表:</span><br><span class="line">    /S      system           指定要连接的远程系统。</span><br><span class="line">    /U      [<span class="type">domain</span>\]user    指定应该在哪个用户上下文执行命令。</span><br><span class="line">    /P      [<span class="type">password</span>]       指定给定用户上下文的密码。如果省略则</span><br><span class="line">                             提示输入。</span><br><span class="line">    /FO     format           指定显示结果的格式。</span><br><span class="line">                             有效值: <span class="string">&quot;TABLE&quot;</span>、<span class="string">&quot;LIST&quot;</span>、<span class="string">&quot;CSV&quot;</span>。</span><br><span class="line">    /NH                      指定“列标题”不应该在输出中显示。</span><br><span class="line">                             只对 <span class="string">&quot;TABLE&quot;</span> 和 <span class="string">&quot;CSV&quot;</span> 格式有效。</span><br><span class="line">    /?                       显示帮助消息。</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Security&gt;systeminfo</span><br><span class="line"></span><br><span class="line">主机名:           DZH</span><br><span class="line">OS 名称:          Microsoft Windows <span class="number">10</span> 企业版</span><br><span class="line">OS 版本:          <span class="number">10.0</span>.<span class="number">19042</span> 暂缺 Build <span class="number">19042</span></span><br><span class="line">OS 制造商:        Microsoft Corporation</span><br><span class="line">OS 配置:          独立工作站</span><br><span class="line">OS 构建类型:      Multiprocessor Free</span><br><span class="line">注册的所有人:     Security</span><br><span class="line">注册的组织:       暂缺</span><br><span class="line">产品 ID:          <span class="number">00329</span><span class="literal">-10331</span><span class="literal">-44210</span><span class="literal">-AA707</span></span><br><span class="line">初始安装日期:     <span class="number">2020</span>/<span class="number">9</span>/<span class="number">25</span>, <span class="number">17</span>:<span class="number">37</span>:<span class="number">05</span></span><br><span class="line">系统启动时间:     <span class="number">2021</span>/<span class="number">2</span>/<span class="number">14</span>, <span class="number">2</span>:<span class="number">39</span>:<span class="number">21</span></span><br><span class="line">系统制造商:       HUAWEI</span><br><span class="line">系统型号:         HLYL<span class="literal">-WXX9</span></span><br><span class="line">系统类型:         x64<span class="literal">-based</span> PC</span><br><span class="line">处理器:           安装了 <span class="number">1</span> 个处理器。</span><br><span class="line">                  [<span class="number">01</span>]: AMD64 Family <span class="number">23</span> Model <span class="number">96</span> Stepping <span class="number">1</span> AuthenticAMD ~<span class="number">3000</span> Mhz</span><br><span class="line">BIOS 版本:        HUAWEI <span class="number">1.06</span>, <span class="number">2020</span>/<span class="number">10</span>/<span class="number">12</span></span><br><span class="line">Windows 目录:     C:\WINDOWS</span><br><span class="line">系统目录:         C:\WINDOWS\system32</span><br><span class="line">启动设备:         \Device\HarddiskVolume1</span><br><span class="line">系统区域设置:     zh<span class="literal">-cn</span>;中文(中国)</span><br><span class="line">输入法区域设置:   zh<span class="literal">-cn</span>;中文(中国)</span><br><span class="line">时区:             (UTC+<span class="number">08</span>:<span class="number">00</span>) 北京，重庆，香港特别行政区，乌鲁木齐</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="0x0001-wmic"><a href="#0x0001-wmic" class="headerlink" title="0x0001 wmic"></a>0x0001 wmic</h2><h3 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h3><p>查看硬件的信息</p>
+<h3 id="使用帮助-1"><a href="#使用帮助-1" class="headerlink" title="使用帮助"></a>使用帮助</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Security&gt;wmic /?</span><br><span class="line"></span><br><span class="line">WMIC 已弃用。</span><br><span class="line"></span><br><span class="line">[全局开关] &lt;命令&gt;</span><br><span class="line"></span><br><span class="line">可以使用以下全局开关:</span><br><span class="line">/NAMESPACE           别名在其上操作的命名空间的路径。</span><br><span class="line">/ROLE                包含别名定义的角色的路径。</span><br><span class="line">/NODE                别名在其上操作的服务器。</span><br><span class="line">/IMPLEVEL            客户端模拟级别。</span><br><span class="line">/AUTHLEVEL           客户端身份验证级别。</span><br><span class="line">/LOCALE              客户端应使用的语言 ID。</span><br><span class="line">/PRIVILEGES          启用或禁用所有权限。</span><br><span class="line">/TRACE               将调试信息输出到 stderr。</span><br><span class="line">/RECORD              记录所有输入命令和输出内容。</span><br><span class="line">/INTERACTIVE         设置或重置交互模式。</span><br><span class="line">/FAILFAST            设置或重置 FailFast 模式。</span><br><span class="line">/USER                会话期间要使用的用户。</span><br><span class="line">/PASSWORD            登录会话时要使用的密码。</span><br><span class="line">/OUTPUT              指定输出重定向模式。</span><br><span class="line">/APPEND              指定输出重定向模式。</span><br><span class="line">/AGGREGATE           设置或重置聚合模式。</span><br><span class="line">/AUTHORITY           指定连接的 &lt;授权类型&gt;。</span><br><span class="line">/?[:&lt;<span class="type">BRIEF</span>|<span class="type">FULL</span>&gt;]    用法信息。</span><br><span class="line"></span><br><span class="line">有关特定全局开关的详细信息，请键入: <span class="built_in">switch-name</span> /?</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用示例-1"><a href="#使用示例-1" class="headerlink" title="使用示例"></a>使用示例</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">例：wmic logicaldisk  // 查看计算机上各个盘的相关信息</span><br><span class="line">例：wmic LogicalDisk <span class="built_in">where</span> <span class="string">&quot;Caption=&#x27;C:&#x27;&quot;</span> get FreeSpace,Size /value  // 获取C盘的剩余空间大小与总大小（单位：Byte）</span><br><span class="line">例：wmic os get Caption,InstallDate,OSArchitecture /value // 获取当前os的Caption、安装日期以及系统架构信息</span><br><span class="line"></span><br><span class="line">wmic查看进程信息</span><br><span class="line">例：wmic <span class="keyword">process</span> <span class="built_in">where</span> Caption=<span class="string">&quot;buyticket.exe&quot;</span> get commandline,ExecutablePath,ProcessId,ThreadCount /value</span><br><span class="line">// 查看名为<span class="string">&quot;buyticket.exe&quot;</span>所有进程命令行，exe全路径，PID及线程数</span><br><span class="line"></span><br><span class="line">例：wmic <span class="keyword">process</span> <span class="built_in">where</span> Caption=<span class="string">&quot;buyticket.exe&quot;</span> get ExecutablePath,HandleCount /value  </span><br><span class="line">// 查看名为<span class="string">&quot;buyticket.exe&quot;</span>所有进程的exe全路径及当前打开的句柄数</span><br><span class="line"></span><br><span class="line">例：wmic <span class="keyword">process</span> <span class="built_in">where</span> Caption=<span class="string">&quot;buyticket.exe&quot;</span> get ExecutablePath,VirtualSize,WorkingSetSize /value  </span><br><span class="line">// 查看名为<span class="string">&quot;buyticket.exe&quot;</span>所有进程的exe全路径、当前虚拟地址空间占用及物理内存工作集</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="0x0002-shutdown"><a href="#0x0002-shutdown" class="headerlink" title="0x0002 shutdown"></a>0x0002 shutdown</h2><h3 id="描述-2"><a href="#描述-2" class="headerlink" title="描述"></a>描述</h3><p>关闭、重启、注销、休眠计算机</p>
+<h3 id="使用帮助-2"><a href="#使用帮助-2" class="headerlink" title="使用帮助"></a>使用帮助</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Security&gt;shutdown /?</span><br><span class="line">用法: shutdown [/<span class="type">i</span> | /<span class="type">l</span> | /<span class="type">s</span> | /<span class="type">sg</span> | /<span class="type">r</span> | /<span class="type">g</span> | /<span class="type">a</span> | /<span class="type">p</span> | /<span class="type">h</span> | /<span class="type">e</span> | /<span class="type">o</span>] [/<span class="type">hybrid</span>] [/<span class="type">soft</span>] [/<span class="type">fw</span>] [/<span class="type">f</span>]</span><br><span class="line">    [/<span class="type">m</span> \\<span class="type">computer</span>][/<span class="type">t</span> <span class="type">xxx</span>][/<span class="type">d</span> [<span class="type">p</span>|<span class="type">u</span>:]<span class="type">xx</span>:<span class="type">yy</span> [/<span class="type">c</span> <span class="string">&quot;comment&quot;</span>]]</span><br><span class="line"></span><br><span class="line">    没有参数   显示帮助。这与键入 /? 是一样的。</span><br><span class="line">    /?         显示帮助。这与不键入任何选项是一样的。</span><br><span class="line">    /i         显示图形用户界面(GUI)。</span><br><span class="line">               这必须是第一个选项。</span><br><span class="line">    /l         注销。这不能与 /m 或 /d 选项一起使用。</span><br><span class="line">    /s         关闭计算机。</span><br><span class="line">    /sg        关闭计算机。在下一次启动时，如果启用了</span><br><span class="line">               自动重启登录，则将自动登录并锁定上次交互用户。</span><br><span class="line">               登录后，重启任何已注册的应用程序。</span><br><span class="line">    /<span class="built_in">r</span>         完全关闭并重启计算机。</span><br><span class="line">    /g         完全关闭并重启计算机。重新启动系统后，</span><br><span class="line">               如果启用了自动重启登录，则将自动登录并</span><br><span class="line">               锁定上次交互用户。</span><br><span class="line">               登录后，重启任何已注册的应用程序。</span><br><span class="line">    /a         中止系统关闭。</span><br><span class="line">               这只能在超时期间使用。</span><br><span class="line">               与 /<span class="built_in">fw</span> 结合使用，以清除任何未完成的至固件的引导。</span><br><span class="line">    /p         关闭本地计算机，没有超时或警告。</span><br><span class="line">               可以与 /d 和 /f 选项一起使用。</span><br><span class="line">    /<span class="built_in">h</span>         休眠本地计算机。</span><br><span class="line">               可以与 /f 选项一起使用。</span><br><span class="line">    /hybrid    执行计算机关闭并进行准备以快速启动。</span><br><span class="line">               必须与 /s 选项一起使用。</span><br><span class="line">    /<span class="built_in">fw</span>        与关闭选项结合使用，使下次启动转到</span><br><span class="line">               固件用户界面。</span><br><span class="line">    /e         记录计算机意外关闭的原因。</span><br><span class="line">    /o         转到高级启动选项菜单并重新启动计算机。</span><br><span class="line">               必须与 /<span class="built_in">r</span> 选项一起使用。</span><br><span class="line">    /m \\computer 指定目标计算机。</span><br><span class="line">    /t xxx     将关闭前的超时时间设置为 xxx 秒。</span><br><span class="line">               有效范围是 <span class="number">0</span><span class="literal">-315360000</span> (<span class="number">10</span> 年)，默认值为 <span class="number">30</span>。</span><br><span class="line">               如果超时时间大于 <span class="number">0</span>，则默示为</span><br><span class="line">               /f 参数。</span><br><span class="line">    /c <span class="string">&quot;comment&quot;</span> 有关重新启动或关闭的原因的注释。</span><br><span class="line">               最多允许 <span class="number">512</span> 个字符。</span><br><span class="line">    /f         强制关闭正在运行的应用程序而不事先警告用户。</span><br><span class="line">               如果为 /t 参数指定大于 <span class="number">0</span> 的值，</span><br><span class="line">               则默示为 /f 参数。</span><br><span class="line">    /d [<span class="type">p</span>|<span class="type">u</span>:]xx:yy  提供重新启动或关闭的原因。</span><br><span class="line">               p 指示重启或关闭是计划内的。</span><br><span class="line">               u 指示原因是用户定义的。</span><br><span class="line">               如果未指定 p 也未指定 u，则重新启动或关闭</span><br><span class="line">               是计划外的。</span><br><span class="line">               xx 是主要原因编号(小于 <span class="number">256</span> 的正整数)。</span><br><span class="line">               yy 是次要原因编号(小于 <span class="number">65536</span> 的正整数)。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用示例-2"><a href="#使用示例-2" class="headerlink" title="使用示例"></a>使用示例</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">shutdown /s                   <span class="comment"># 关闭计算机</span></span><br><span class="line">shutdown /s /t <span class="number">3600</span>           <span class="comment"># 一小时后，关闭本地计算机</span></span><br><span class="line">shutdown /a                   <span class="comment"># 终止系统关闭</span></span><br><span class="line">shutdown /<span class="built_in">r</span>                   <span class="comment"># 关闭并重启本地计算机</span></span><br><span class="line">shutdown /m <span class="number">192.168</span>.<span class="number">1.166</span> /<span class="built_in">r</span>  <span class="comment"># 关闭并重启ip为192.168.1.166的计算机</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="二、进程相关"><a href="#二、进程相关" class="headerlink" title="二、进程相关"></a>二、进程相关</h1><h2 id="0x0100-schtasks"><a href="#0x0100-schtasks" class="headerlink" title="0x0100 schtasks"></a>0x0100 schtasks</h2><h3 id="描述-3"><a href="#描述-3" class="headerlink" title="描述"></a>描述</h3><p>任务计划</p>
+<p>使用帮助</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\Security&gt; schtasks /?</span><br><span class="line"></span><br><span class="line">SCHTASKS /<span class="keyword">parameter</span> [<span class="type">arguments</span>]</span><br><span class="line"></span><br><span class="line">描述:</span><br><span class="line">    允许管理员创建、删除、查询、更改、运行和中止本地或远程系统上的计划任</span><br><span class="line">    务。</span><br><span class="line"></span><br><span class="line">参数列表:</span><br><span class="line">    /Create         创建新计划任务。</span><br><span class="line"></span><br><span class="line">    /Delete         删除计划任务。</span><br><span class="line"></span><br><span class="line">    /Query          显示所有计划任务。</span><br><span class="line"></span><br><span class="line">    /Change         更改计划任务属性。</span><br><span class="line"></span><br><span class="line">    /Run            按需运行计划任务。</span><br><span class="line"></span><br><span class="line">    /<span class="keyword">End</span>            中止当前正在运行的计划任务。</span><br><span class="line"></span><br><span class="line">    /ShowSid        显示与计划的任务名称相应的安全标识符。</span><br><span class="line"></span><br><span class="line">    /?              显示此帮助消息。</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用示例-3"><a href="#使用示例-3" class="headerlink" title="使用示例"></a>使用示例</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="0x0101-tasklist"><a href="#0x0101-tasklist" class="headerlink" title="0x0101 tasklist"></a>0x0101 tasklist</h2><h3 id="描述-4"><a href="#描述-4" class="headerlink" title="描述"></a>描述</h3><p>tasklist     // 显示当前运行的进程信息（可查看PID）</p>
+<h3 id="使用帮助-3"><a href="#使用帮助-3" class="headerlink" title="使用帮助"></a>使用帮助</h3> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tasklist 	// 显示当前运行的进程信息（可查看PID）</span><br></pre></td></tr></table></figure>
+<h3 id="使用示例-4"><a href="#使用示例-4" class="headerlink" title="使用示例"></a>使用示例</h3> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="0x0102-taskkill"><a href="#0x0102-taskkill" class="headerlink" title="0x0102 taskkill"></a>0x0102 taskkill</h2><h3 id="描述-5"><a href="#描述-5" class="headerlink" title="描述"></a>描述</h3><p>结束指定的进程</p>
+<h3 id="使用帮助-4"><a href="#使用帮助-4" class="headerlink" title="使用帮助"></a>使用帮助</h3>  <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">taskkill 	// 结束指定的进程</span><br></pre></td></tr></table></figure>
+<h3 id="使用示例-5"><a href="#使用示例-5" class="headerlink" title="使用示例"></a>使用示例</h3>  <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="三、安全相关"><a href="#三、安全相关" class="headerlink" title="三、安全相关"></a>三、安全相关</h1><h2 id="0x0200-reg"><a href="#0x0200-reg" class="headerlink" title="0x0200 reg"></a>0x0200 reg</h2><h3 id="描述-6"><a href="#描述-6" class="headerlink" title="描述"></a>描述</h3><p>reg 注册表操作命令</p>
+<h3 id="使用帮助-5"><a href="#使用帮助-5" class="headerlink" title="使用帮助"></a>使用帮助</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg 注册表相关操作</span><br></pre></td></tr></table></figure>
+<h3 id="使用示例-6"><a href="#使用示例-6" class="headerlink" title="使用示例"></a>使用示例</h3><h1 id="四、网络通信"><a href="#四、网络通信" class="headerlink" title="四、网络通信"></a>四、网络通信</h1><h2 id="0x0300-net"><a href="#0x0300-net" class="headerlink" title="0x0300 net"></a>0x0300 net</h2><h3 id="描述-7"><a href="#描述-7" class="headerlink" title="描述"></a>描述</h3><h3 id="使用帮助-6"><a href="#使用帮助-6" class="headerlink" title="使用帮助"></a>使用帮助</h3> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net <span class="built_in">start</span> 						// 查看已经启动的服务</span><br><span class="line">net <span class="built_in">start</span> 	<span class="string">&quot;Task Scheduler&quot;</span>  	// 开启任务计划服务</span><br><span class="line">net stop 	<span class="string">&quot;Task Scheduler&quot;</span>  	// 关闭任务计划服务</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用示例-7"><a href="#使用示例-7" class="headerlink" title="使用示例"></a>使用示例</h3> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="0x0301-Ping"><a href="#0x0301-Ping" class="headerlink" title="0x0301 Ping"></a>0x0301 Ping</h2><h3 id="描述-8"><a href="#描述-8" class="headerlink" title="描述"></a>描述</h3><p>Ping：网络连通性测试</p>
+<h3 id="使用帮助-7"><a href="#使用帮助-7" class="headerlink" title="使用帮助"></a>使用帮助</h3> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\Security&gt; ping /?</span><br><span class="line"></span><br><span class="line">用法: ping [-<span class="type">t</span>] [-<span class="type">a</span>] [-<span class="type">n</span> <span class="type">count</span>] [-<span class="type">l</span> <span class="type">size</span>] [-<span class="type">f</span>] [-<span class="type">i</span> <span class="type">TTL</span>] [-<span class="type">v</span> <span class="type">TOS</span>]</span><br><span class="line">            [-<span class="type">r</span> <span class="type">count</span>] [-<span class="type">s</span> <span class="type">count</span>] [[-<span class="type">j</span> <span class="type">host</span>-<span class="type">list</span>] | [-<span class="type">k</span> <span class="type">host</span>-<span class="type">list</span>]]</span><br><span class="line">            [-<span class="type">w</span> <span class="type">timeout</span>] [-<span class="type">R</span>] [-<span class="type">S</span> <span class="type">srcaddr</span>] [-<span class="type">c</span> <span class="type">compartment</span>] [-<span class="type">p</span>]</span><br><span class="line">            [-<span class="number">4</span>] [-<span class="number">6</span>] target_name</span><br><span class="line"></span><br><span class="line">选项:</span><br><span class="line">    <span class="literal">-t</span>             Ping 指定的主机，直到停止。</span><br><span class="line">                   若要查看统计信息并继续操作，请键入 Ctrl+<span class="keyword">Break</span>；</span><br><span class="line">                   若要停止，请键入 Ctrl+C。</span><br><span class="line">    <span class="literal">-a</span>             将地址解析为主机名。</span><br><span class="line">    <span class="literal">-n</span> count       要发送的回显请求数。</span><br><span class="line">    <span class="literal">-l</span> size        发送缓冲区大小。</span><br><span class="line">    <span class="operator">-f</span>             在数据包中设置“不分段”标记(仅适用于 IPv4)。</span><br><span class="line">    <span class="literal">-i</span> TTL         生存时间。</span><br><span class="line">    <span class="literal">-v</span> TOS         服务类型(仅适用于 IPv4。该设置已被弃用，</span><br><span class="line">                   对 IP 标头中的服务类型字段没有任何</span><br><span class="line">                   影响)。</span><br><span class="line">    <span class="literal">-r</span> count       记录计数跃点的路由(仅适用于 IPv4)。</span><br><span class="line">    <span class="literal">-s</span> count       计数跃点的时间戳(仅适用于 IPv4)。</span><br><span class="line">    <span class="literal">-j</span> host<span class="literal">-list</span>   与主机列表一起使用的松散源路由(仅适用于 IPv4)。</span><br><span class="line">    <span class="literal">-k</span> host<span class="literal">-list</span>    与主机列表一起使用的严格源路由(仅适用于 IPv4)。</span><br><span class="line">    <span class="literal">-w</span> timeout     等待每次回复的超时时间(毫秒)。</span><br><span class="line">    <span class="literal">-R</span>             同样使用路由标头测试反向路由(仅适用于 IPv6)。</span><br><span class="line">                   根据 RFC <span class="number">5095</span>，已弃用此路由标头。</span><br><span class="line">                   如果使用此标头，某些系统可能丢弃</span><br><span class="line">                   回显请求。</span><br><span class="line">    <span class="literal">-S</span> srcaddr     要使用的源地址。</span><br><span class="line">    <span class="literal">-c</span> compartment 路由隔离舱标识符。</span><br><span class="line">    <span class="literal">-p</span>             Ping Hyper<span class="literal">-V</span> 网络虚拟化提供程序地址。</span><br><span class="line">    <span class="literal">-4</span>             强制使用 IPv4。</span><br><span class="line">    <span class="literal">-6</span>             强制使用 IPv6。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用示例-8"><a href="#使用示例-8" class="headerlink" title="使用示例"></a>使用示例</h3><h2 id="0x0302-nslookup"><a href="#0x0302-nslookup" class="headerlink" title="0x0302 nslookup"></a>0x0302 nslookup</h2><h3 id="描述-9"><a href="#描述-9" class="headerlink" title="描述"></a>描述</h3><p>nslookup：域名解析</p>
+<h3 id="使用帮助-8"><a href="#使用帮助-8" class="headerlink" title="使用帮助"></a>使用帮助</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\Security&gt; nslookup /?</span><br><span class="line">用法:</span><br><span class="line">   nslookup [-<span class="type">opt</span> <span class="type">...</span>]             <span class="comment"># 使用默认服务器的交互模式</span></span><br><span class="line">   nslookup [-<span class="type">opt</span> <span class="type">...</span>] - server    <span class="comment"># 使用 &quot;server&quot; 的交互模式</span></span><br><span class="line">   nslookup [-<span class="type">opt</span> <span class="type">...</span>] host        <span class="comment"># 仅查找使用默认服务器的 &quot;host&quot;</span></span><br><span class="line">   nslookup [-<span class="type">opt</span> <span class="type">...</span>] host server <span class="comment"># 仅查找使用 &quot;server&quot; 的 &quot;host&quot;</span></span><br><span class="line"></span><br><span class="line">   nslookup <span class="literal">-d</span> www.domain.com 	   <span class="comment"># 打印出www.cnblogs.com的域名解析所有记录</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用示例-9"><a href="#使用示例-9" class="headerlink" title="使用示例"></a>使用示例</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="0x0303-netstat"><a href="#0x0303-netstat" class="headerlink" title="0x0303 netstat"></a>0x0303 netstat</h2><h3 id="描述-10"><a href="#描述-10" class="headerlink" title="描述"></a>描述</h3><p>显示协议统计信息和当前 TCP/IP 网络连接。</p>
+<h3 id="使用示例-10"><a href="#使用示例-10" class="headerlink" title="使用示例"></a>使用示例</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Security&gt;netstat /?</span><br><span class="line"></span><br><span class="line">显示协议统计信息和当前 TCP/IP 网络连接。</span><br><span class="line"></span><br><span class="line">NETSTAT [-<span class="type">a</span>] [-<span class="type">b</span>] [-<span class="type">e</span>] [-<span class="type">f</span>] [-<span class="type">n</span>] [-<span class="type">o</span>] [-<span class="type">p</span> <span class="type">proto</span>] [-<span class="type">r</span>] [-<span class="type">s</span>] [-<span class="type">t</span>] [-<span class="type">x</span>] [-<span class="type">y</span>] [<span class="built_in">int</span><span class="type">erval</span>]</span><br><span class="line"></span><br><span class="line">  <span class="literal">-a</span>            显示所有连接和侦听端口。</span><br><span class="line">  <span class="literal">-b</span>            显示在创建每个连接或侦听端口时涉及的</span><br><span class="line">                可执行文件。在某些情况下，已知可执行文件托管</span><br><span class="line">                多个独立的组件，此时会</span><br><span class="line">                显示创建连接或侦听端口时</span><br><span class="line">                涉及的组件序列。在此情况下，可执行文件的</span><br><span class="line">                名称位于底部 [] 中，它调用的组件位于顶部，</span><br><span class="line">                直至达到 TCP/IP。注意，此选项</span><br><span class="line">                可能很耗时，并且可能因为你没有足够的</span><br><span class="line">                权限而失败。</span><br><span class="line">  <span class="literal">-e</span>            显示以太网统计信息。此选项可以与 <span class="literal">-s</span> 选项</span><br><span class="line">                结合使用。</span><br><span class="line">  <span class="operator">-f</span>            显示外部地址的完全限定</span><br><span class="line">                域名(FQDN)。</span><br><span class="line">  <span class="literal">-n</span>            以数字形式显示地址和端口号。</span><br><span class="line">  <span class="literal">-o</span>            显示拥有的与每个连接关联的进程 ID。</span><br><span class="line">  <span class="literal">-p</span> proto      显示 proto 指定的协议的连接；proto</span><br><span class="line">                可以是下列任何一个: TCP、UDP、TCPv6 或 UDPv6。如果与 <span class="literal">-s</span></span><br><span class="line">                选项一起用来显示每个协议的统计信息，proto 可以是下列任何一个:</span><br><span class="line">                IP、IPv6、ICMP、ICMPv6、TCP、TCPv6、UDP 或 UDPv6。</span><br><span class="line">  <span class="literal">-q</span>            显示所有连接、侦听端口和绑定的</span><br><span class="line">                非侦听 TCP 端口。绑定的非侦听端口</span><br><span class="line">                不一定与活动连接相关联。</span><br><span class="line">  <span class="literal">-r</span>            显示路由表。</span><br><span class="line">  <span class="literal">-s</span>            显示每个协议的统计信息。默认情况下，</span><br><span class="line">                显示 IP、IPv6、ICMP、ICMPv6、TCP、TCPv6、UDP 和 UDPv6 的统计信息；</span><br><span class="line">                <span class="literal">-p</span> 选项可用于指定默认的子网。</span><br><span class="line">  <span class="literal">-t</span>            显示当前连接卸载状态。</span><br><span class="line">  <span class="literal">-x</span>            显示 NetworkDirect 连接、侦听器和共享</span><br><span class="line">                终结点。</span><br><span class="line">  <span class="literal">-y</span>            显示所有连接的 TCP 连接模板。</span><br><span class="line">                无法与其他选项结合使用。</span><br><span class="line">  interval      重新显示选定的统计信息，各个显示间暂停的</span><br><span class="line">                间隔秒数。按 CTRL+C 停止重新显示</span><br><span class="line">                统计信息。如果省略，则 netstat 将打印当前的</span><br><span class="line">                配置信息一次。</span><br></pre></td></tr></table></figure>
+<h3 id="使用帮助-9"><a href="#使用帮助-9" class="headerlink" title="使用帮助"></a>使用帮助</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">netstat <span class="literal">-a</span> 	 	// 查看开启了哪些端口</span><br><span class="line">netstat <span class="literal">-n</span> 		// 查看端口的网络连接情况</span><br><span class="line">netstat <span class="literal">-v</span>  	// 查看正在进行的工作</span><br><span class="line">netstat <span class="literal">-p</span> tcp 	// 查看tcp协议的使用情况</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="X、杂七杂八"><a href="#X、杂七杂八" class="headerlink" title="X、杂七杂八"></a>X、杂七杂八</h1><h2 id="特殊符号命令"><a href="#特殊符号命令" class="headerlink" title="特殊符号命令"></a>特殊符号命令</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&amp;  	顺序执行多条命令，而不管命令是否执行成功</span><br><span class="line">&amp;&amp;  顺序执行多条命令，当碰到执行出错的命令后将不执行后面的命令</span><br><span class="line">||  顺序执行多条命令，当碰到执行正确的命令后将不执行后面的命令</span><br><span class="line">|  	管道命令</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="中断命令执行"><a href="#中断命令执行" class="headerlink" title="中断命令执行"></a>中断命令执行</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + Z</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="目录查看"><a href="#目录查看" class="headerlink" title="目录查看"></a>目录查看</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>  切换目录</span><br><span class="line"><span class="built_in">dir</span> 显示目录中的内容</span><br><span class="line">tree 显示目录结构</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="文件查看"><a href="#文件查看" class="headerlink" title="文件查看"></a>文件查看</h2> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> 	显示文本文件内容</span><br><span class="line">more 	逐屏的显示文本文件内容</span><br><span class="line">findstr 文件中搜索字符串</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="注销登录：logoff"><a href="#注销登录：logoff" class="headerlink" title="注销登录：logoff"></a>注销登录：logoff</h2><h3 id="描述-11"><a href="#描述-11" class="headerlink" title="描述"></a>描述</h3><p>终止会话。</p>
+<h3 id="使用帮助-10"><a href="#使用帮助-10" class="headerlink" title="使用帮助"></a>使用帮助</h3> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\Security&gt; logoff /?</span><br><span class="line">终止会话。</span><br><span class="line"></span><br><span class="line">LOGOFF [<span class="type">sessionname</span> | <span class="type">sessionid</span>] [/<span class="type">SERVER</span>:<span class="type">servername</span>] [/<span class="type">V</span>] [/<span class="type">VM</span>]</span><br><span class="line"></span><br><span class="line">  sessionname         会话名。</span><br><span class="line">  sessionid           会话 ID。</span><br><span class="line">  /SERVER:servername  指定含有要注销的用户会话的远程桌面服务器</span><br><span class="line">                      (默认值是当前值)。</span><br><span class="line">  /V                  显示有关所执行操作的信息。</span><br><span class="line">  /VM                 注销服务器上或虚拟机中的会话。需要指定该会话的唯一 ID。</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用示例-11"><a href="#使用示例-11" class="headerlink" title="使用示例"></a>使用示例</h3> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">没有......</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h2> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ver             显示当前windows系统的版本号</span><br><span class="line">winver 			    弹框显示当前windows系统信息</span><br><span class="line">vol             显示当前分区的卷标</span><br><span class="line">label           显示当前分区的卷标，同时提示输入新卷标</span><br><span class="line">label c:system 	设置c盘的卷标为system</span><br><span class="line">time            显示或设置当前时间</span><br></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Windows/">Windows</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E9%9B%B6-%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C%E6%A0%87%E5%87%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">零-渗透测试执行标准</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

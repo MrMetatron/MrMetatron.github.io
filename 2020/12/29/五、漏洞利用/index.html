@@ -1,0 +1,538 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="G3G4X5X6">
+  <meta name="keywords" content="">
+  
+  <title>五、漏洞利用 - MrMetatron&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"mrmetatron.github.io","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="五、漏洞利用">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-29 15:50" pubdate>
+        2020年12月29日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      91
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">五、漏洞利用</h1>
+            
+            <div class="markdown-body">
+              <h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><h1 id="0x00-目的-Purpose"><a href="#0x00-目的-Purpose" class="headerlink" title="0x00 目的(Purpose)"></a>0x00 目的(Purpose)</h1><p>The exploitation phase of a penetration test focuses solely on establishing access to a system or resource by bypassing security restrictions. If the prior phase, vulnerability analysis was performed properly, this phase should be well planned and a precision strike.. The main focus is to identify the main entry point into the organization and to identify high value target assets.</p>
+<p>渗透测试的开发阶段仅专注于通过绕过安全限制来建立对系统或资源的访问。 如果在上一阶段适当地执行了漏洞分析，则此阶段应该计划周全，并且要进行精确的打击。主要重点是确定组织的主要切入点并确定高价值目标资产。</p>
+<p>If the vulnerability analysis phase was properly completed, a high value target list should have been complied. Ultimately the attack vector should take into consideration the success probability and highest impact on the organization.</p>
+<p>如果漏洞分析阶段已正确完成，则应遵守高价值目标列表。 最终，攻击媒介应考虑成功概率和对组织的最大影响。</p>
+<h1 id="0x01-对策-Countermeasures"><a href="#0x01-对策-Countermeasures" class="headerlink" title="0x01 对策(Countermeasures)"></a>0x01 对策(Countermeasures)</h1><p>Countermeasures are defined as preventative technology or controls that hinder the ability to successfully complete an exploit avenue. This technology could be a Host Based Intrusion Prevention System, Security Guard, Web Application Firewall, or other preventative methods. When performing an exploit, several factors should be taken into consideration. In the event of a preventative technology, a circumvention technique should be considered. In circumstances when this is not possible, alternative exploit methods should be considered.</p>
+<p>对策定义为阻止成功完成漏洞利用途径的能力的预防性技术或控制措施。 该技术可以是基于主机的入侵防御系统，安全卫士，Web应用程序防火墙或其他预防方法。 执行漏洞利用时，应考虑几个因素。 如果采用预防技术，则应考虑采取规避技术。 在不可能的情况下，应考虑使用其他利用方法。</p>
+<p>Overall, the purpose is to remain stealth when attacking the organization, if alarms are tripped the level of the assessment could be diminished. If at all possible, the countermeasures should be enumerated prior to triggering the exploit. This could be done through doing dry runs of the attack or enumerating the technology.</p>
+<p>总体而言，这样做的目的是在攻击组织时保持隐身状态，如果发出警报，评估水平可能会降低。 如果有可能，应在触发利用之前枚举对策。 这可以通过空袭或枚举技术来完成。</p>
+<h2 id="0x0100-反病毒-Anti-Virus"><a href="#0x0100-反病毒-Anti-Virus" class="headerlink" title="0x0100 反病毒(Anti-Virus)"></a>0x0100 反病毒(Anti-Virus)</h2><p>Anti-virus is a technology aimed at preventing malicious software from being deployed on the system. As a penetration tester we should be able to identify these types of anti-virus technologies and be able to protect against them. Anti-virus is a small subset of all of the different preventative measures that can be in place, for example host-based intrusion prevention systems, web application firewalls, and other preventative technologies.</p>
+<p>防病毒是一种旨在防止恶意软件在系统上部署的技术。 作为渗透测试人员，我们应该能够识别出这些类型的防病毒技术并能够加以保护。 防病毒只是可以采取的所有不同预防措施的一小部分，例如基于主机的入侵防御系统，Web应用程序防火墙和其他预防技术。</p>
+<h3 id="0x010000-编码"><a href="#0x010000-编码" class="headerlink" title="0x010000 编码"></a>0x010000 编码</h3><p>Encoding is the method of obfuscating data in a way that makes the deployed piece of code not appear the same. With encoding, the obfuscation occurs usually by scrambling the information and re-arranging in order to hide the fact of what the application is actually doing.</p>
+<p>编码是一种使数据混淆的方法，可以使部署的代码看起来不一样。 使用编码时，混淆通常是通过加扰信息并重新排列以隐藏应用程序实际在做什么的事实而发生的。</p>
+<h3 id="0x010001-打包"><a href="#0x010001-打包" class="headerlink" title="0x010001 打包"></a>0x010001 打包</h3><p>Packing is similar to encoding in a sense in that it attempts to re-arrange data to compress the application or “pack” it. The hopes of this is that the executable or piece of code being delivered is obfuscated in a manner that it won’t be picked up by anti-virus technologies.</p>
+<p>打包在某种意义上与编码类似，因为它尝试重新排列数据以压缩应用程序或对其进行“打包”。 这样做的希望是，所交付的可执行文件或代码段被混淆，从而不会被防病毒技术拾取。</p>
+<h3 id="0x010002-加密"><a href="#0x010002-加密" class="headerlink" title="0x010002 加密"></a>0x010002 加密</h3><p>Encrypting, like Encoding and Packing is another method of manipulating the intended runnable code such that it is not recognizable or available for inspection. Only after decrypting in in-memory (with methods similar to packing) the actual code is exposed for the first time - hopefully after security mechanisms have allowed it through and it is executed immediately after it is decrypted.</p>
+<p>像编码和打包一样，加密是另一种处理预期的可运行代码的方法，该方法无法识别或不可检查。 仅在内存中解密（使用类似于打包的方法）之后，才首次公开实际代码-希望在安全机制允许它通过并在解密后立即执行之后才公开。</p>
+<h3 id="0x010003-白名单绕过"><a href="#0x010003-白名单绕过" class="headerlink" title="0x010003 白名单绕过"></a>0x010003 白名单绕过</h3><p>Whitelisting technologies leveraged a trusted model for applications that have been seen on a given system at a time. The technology takes a baseline of the system and identifies what is normal to be run on the system versus what is something foreign. The penetration tester should be able to circumvent whitelist technologies. One of the most common methods is through direct memory access. Whitelisting does not have the capbility of monitoring memory real time and if a memory resident program is running and not touching disk, it can run without being detect by the given technology.</p>
+<p>白名单技术利用可信任模型建立了一次在给定系统上看到的应用程序。 该技术以系统为基准，并确定在系统上可以正常运行的东西与哪些东西无关。 渗透测试人员应该能够规避白名单技术。 最常见的方法之一是通过直接内存访问。 白名单不具有实时监视内存的功能，并且如果内存驻留程序正在运行且未接触磁盘，则可以在不被给定技术检测的情况下运行。</p>
+<h3 id="0x010004-进程注入"><a href="#0x010004-进程注入" class="headerlink" title="0x010004 进程注入"></a>0x010004 进程注入</h3><p>Process injection is simply the method to inject into an already running process. By injecting into a process, the information of the application can be hidden within a process that would normally be trusted in nature. It’s very difficult for preventative measure technology to inspect running processes and can almost always hide in a different process that the application would think is a trusted one.</p>
+<p>流程注入只是注入到已经运行的流程中的方法。 通过注入到进程中，可以将应用程序的信息隐藏在通常会自然信任的进程中。 预防措施技术很难检查正在运行的进程，并且几乎总是隐藏在应用程序认为是值得信任的进程中。</p>
+<h3 id="0x010005-纯粹的常驻内存-Purely-Memory-Resident"><a href="#0x010005-纯粹的常驻内存-Purely-Memory-Resident" class="headerlink" title="0x010005 纯粹的常驻内存(Purely Memory Resident)"></a>0x010005 纯粹的常驻内存(Purely Memory Resident)</h3><p>Memory resident attacks are generally the most preferred as most technologies do not inspect memory. As an attacker, finding a way to live in memory purely would be most desirable. When writing to disk, most applications will conduct scans, baselines, and other identifications of potentially maliicous software. The ability to be detected when writing to disk becomes significantly greater.</p>
+<p>通常，最常首选驻留内存的攻击，因为大多数技术都不会检查内存。 作为攻击者，最希望找到一种纯粹生活在内存中的方法。 当写入磁盘时，大多数应用程序将进行扫描，基准测试以及其他可能恶意软件的标识。 写入磁盘时被检测的能力大大增强。</p>
+<h2 id="0x0101-人为因素-Human"><a href="#0x0101-人为因素-Human" class="headerlink" title="0x0101 人为因素(Human)"></a>0x0101 人为因素(Human)</h2><p>When performing exploitation, it is not always the best route to go through a direct exploit or through an application flaw. Sometimes the human element may be a better way to attack an organization. It’s important to understand the right attack avenue and make sure that the method we are leveraging is the best route to take.</p>
+<p>在执行利用时，进行直接利用或通过应用程序漏洞不一定总是最佳途径。 有时，人为因素可能是攻击组织的更好方法。 重要的是要了解正确的攻击途径，并确保我们利用的方法是采取的最佳途径。</p>
+<h2 id="0x0102-数据执行保护-DEP"><a href="#0x0102-数据执行保护-DEP" class="headerlink" title="0x0102 数据执行保护(DEP)"></a>0x0102 数据执行保护(DEP)</h2><p>When performing exploitation, many preventative measures canc ome into play. Data Execution Prevention is a defensive measure implemented into most operating systems and prevents execute permission when an overwrite in memory has occurred. The thought process behind DEP is to stop an attacker in rewriting memory and then executing that code. There are mulitple methods to bypass data execution prevention and discussed later in the the exploitation phase of PTES.</p>
+<p>在进行剥削时，许多预防措施都会发挥作用。 数据执行保护是一种防御措施，已在大多数操作系统中实施，并在发生内存覆盖时阻止执行权限。 DEP背后的思考过程是阻止攻击者重写内存，然后执行该代码。 有多种方法可以绕过数据执行保护，稍后将在PTES的开发阶段进行讨论。</p>
+<h2 id="0x0103-地址空间布局随机化-ASLR"><a href="#0x0103-地址空间布局随机化-ASLR" class="headerlink" title="0x0103 地址空间布局随机化(ASLR)"></a>0x0103 地址空间布局随机化(ASLR)</h2><p>During a buffer overflow vulnerability (or that of anything where we control memory), memory addresses are hardcoded in order redirect execution flow to our shellcode. In the event of ASLR, certain bytes are randomized in order to prevent an attacker from predicting where he/she can always go to in order to execute shellcode.</p>
+<p>在缓冲区溢出漏洞（或我们控制内存的任何漏洞）中，内存地址经过硬编码，以便将执行流重定向到我们的Shellcode。 在发生ASLR的情况下，某些字节将被随机分配，以防止攻击者预测他/她为了执行shellcode而总是可以去的地方。</p>
+<h2 id="0x0104-Web应用防火墙-WAF"><a href="#0x0104-Web应用防火墙-WAF" class="headerlink" title="0x0104 Web应用防火墙(WAF)"></a>0x0104 Web应用防火墙(WAF)</h2><p>Web application firewalls are a technology that sits inline with an application in order to protect against web-based application attacks. Web application firewalls attempt to identify potentially dangerous or malforms attacked towards a given web applciation and prevent them. There are a number of bypass techniques for web application firewalls and should be tested during the penetration test.</p>
+<p>Web应用程序防火墙是一种与应用程序共存的技术，可以防止基于Web的应用程序受到攻击。 Web应用程序防火墙试图识别针对给定Web应用程序而受到攻击的潜在危险或格式错误，并阻止它们。 Web应用程序防火墙有许多绕过技术，应该在渗透测试期间进行测试。</p>
+<h1 id="0x02-逃避-Evasion"><a href="#0x02-逃避-Evasion" class="headerlink" title="0x02 逃避(Evasion)"></a>0x02 逃避(Evasion)</h1><p>Evasion is the technique used in order to escape detection during a penetration test. This could be circumventing a camera system as to not be seen by a guard, obfuscating your payloads to evade Intrusion Detection Systems (IDS) or Intrusion Prevention Systems (IPS) or encoding requests/responses to circumvent web application firewalls. Overall, the need to identify a low risk scenario for evading a technology or person should be formulated prior to the exploit.</p>
+<p>逃避是一种用于在渗透测试过程中逃避检测的技术。 这可能是绕过了警卫看不到的摄像头系统，混淆了您的有效载荷以逃避入侵检测系统（IDS）或入侵防御系统（IPS）或对请求/响应进行编码以绕过Web应用程序防火墙。 总体而言，应在漏洞利用之前确定对技术或人员进行低风险识别的需求。</p>
+<h1 id="0x03-精准打击-Precision-Strike"><a href="#0x03-精准打击-Precision-Strike" class="headerlink" title="0x03 精准打击(Precision Strike)"></a>0x03 精准打击(Precision Strike)</h1><p>The main focus of a penetration test is to simulate an attacker in order to represent a simulated attack against the organization. The value brought through a penetration test is generally not through smash and grab techniques where the attacks are noisy in nature and in an attempt to try every exploit. This approach may be particularly useful at the end of a penetration test to gauge the level of incident response from the organization, but in most cases the exploitation phase is a accumulation of specific research on the target.</p>
+<p>渗透测试的主要重点是模拟攻击者，以表示对组织的模拟攻击。 渗透测试所带来的价值通常不是通过攻击本质上是嘈杂的，试图尝试各种利用的粉碎和抢夺技术来实现的。 这种方法在渗透测试结束后评估组织的事件响应水平时可能特别有用，但是在大多数情况下，开发阶段是针对目标的特定研究的积累。</p>
+<h1 id="0x04-定制化漏洞利用途径"><a href="#0x04-定制化漏洞利用途径" class="headerlink" title="0x04 定制化漏洞利用途径"></a>0x04 定制化漏洞利用途径</h1><p>Every attack will typically not be the same in how the exploitation avenue occurs. In order to be successful in this phase, the attack should be tailored and customized based on the scenario. For example, if a wireless penetration test is occurred, and a specific technology is in use, these need to be identified and attacked based on what technologies are in place. Having a clear understanding of each scenario and the applicability of an exploit is one of the most important aspects of this phase of the penetration test.</p>
+<p>通常，每种攻击在利用途径上都是不同的。 为了在此阶段中取得成功，应根据情况定制和定制攻击。 例如，如果进行了无线渗透测试，并且正在使用特定技术，则需要根据所采用的技术来识别和攻击这些技术。 深入了解每种情况和漏洞利用的适用性是渗透测试此阶段最重要的方面之一。</p>
+<h1 id="0x05-定制的利用-Tailored-Exploits"><a href="#0x05-定制的利用-Tailored-Exploits" class="headerlink" title="0x05 定制的利用(Tailored Exploits)"></a>0x05 定制的利用(Tailored Exploits)</h1><p>In a number of occasions the exploits that are public on the Internet may need some work in order to successfully complete. In most cases, if an exploit is designed for Windows XP SP2, specific modifications to the exploit will be required in order for the attack to be successful via Windows XP SP3. The penetration tester should have the knowledge in place to be able to customize an exploit and the ability to change on the fly in order to successfully complete the attack.</p>
+<p>在许多情况下，要成功完成Internet上公开的漏洞利用，可能需要做一些工作。 在大多数情况下，如果为Windows XP SP2设计了漏洞利用程序，则需要对该漏洞利用程序进行特定的修改，才能通过Windows XP SP3成功进行攻击。 渗透测试人员应具备适当的知识，能够自定义漏洞利用程序和即时更改能力，以成功完成攻击。</p>
+<h2 id="0x0500-利用定制-Exploit-Customization"><a href="#0x0500-利用定制-Exploit-Customization" class="headerlink" title="0x0500 利用定制(Exploit Customization)"></a>0x0500 利用定制(Exploit Customization)</h2><p>In the event of an attack, it is often required to simulate the victims infrastructure in order to ensure that the exploitation phase will be successful. The techniques leveraged in the information gathering phase can always help assist in that however, having a working infrastructure and systems in place will make the expliotation phase much easier. In the event of a tailored exploit, the penetration tester should be able to customize already public exploits in order to successfully attack a system. A common theme for exploits is to target specific versions of operating systems or applications. The reason for this is due to memory addresses changing based on service packs, and/or new versions of the operating system. The tester should be able to customize these exploits to successfully deploy to different operating systems and successfully compromise the system.</p>
+<p>发生攻击时，通常需要模拟受害者的基础结构，以确保开发阶段能够成功进行。 在信息收集阶段利用的技术总是可以帮助实现这一点，但是，拥有适当的基础架构和系统将使开发阶段更加容易。 如果是量身定制的漏洞利用，渗透测试人员应该能够自定义已经公开的漏洞利用，以成功攻击系统。 漏洞利用的一个常见主题是针对特定版本的操作系统或应用程序。 其原因是由于内存地址根据Service Pack和/或操作系统的新版本而改变。 测试人员应该能够自定义这些漏洞，以成功部署到不同的操作系统并成功危害系统。</p>
+<h1 id="0x06-Zero-Day-Angle"><a href="#0x06-Zero-Day-Angle" class="headerlink" title="0x06 Zero-Day Angle"></a>0x06 Zero-Day Angle</h1><p>In most cases, the zero-day angle is often a last resort for most penetration testers. This type of attack often represents a highly advanced organization that can handle a focused attack against the organization through normal attack methods. In certain scenarios research may be conducted in order to reverse engineer, fuzz, or perform advanced discovery of vulnerabilities that have not been discovered. In the event this type of attack is applicable, ensure that the environment to the best of the attackers knowledge is reproduced to include countermeasure technology.</p>
+<p>在大多数情况下，对于大多数渗透测试人员而言，零日倾角通常是不得已的方法。 这种类型的攻击通常表示一个高级组织，可以通过常规攻击方法对组织进行有针对性的攻击。 在某些情况下，可以进行研究以逆向工程，模糊化或执行尚未发现的漏洞的高级发现。 如果适用这种类型的攻击，请确保复制攻击者所知的环境以包括对策技术。</p>
+<p>In order for zero-day exploits to be successful (or any exploit for that matter), having the same operating system, patches, and countermeasures is highly important on success. Sometimes this information may not be available based on the level of access or enumeration that has occurred.</p>
+<p>为了使零时差攻击（或与此相关的任何攻击）获得成功，拥有相同的操作系统，补丁程序和对策对成功至关重要。 有时，根据已发生的访问或枚举级别，可能无法获得此信息。</p>
+<h2 id="0x0600-模糊测试"><a href="#0x0600-模糊测试" class="headerlink" title="0x0600 模糊测试"></a>0x0600 模糊测试</h2><p>Fuzzing is the ability to recreate a protocol or application and attempt to send data at the application in hopes of identification of a vulnerability. Often times the hopes of a fuzzer is to identify a crash in an application and craft a specific exploit out of it. In the case of fuzzing, the attacker is attempting to create a specific vulnerability out of something that hasn’t been discovered before. As part of a penetration test, if no avenues are identified during the engagement, or the engagement calls for zero-day research; fuzzing techniques should be leveraged in order to identify potentially vulnerable exposures.</p>
+<p>模糊测试是重新创建协议或应用程序并尝试在该应用程序发送数据以识别漏洞的能力。 通常，模糊测试器的希望是识别应用程序中的崩溃并从中进行特定的利用。 在进行模糊测试的情况下，攻击者将尝试从以前未发现的内容中创建特定的漏洞。 作为渗透测试的一部分，如果在参与期间没有发现任何途径，或者参与需要零日研究； 应该利用模糊技术来识别潜在的易受攻击的暴露。</p>
+<h2 id="0x0601-源码分析"><a href="#0x0601-源码分析" class="headerlink" title="0x0601 源码分析"></a>0x0601 源码分析</h2><p>Other avenues that a penetration tester has available is if the source code is available or open-source. If the tester has the ability to look at the source code and identify flaws within the application, zero day exposures can also be identified through these methods.</p>
+<p>渗透测试人员可以使用的其他途径是源代码可用还是开源。 如果测试人员有能力查看源代码并识别应用程序中的缺陷，则也可以通过这些方法确定零日暴露。</p>
+<h2 id="0x0602-利用类型-Types-of-Exploits"><a href="#0x0602-利用类型-Types-of-Exploits" class="headerlink" title="0x0602 利用类型(Types of Exploits)"></a>0x0602 利用类型(Types of Exploits)</h2><p>There are several types of exploits that can be identified during a penetration test that could be classified as a zero-day. Some are listed in this section.</p>
+<p>在渗透测试期间可以识别出几种类型的漏洞，可以将其归类为零时差。 本节中列出了一些。</p>
+<h3 id="0x060200-缓冲区溢出"><a href="#0x060200-缓冲区溢出" class="headerlink" title="0x060200 缓冲区溢出"></a>0x060200 缓冲区溢出</h3><p>Buffer overflows occur due to improper coding techniques. Specifically this usually occurs when a program writes data to a buffer and then overruns the buffer’s boundary and begins to overwrite portions of memory. In buffer overflow exploits the attackers goal is to control a crash and gain code execution on the given system. In a buffer overflow exploit, one of the more common techniques is to overwrite a given register and “jump” to the shellcode.</p>
+<p>缓冲区溢出是由于编码技术不正确造成的。 特别是，这通常在程序将数据写入缓冲区，然后超出缓冲区边界并开始覆盖内存的某些部分时发生。 在缓冲区溢出中，攻击者的目标是控制崩溃并在给定系统上执行代码。 在缓冲区溢出利用中，较常见的技术之一是覆盖给定的寄存器并“跳转”到shellcode。</p>
+<h3 id="0x060201-SEH覆盖-SEH-Overwrites"><a href="#0x060201-SEH覆盖-SEH-Overwrites" class="headerlink" title="0x060201 SEH覆盖(SEH Overwrites)"></a>0x060201 SEH覆盖(SEH Overwrites)</h3><p>SEH overwrites occur when the structured exception handler begins to gracefully close an application. The attacker can manipulate how SEH works, overwrite the base address of the SEH handler and gain control of execution flow through the SEH. This is a common attack leveraged with buffer overflow vulnerability and applications that have been complied with SEH.</p>
+<p>当结构化异常处理程序开始正常关闭应用程序时，将发生SEH覆盖。 攻击者可以操纵SEH的工作方式，覆盖SEH处理程序的基地址，并控制通过SEH的执行流。 这是利用SEH符合的缓冲区溢出漏洞和应用程序的常见攻击。</p>
+<h3 id="0x060202-面向返回编程-Return-Oriented-Programming"><a href="#0x060202-面向返回编程-Return-Oriented-Programming" class="headerlink" title="0x060202 面向返回编程(Return Oriented Programming)"></a>0x060202 面向返回编程(Return Oriented Programming)</h3><p>Return Oriented Programming (ROP) is a technique used during a portion where the user has control of execution flow however data execution prevention (DEP) or other precluding defense mechanisms may be in place. In the situation where DEP is enabled, the attacker does not have direct access to execute specific assembly instructions, therefor the attacker buildsa ROP gadget in order to prep certain Windows API calls or techniques to disable DEP or circumvent DEP. A common method is leveraging the WriteProcessMemory call to copy data from the stack into a writable memory space that can then be executed.</p>
+<p> 面向返回的编程（ROP）是一种在用户可以控制执行流程的部分中使用的技术，但是可以采用数据执行保护（DEP）或其他预防措施。 在启用DEP的情况下，攻击者无权直接执行特定的汇编指令，因此攻击者会构建ROP小工具以准备某些Windows API调用或禁用DEP或规避DEP的技术。 一种常见的方法是利用WriteProcessMemory调用将数据从堆栈复制到可写的存储空间，然后再执行该空间。</p>
+<h2 id="0x0603-流量分析"><a href="#0x0603-流量分析" class="headerlink" title="0x0603 流量分析"></a>0x0603 流量分析</h2><p>Traffic analysis is the technique of identifying what type of information is being sent and the ability to understand and manipulate that traffic. A penetration tester should be able to understand how a protocol works and how it can be manipulated in order to leverage an attack.</p>
+<p>流量分析是一种识别正在发送的信息类型以及了解和操纵该流量的能力的技术。 渗透测试人员应该能够理解协议的工作原理以及如何利用协议来利用攻击。</p>
+<h2 id="0x0604-物理访问"><a href="#0x0604-物理访问" class="headerlink" title="0x0604 物理访问"></a>0x0604 物理访问</h2><p>Physical access during a penetration test can be a viable attack method for attempting to circumvent physical security controls and gain unauthorized access. During a penetration test, the assessor should be able to identify potentially flawed physical security controls and attempt to gain access to the facility if within scope.</p>
+<p>渗透测试期间的物理访问可能是尝试绕过物理安全控制并获得未授权访问的可行攻击方法。 在渗透测试期间，评估人员应该能够识别出可能存在缺陷的物理安全控制，并在范围内尝试访问该设施。</p>
+<h3 id="0x060400-Human-Angle"><a href="#0x060400-Human-Angle" class="headerlink" title="0x060400 Human Angle"></a>0x060400 Human Angle</h3><p>During a physical penetration test, some of the most obvious ways would be to social-engineer your way into the facility and gain access. This requires significant knowledge of how the organization performs business, and everything you learned from the intelligence gathering phase.</p>
+<p>在进行物理渗透测试时，一些最明显的方法是对进入工厂的方式进行社交工程并获得访问权限。 这需要对组织如何开展业务以及从情报收集阶段学到的一切有大量的了解。</p>
+<h3 id="0x060401-PC访问权限"><a href="#0x060401-PC访问权限" class="headerlink" title="0x060401 PC访问权限"></a>0x060401 PC访问权限</h3><p>If physical access is granted to a PC, the penetration tester should be able to attack the PC and gain access through multiple methods that would allow access to the system.</p>
+<p>如果授予PC物理访问权限，则渗透测试人员应该能够攻击PC并通过允许访问系统的多种方法获得访问权限。</p>
+<h2 id="0x0605-近场访问-WiFi"><a href="#0x0605-近场访问-WiFi" class="headerlink" title="0x0605 近场访问(WiFi)"></a>0x0605 近场访问(WiFi)</h2><p>Wireless communications are an avenue for attacks to gain access through RF type communications. The penetration tester should view the FCC radio frequency list to see if the target has registered spectrum frequencies in use.</p>
+<p>无线通信是攻击者通过RF类型通信获得访问权限的途径。 渗透测试仪应查看FCC射频列表，以查看目标是否已使用注册的频谱频率。</p>
+<h3 id="0x060500-WiFi攻击"><a href="#0x060500-WiFi攻击" class="headerlink" title="0x060500 WiFi攻击"></a>0x060500 WiFi攻击</h3><p>Regardless of protocol, there are a number of attacks available for WEP, WPA, WPA2, EAP-FAST, EAP-LEAP, and other avenues. The attacker should be familiar with the various encryption protocols and standards and be able to effectively test the implementation around the controls put in place.</p>
+<p>无论采用哪种协议，WEP，WPA，WPA2，EAP-FAST，EAP-LEAP和其他途径都可以使用多种攻击。 攻击者应该熟悉各种加密协议和标准，并能够有效地测试已实施的控件周围的实现。</p>
+<h3 id="0x060501-攻击用户"><a href="#0x060501-攻击用户" class="headerlink" title="0x060501 攻击用户"></a>0x060501 攻击用户</h3><p>Leveraging rogue access points in order to attack the victim is often a beneficial and a viable attack method. Leveraging a rogue access point to entice victims in order to leverage exploits or steal sensitive information should be performed during a wireless assessment. There are several common techniques in use of this, but most commonly the attacker would setup a wireless access point with the same name or an enticing name in order for the victim to connect.</p>
+<p>利用流氓接入点攻击受害者通常是一种有益且可行的攻击方法。 在无线评估期间，应利用恶意接入点诱使受害者利用攻击或窃取敏感信息。 有几种常用的技术可以使用，但是最常见的是，攻击者会设置一个具有相同名称或诱人名称的无线访问点，以便受害者连接。</p>
+<h1 id="0x07-攻击途径示例"><a href="#0x07-攻击途径示例" class="headerlink" title="0x07 攻击途径示例"></a>0x07 攻击途径示例</h1><p>In any scenario, the attacks should consist based on the scenario that is within scope of the engagement. Below is a list of several attack avenues to consider based on scenario but is by no means a comprehensive list.</p>
+<p>在任何情况下，攻击都应基于参与范围内的情况进行。 以下是根据场景考虑的几种攻击途径的列表，但绝不是全面的列表。</p>
+<p>Web Application Attacks Social-Engineering Physical Attack Avenues Memory Based Exploits (i.e. buffer/heap overflows, memory corruptions, use-after-free). Man in the Middle VLAN Hopping USB/Flash Drive deployment Reverse Engineering Zero-Day Angle Attacking the user Encryption Cracking Graphics Processing Unit (GPU) Cracking Traffic Analysis Firewire Routing protocols Phishing with Pretexting Employee Impersonation</p>
+<p>Web应用程序攻击社会工程物理攻击途径基于内存的漏洞（即缓冲区/堆溢出，内存损坏，无偿使用）。 处于中间VLAN中的人跳动USB /闪存驱动器部署逆向工程零日角度攻击用户加密破解图形处理单元（GPU）破解流量分析火线路由协议假冒员工冒名顶替网络钓鱼</p>
+<p>Again, these examples are only basic avenues for attack based on the scenario you are performing for the organization. The value from a penetration test comes from creativity and the ability to identify exposures and exploit them in a precise manner.</p>
+<p>同样，这些示例仅是根据您为组织执行的方案进行攻击的基本途径。 渗透测试的价值来自创造力和识别风险并以精确方式加以利用的能力。</p>
+<h1 id="0x08-总体目标-Overall-Objective"><a href="#0x08-总体目标-Overall-Objective" class="headerlink" title="0x08 总体目标(Overall Objective)"></a>0x08 总体目标(Overall Objective)</h1><p>In the pre-engagement interaction phase with the customer, a clear definition of the overall objectives of the penetration test should have been communicated. In the case of the exploitation phase, the biggest challenge is identifying the least path of resistance into the organization without detection and having the most impact on the organizations ability to generate revenue.</p>
+<p>在与客户进行接触前的互动阶段，应该传达渗透测试总体目标的明确定义。 在开发阶段，最大的挑战是在不被发现的情况下，确定进入组织的阻力最小的途径，并且对组织创收能力的影响最大。</p>
+<p>By performing the prior phases properly, a clear understanding of how the organization functions and makes money should be relatively understood. From the exploitation phase and into the post-exploitation phase, the attack vectors should rely solely on the mission of circumventing security controls in order to represent how the organization can suffer substantial losses through a targeted attack against the organization.</p>
+<p>通过正确地执行先前的阶段，应该相对了解组织的运作方式和赚钱方式。 从开发阶段到进入开发后阶段，攻击媒介应仅依赖于规避安全控制的任务，以表示组织如何通过针对组织的有针对性的攻击而遭受重大损失。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A0%87%E5%87%86/">标准</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Google%E7%BF%BB%E8%AF%91/">Google翻译</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/">漏洞利用</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E5%85%AD%E3%80%81%E5%90%8E%E5%88%A9%E7%94%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">六、后利用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E5%9B%9B%E3%80%81%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">
+                        <span class="hidden-mobile">四、漏洞分析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

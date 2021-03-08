@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="G3G4X5X6">
+  <meta name="keywords" content="">
+  
+  <title>四、漏洞分析 - MrMetatron&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"mrmetatron.github.io","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="四、漏洞分析">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-29 15:49" pubdate>
+        2020年12月29日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      11.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      157
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">四、漏洞分析</h1>
+            
+            <div class="markdown-body">
+              <h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><h1 id="0x00-漏洞测试"><a href="#0x00-漏洞测试" class="headerlink" title="0x00 漏洞测试"></a>0x00 漏洞测试</h1><p>Vulnerability testing is the process of discovering flaws in systems and applications which can be leveraged by an attacker. These flaws can range anywhere from host and service misconfiguration, or insecure application design. Although the process used to look for flaws varies and is highly dependent on the particular component being tested, some key principals apply to the process.</p>
+<p>漏洞测试是发现攻击者可以利用的系统和应用程序缺陷的过程。 这些缺陷的范围很广，从主机和服务的错误配置到不安全的应用程序设计。 尽管用于查找缺陷的过程各不相同，并且高度依赖于要测试的特定组件，但是某些关键原则适用于该过程。</p>
+<p>When conducting vulnerability analysis of any type the tester should properly scope the testing for applicable depth and breadth to meet the goals and/or requirements of the desired outcome. Depth values can include such things as the location of an assessment tool, authentication requirements, etc. For example; in some cases it maybe the goal of the test to validate mitigation is in place and working and the vulnerability is not accessible; while in other instances the goal maybe to test every applicable variable with authenticated access in an effort to discover all applicable vulnerabilities. Whatever your scope, the testing should be tailored to meet the depth requirements to reach your goals. Depth of testing should always be validated to ensure the results of the assessment meet the expectation (i.e. did all the machines authenticate, etc.). In addition to depth, breadth must also be taken into consideration when conducting vulnerability testing. Breadth values can include things such as target networks, segments, hosts, application, inventories, etc. At its simplest element, your testing may be to find all the vulnerabilities on a host system; while in other instances you may need to find all the vulnerabilities on hosts with in a given inventory or boundary. Additionally breadth of testing should always be validated to ensure you have met your testing scope (i.e. was every machine in the inventory alive at the time of scanning? If not, why).</p>
+<p>在进行任何类型的漏洞分析时，测试人员应适当调整测试的适用深度和广度，以达到预期结果的目标和/或要求。深度值可以包括诸如评估工具的位置，身份验证要求等内容。在某些情况下，验证缓解的测试目标可能已经到位并且可以正常工作，并且该漏洞无法访问；而在其他情况下，目标可能是使用经过身份验证的访问来测试每个适用的变量，以发现所有适用的漏洞。无论您的范围是什么，测试都应量身定制，以满足达到目标的深度要求。应始终验证测试深度，以确保评估结果符合预期（即所有机器都进行了身份验证等）。除了深度之外，在进行漏洞测试时还必须考虑广度。广度值可以包括目标网络，网段，主机，应用程序，清单等内容。最简单的测试可能是查找主机系统上的所有漏洞。而在其他情况下，您可能需要查找具有给定清单或边界的主机上的所有漏洞。此外，应始终验证测试的广度，以确保满足测试范围（即，扫描时库存中的每台计算机是否都处于活动状态？如果不是，原因为何）。</p>
+<h1 id="0x01-有效漏洞"><a href="#0x01-有效漏洞" class="headerlink" title="0x01 有效漏洞"></a>0x01 有效漏洞</h1><p>Active testing involves direct interaction with the component being tested for security vulnerabilities. This could be low level components such as the TCP stack on a network device, or it could be components higher up on the stack such as the web based interface used to administer such a device. There are two distinct ways to interact with the target component: automated, and manual.</p>
+<p>主动测试涉及与要测试的组件的安全漏洞的直接交互。 这可能是低级组件，例如网络设备上的TCP堆栈，也可能是栈上较高的组件，例如用于管理此类设备的基于Web的界面。 与目标组件进行交互的方式有两种：自动和手动。</p>
+<p><strong>Automated</strong></p>
+<p>Automated testing utilizes software to interact with a target, examine responses, and determine whether a vulnerability exists based on those responses. An automated process can help reduce time and labor requirements. For example, while it is simple to connect to a single TCP port on a system to determine whether it is open to receive incoming data, performing this step once for each of the available 65,535 possible ports requires a significant amount of time if done manually. When such a test must be repeated on multiple network addresses, the time required may simply be too great to allow testing to be completed without some form of automation. Using software to perform these functions allows the tester to accomplish the task at hand, and focus their attention on processing data and performing tasks which are better suited to manual testing.</p>
+<p>自动化测试利用软件与目标交互，检查响应并根据这些响应确定是否存在漏洞。 自动化过程可以帮助减少时间和劳动力需求。 例如，虽然很容易连接到系统上的单个TCP端口来确定它是否已打开以接收传入的数据，但是如果手动进行，则对每个可用的65,535个可能的端口执行一次此步骤需要大量的时间。 当必须在多个网络地址上重复进行这样的测试时，所需的时间可能太长而无法在没有某种形式的自动化的情况下完成测试。 使用软件执行这些功能可以使测试人员完成手头的任务，并将精力集中在处理数据和执行更适合手动测试的任务上。</p>
+<p><strong>Network/General Vulnerability Scanners</strong></p>
+<p><em>Port Based</em></p>
+<p>An automated port based scan is generally one of the first steps in a traditional penetration test because it helps obtain a basic overview of what may be available on the target network or host. Port based scanners check to determine whether a port on a remote host is able to receive a connection. Generally, this will involve the protocols which utilize IP (such as TCP, UDP, ICMP, etc.), However, ports on other network protocols could be present as well dependent on the environment (for example, it’s quite common in large mainframe environments for SNA to be in use). Typically, a port can have one of two possible states:</p>
+<p>基于端口的自动扫描通常是传统渗透测试的第一步，因为它有助于获得目标网络或主机上可能可用内容的基本概述。 基于端口的扫描程序检查以确定远程主机上的端口是否能够接收连接。 通常，这将涉及利用IP的协议（例如TCP，UDP，ICMP等），但是，其他网络协议上的端口也可能取决于环境而存在（例如，在大型主机环境中很常见） 以便使用SNA）。 通常，端口可以具有以下两种可能状态之一：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Open - the port is able to receive data</span><br><span class="line">Closed - the port is not able to receive data</span><br></pre></td></tr></table></figure>
+
+<p>A scanner may list other states, such as “filtered”, if it is unable to accurately determine whether a given port is open or closed.</p>
+<p>如果扫描仪无法准确确定给定端口是打开还是关闭，它可能会列出其他状态，例如“已过滤”。</p>
+<p>When the scanner determines that a port is open, a presumption is made by the scanner as to whether a vulnerability is present or not. For example, if a port based scanner connects to TCP port 23, and that port is listening, the scanner is likely to report that the telnet service is available on the remote host, and flag it as having a clear text authentication protocol enabled.</p>
+<p>当扫描程序确定端口已打开时，扫描程序将假定是否存在漏洞。 例如，如果基于端口的扫描器连接到TCP端口23，并且该端口正在侦听，则扫描器可能会报告远程主机上有telnet服务可用，并将其标记为启用了明文身份验证协议。</p>
+<p><strong>Service Based</strong></p>
+<p>A service based vulnerability scanner is one which utilizes specific protocols to communicate with open ports on a remote host, to determine more about the service that is running on that port. This is more precise than a port scan, because it does not rely on the port alone to determine what service is running. For example, a port scan may be able to identify that TCP port 8000 is open on a host, but it will not know based on that information alone what service is running there. A service scanner would attempt to communicate with the port using different protocols. If the service running on port 8000 is able to correctly communicate using HTTP, then it will be identified as a web server.</p>
+<p>基于服务的漏洞扫描程序是一种利用特定协议与远程主机上的开放端口进行通信，以确定有关在该端口上运行的服务的更多信息的漏洞扫描程序。 这比端口扫描更为精确，因为它不仅仅依靠端口来确定正在运行的服务。 例如，端口扫描可能能够识别TCP端口8000在主机上处于打开状态，但是仅根据该信息，它不会知道那里正在运行什么服务。 服务扫描程序将尝试使用不同的协议与端口进行通信。 如果在端口8000上运行的服务能够使用HTTP正确通信，则它将被识别为Web服务器。</p>
+<p><strong>Banner Grabbing</strong></p>
+<p>Banner grabbing is the process of connecting to a specific port and examining data returned from the remote host to identify the service/application bound to that port. Often in the connection process, software will provide an identification string which may include information such as the name of the application, or information about which specific version of the software is running.</p>
+<p>标语抓取是连接到特定端口并检查从远程主机返回的数据以标识绑定到该端口的服务/应用程序的过程。 通常在连接过程中，软件会提供一个标识字符串，其中可能包含诸如应用程序名称之类的信息，或者有关正在运行哪个特定版本软件的信息。</p>
+<p><strong>Web Application Scanners</strong></p>
+<p><strong>General application flaw scanners</strong></p>
+<p>Most web application scans start with the address of a website, web application, or web service. The scanner then crawls the site by following links and directory structures. After compiling a list of webpages, resources, services and/or other media offered, the scanner will perform tests, or audits against the results of the crawl. For example, if a webpage discovered in the crawl has form fields, the scanner might attempt SQL injection or cross-site scripting. If the crawled page contained errors, the scanner might look for sensitive information displayed in the error detail, and so on.</p>
+<p>大多数Web应用程序扫描均以网站，Web应用程序或Web服务的地址开头。 然后，扫描程序将通过遵循链接和目录结构对站点进行爬网。 编译提供的网页，资源，服务和/或其他媒体的列表后，扫描程序将执行测试或对爬网结果进行审核。 例如，如果在爬网中发现的网页具有表单字段，则扫描程序可能会尝试SQL注入或跨站点脚本。 如果爬网的页面包含错误，则扫描程序可能会寻找错误详细信息中显示的敏感信息，依此类推。</p>
+<p>It should be noted that crawling and testing phases can be staggered and performed at the same time to reduce overall scanning time. This is the default behavior for many web application scanners.</p>
+<p>应当注意，爬行和测试阶段可以错开并同时执行，以减少总体扫描时间。 这是许多Web应用程序扫描程序的默认行为。</p>
+<p><strong>Directory Listing/Brute Forcing</strong></p>
+<p>Suppose there are directories available on the website that the crawler won’t find by following links. Without prior knowledge of these directories, provided by the user, the scanner has at least two additional options.</p>
+<p>假设通过以下链接，爬网程序无法找到网站上的可用目录。 在没有用户提供的这些目录的先验知识的情况下，扫描仪至少具有两个附加选项。</p>
+<p>The scanner/crawler can search for “common” directories. These are directories with names and variants of names that are commonly found, and are included in a list that has been compiled as the result of years of experience and scanning. Most web applications have a “built-in” list of this sort, while some penetration testers maintain their own custom lists. Sometimes directory names are unique enough that they can be used to identify a 3rd party web application with reasonably high accuracy. An accurate directory list can often be the key to finding the “administrative” portion of a website - a portion most penetration testers should be highly interested in discovering.</p>
+<p>扫描仪/搜寻器可以搜索“公用”目录。 这些是具有常见名称的名称和名称变体的目录，并包含在经过多年经验和扫描而编制的列表中。 大多数Web应用程序都有这种“内置”列表，而某些渗透测试人员则维护自己的自定义列表。 有时，目录名称的唯一性足以使它们可用于以相当高的准确性识别第三方Web应用程序。 准确的目录列表通常可能是找到网站“管理”部分的关键-大多数渗透测试人员应该对发现这一部分非常感兴趣。</p>
+<p>Brute forcing directories is a similar approach, though instead of using a static list, a tool is used to enumerate every possibility a directory name could have. The downside of using this approach is that it has the potential to crash or inundate the web server with requests and thus cause a denial-of-service condition. Care should be taken to perform directory brute forcing while someone is keeping a close watch on the condition of the web server, especially in a production setting.</p>
+<p>强制目录是一种类似的方法，尽管不是使用静态列表，而是使用一种工具来枚举目录名称可能具有的所有可能性。 使用此方法的缺点是，它可能使Web服务器崩溃或被请求淹没，从而导致拒绝服务情况。 当有人密切注意Web服务器的状况时，尤其是在生产环境中，应小心执行目录暴力破解。</p>
+<p>The reason you as the penetration tester would want to perform directory listing is to extend your attack field or to find directories that could contain sensitive information (which depending on the goal of the penetration test, may lead to a major finding within it).</p>
+<p>作为渗透测试人员，您希望执行目录列表的原因是为了扩展攻击范围或查找可能包含敏感信息的目录（这取决于渗透测试的目标，可能会在其中产生重大发现）。</p>
+<p><strong>Web Server Version/Vulnerability Identification</strong></p>
+<p>Many web application scanners will attempt to compare the version of the web server with known vulnerable versions in security advisories. This approach can sometimes lead to false positives; as there are some cases where open-source web servers are forked or copied and given new names, banners, and assigned different version numbers. Additional steps should be taken to verify that the web server is, in fact, running what the banner, or web scanner reports.</p>
+<p>许多Web应用程序扫描程序将尝试在安全公告中将Web服务器的版本与已知的易受攻击的版本进行比较。 这种方法有时会导致误报。 因为在某些情况下，派生或复制开源Web服务器并为其赋予新名称，标语并分配了不同的版本号。 应该采取其他步骤来验证Web服务器实际上是否正在运行横幅或Web扫描程序报告的内容。</p>
+<p><em>Methods</em></p>
+<p>Several web server methods are considered insecure, and can allow attackers to gain varying levels of access to web server content. The fact that these methods are part of the web server software, and not web site content differentiates it from other vulnerabilities discussed thus far. Some insecure methods include:</p>
+<p>几种Web服务器方法被认为是不安全的，它们可以使攻击者获得对Web服务器内容的不同级别的访问。 这些方法是Web服务器软件的一部分，而不是Web站点内容，这一事实将其与迄今为止讨论的其他漏洞区分开来。 一些不安全的方法包括：</p>
+<p>OPTIONS</p>
+<p>While the HTTP OPTIONS method is not insecure by itself, it can allow an attacker to easily enumerate the kinds of HTTP methods accepted by the target server. Note, the OPTIONS method is not always accurate and each of the methods below should be validated individually.</p>
+<p>尽管HTTP OPTIONS方法本身并不是不安全的，但它可以使攻击者轻松枚举目标服务器接受的HTTP方法的种类。 注意，OPTIONS方法并不总是准确的，下面的每个方法都应单独进行验证。</p>
+<p>PUT/DELETE</p>
+<p>Using the PUT method, an attacker can upload malicious content such as HTML pages that could be used to transfer information, alter web content or install malicious software on the web server. Using the DELETE method an attacker could remove content or deface a site causing a disruption of service.</p>
+<p>使用PUT方法，攻击者可以上载诸如HTML页面之类的恶意内容，这些内容可能用于传输信息，更改Web内容或在Web服务器上安装恶意软件。 攻击者可以使用DELETE方法删除内容或破坏站点，从而导致服务中断。</p>
+<p>Additionally, modern REST applications use PUT in a different manner:</p>
+<p>此外，现代REST应用程序以不同的方式使用PUT：</p>
+<p>Create-&gt;POST Read-&gt;GET Update-&gt;PUT Delete-&gt;DELETE</p>
+<p>WebDAV</p>
+<p>WebDAV is a component of the Microsoft Internet Information Server (IIS). WebDAV stands for “Web-based Distributed Authoring and Versioning” and is used for editing and file management. WebDAV extensions are used by administrators to manage and edit Web content remotely on IIS Web servers and can include PROPFIND, COPY, MOVE, PROPPATCH, MKCOL, LOCK, and UNLOCK .WebDAV interacts with core operating system components, which can expose a system to several possible vulnerabilities. Some of these potential risks include:</p>
+<p>WebDAV是Microsoft Internet信息服务器（IIS）的组件。 WebDAV代表“基于Web的分布式创作和版本控制”，并用于编辑和文件管理。 管理员使用WebDAV扩展来在IIS Web服务器上远程管理和编辑Web内容，其中可以包括PROPFIND，COPY，MOVE，PROPPATCH，MKCOL，LOCK和UNLOCK。WebDAV与核心操作系统组件进行交互，从而使系统暴露于多个可能的漏洞。 这些潜在风险包括：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Buffer overflow conditions due to improper handling of user requests</span><br><span class="line">Denial-of-service conditions from malformed requests</span><br><span class="line">Domain based scripting attacks</span><br><span class="line">Privilege escalation</span><br><span class="line">Execution of arbitrary code</span><br></pre></td></tr></table></figure>
+
+<p>TRACE/TRACK</p>
+<p>Modern web servers support the TRACE HTTP method, which contains a flaw that can lead to unauthorized information disclosure. The TRACE method is used to debug web server connections and can allow the client to see what is being received at the other end of the request chain. Enabled by default in all major web servers, a remote attacker may abuse the HTTP TRACE functionality to disclose sensitive information resulting in a loss of confidentiality.</p>
+<p>现代Web服务器支持TRACE HTTP方法，该方法包含可能导致未经授权的信息泄露的缺陷。 TRACE方法用于调试Web服务器连接，并且可以允许客户端查看请求链另一端正在接收的内容。 默认情况下，所有主要的Web服务器都启用了远程攻击者，远程攻击者可能会滥用HTTP TRACE功能来泄露敏感信息，从而导致机密性下降。</p>
+<p><strong>Network Vulnerability Scanners/Specific Protocols</strong></p>
+<p><strong>VPN</strong></p>
+<p>Conventional vulnerability assessment tools are not capable of performing the correct protocol negotiations with VPN devices that service Internet Key Exchange (IKE). In situations where IKE is in use, it will be necessary to use additional toolkits that can perform functions such as accurate fingerprinting, back off patterns and identify authentication mechanisms that are in use. By identifying these attributes of a VPN device, weaknesses can be identified in running code versions as well as authentication types such as static preshared keys.</p>
+<p>传统的漏洞评估工具无法与为Internet密钥交换（IKE）服务的VPN设备执行正确的协议协商。 在使用IKE的情况下，有必要使用其他工具包来执行诸如准确的指纹识别，退回模式和识别正在使用的身份验证机制之类的功能。 通过识别VPN设备的这些属性，可以识别运行代码版本以及身份验证类型（例如静态预共享密钥）中的弱点。</p>
+<p><strong>Voice Network Scanners</strong></p>
+<p><em>War Dialing</em></p>
+<p>Many organizations still utilize out of band access over telephone lines. Using vulnerability assessment tools that are designed to conduct war-dialing can determine weaknesses in authentication and network architecture.</p>
+<p>许多组织仍在通过电话线使用带外访问。 使用旨在进行战争拨号的漏洞评估工具可以确定身份验证和网络体系结构中的弱点。</p>
+<p><em>VoIP</em></p>
+<p>Voice over IP technologies are now abundant within most organizations. Many tools have been developed to conduct vulnerability analysis of VoIP infrastructures. Using these tools, one can identify if VoIP networks are properly segmented and potentials for leveraging these networks to access core infrastructure systems or record phone conversations on a target network may exist.</p>
+<p>IP语音技术现在在大多数组织中都很丰富。 已经开发了许多工具来进行VoIP基础结构的漏洞分析。 使用这些工具，可以确定VoIP网络是否正确分段，并且可能存在利用这些网络访问核心基础结构系统或在目标网络上记录电话对话的潜力。</p>
+<p><strong>Manual Direct Connections</strong></p>
+<p>As with any automated process or technology, the margin for error always exists. Instabilities in systems, network devices and network connectivity may introduce inaccurate results during testing. It is always recommended to execute manual direct connections to each protocol or service available on a target system to validate the results of automated testing as well as identifying all potential attack vectors and previously unidentified weaknesses.</p>
+<p>与任何自动化过程或技术一样，错误的余地总是存在的。 系统，网络设备和网络连接的不稳定性可能会在测试期间引入不正确的结果。 始终建议对目标系统上可用的每个协议或服务执行手动直接连接，以验证自动测试的结果以及识别所有潜在的攻击媒介和以前未发现的弱点。</p>
+<p><strong>Obfuscated</strong></p>
+<p><em>Multiple Exit Nodes</em></p>
+<p>Security monitoring and defense systems operate under the pretense of identifying malicious activity from a specific IP address. In situations where Intrusion Detection systems are deployed and monitoring activity, sourcing assessment and attack activities from multiple IP addresses provide more accurate results and lessen the opportunity for a monitoring device on a target network to identify and respond. Technologies such as TOR proxies can provide a means to conduct assessment activities without sourcing from a single IP address.</p>
+<p>安全监视和防御系统会伪装成从特定IP地址识别恶意活动。 在部署了入侵检测系统并监视活动的情况下，来自多个IP地址的源评估和攻击活动可提供更准确的结果，并减少目标网络上的监视设备进行识别和响应的机会。 TOR代理之类的技术可以提供一种进行评估活动的方法，而无需从单个IP地址采购。</p>
+<p><em>IDS Evasion</em></p>
+<p>When conducting assessment activities against a target environment where IDS technologies are deployed, it may be necessary to perform evasion. Using methods such as string manipulation, polymorphism, session splicing, and fragmentation can provide more accurate results while bypassing signature matching patterns implemented in IDS devices.</p>
+<p>当针对部署了IDS技术的目标环境进行评估活动时，可能有必要进行规避。 使用诸如字符串操作，多态性，会话拼接和分段之类的方法可以提供更准确的结果，同时绕过IDS设备中实现的签名匹配模式。</p>
+<h1 id="0x02-虚假漏洞"><a href="#0x02-虚假漏洞" class="headerlink" title="0x02 虚假漏洞"></a>0x02 虚假漏洞</h1><p><strong>Metadata Analysis</strong></p>
+<p>Metadata analysis involves looking at data that describes a file, as opposed to the file data itself. A Microsoft Office document for example, might list the document author, company, when the document was last saved, when the document was created, and so on. Many documents even allow for the entry of custom metadata. This could potentially contain internal addresses and paths to servers, internal IP addresses, and other information a penetration tester could use to gain additional access or information.</p>
+<p>元数据分析涉及查看描述文件的数据，而不是文件数据本身。 例如，一个Microsoft Office文档可能会列出文档作者，公司，上次保存文档的时间，创建文档的时间等等。 许多文档甚至允许输入自定义元数据。 它可能包含内部地址和服务器路径，内部IP地址以及渗透测试人员可以用来获取其他访问或信息的其他信息。</p>
+<p>Though metadata is quite common on documents located on a company’s internal network, companies should take care to purge metadata before making documents available to the public, or on the public Internet. For this reason, any metadata an attacker could gain access to passively (without directly attacking the target) should be considered a security issue.</p>
+<p>尽管元数据在公司内部网络上的文档中非常普遍，但是公司在将文档提供给公众或公共Internet之前，应谨慎清除元数据。 因此，攻击者可以被动地访问（而不直接攻击目标）的任何元数据都应被视为安全问题。</p>
+<p><strong>Traffic Monitoring</strong></p>
+<p>Traffic monitoring is the concept of connecting to an internal network and capturing data for offline analysis. Route poisoning is excluded from this phase as these create “noise” on the network and can easily be detected. It is often surprising how much sensitive data can be gleaned from a “switched” network. This “leaking of data” onto a switched network can be categorized as follows:</p>
+<p>流量监视是连接到内部网络并捕获数据以进行脱机分析的概念。 此阶段排除了路由中毒，因为它们会在网络上产生“噪声”，并且很容易被检测到。 令人惊讶的是，可以从“交换”网络中收集到多少敏感数据。 可以将这种“数据泄漏”到交换网络中的方法如下：</p>
+<p>ARP/MAC cache overflow, causing switched packets to be broadcast - this is common on Cisco switches that have improper ARP/MAC cache timing configurations.</p>
+<p>ARP / MAC缓存溢出，导致交换的数据包被广播-这在ARP / MAC缓存定时配置不正确的Cisco交换机上很常见。</p>
+<p>Etherleak - some older network drivers and some embedded drivers will use data from system memory to pad ARP packets. If enough ARP packets can be collected, sensitive information from internal memory can be captured</p>
+<p>Etherleak-一些较旧的网络驱动程序和某些嵌入式驱动程序将使用系统内存中的数据填充ARP数据包。 如果可以收集足够的ARP数据包，则可以捕获内部存储器中的敏感信息</p>
+<p>Misconfigured clusters or load balancers 群集或负载均衡器配置错误</p>
+<p>Hubs plugged into the network Note that some of these categories only result in data leakage to a single subnet, while others can result in leakage to much larger network segments.</p>
+<p>集线器插入网络注意，其中一些类别只会导致数据泄漏到单个子网，而其他类别可能导致泄漏到更大的网络段。</p>
+<h1 id="0x03-漏洞验证"><a href="#0x03-漏洞验证" class="headerlink" title="0x03 漏洞验证"></a>0x03 漏洞验证</h1><p><strong>Correlation between Tools</strong></p>
+<p>When working with multiple tools the need for correlation of findings can become complicated. Correlation can be broken down into two distinct styles, specific and categorical correlation of items, both are useful based on the type of information, metrics and statistics you are trying to gather on a given target.</p>
+<p>当使用多种工具时，结果相关性的需求可能会变得复杂。 关联可以分为两种不同的样式，即项目的特定和分类关联，这两种方式都可以根据您要在给定目标上收集的信息类型，指标和统计信息来使用。</p>
+<p>Specific correlation relates to a specific definable issue such as vulnerability ID, CVE, OSVDB, vendor indexing numbers, known issue with a software product, etc. and can be grouped with micro factors such as hostname, IP, FQDN, MAC Address etc. An example of this would be grouping the findings for host x by CVE number as they would index the same issue in multiple tools.</p>
+<p>特定关联与特定的可定义问题有关，例如漏洞ID，CVE，OSVDB，供应商索引号，软件产品的已知问题等，并且可以与诸如主机名，IP，FQDN，MAC地址等微观因素分组。 例如，可以将主机x的发现结果按CVE编号分组，因为它们将在多个工具中索引同一问题。</p>
+<p>Categorical correlation relates to a categorical structure for issues such as in compliance frameworks (i.e. NIST SP 800-53, DoD 5300 Series, PCI, HIPPA, OWASP List, etc.) that allow you to group items by macro factors such as vulnerability types, configuration issues, etc. An example of this would be grouping all the findings for hosts with default passwords into a group for password complexity within NIST 800-53 (IA-5).</p>
+<p>分类相关性涉及问题的分类结构，例如合规性框架（例如，NIST SP 800-53，DoD 5300系列，PCI，HIPPA，OWASP列表等）中的问题，这些问题使您可以根据宏观因素（例如漏洞类型， 例如，配置问题等。在NIST 800-53（IA-5）中，将具有默认密码的主机的所有发现分组为一个分组，以解决密码复杂性问题。</p>
+<p>In most cases penetration testers are going to focus on the micro issues of specific vulnerabilities found in redundancy between multiple tools on the same host. This redundancy can skew the statistical results in the test output leading to a false increased risk profile.</p>
+<p>在大多数情况下，渗透测试人员将专注于特定漏洞的微观问题，这些漏洞是在同一主机上的多个工具之间的冗余中发现的。 这种冗余可能会使测试输出中的统计结果产生偏差，从而导致错误的风险分布增加。</p>
+<p>The inverse of this is with an over reduction or simplification in macro correlation (i.e. top 10/20 lists) as the results can skew the output resulting in a false reduced risk profile.</p>
+<p>反之则是宏观相关性的过度降低或简化（即排名前10/20的列表），因为结果可能会使输出偏斜，从而导致错误的风险分布降低。</p>
+<p><strong>Manual Testing/Protocol Specific</strong></p>
+<p><strong>VPN</strong></p>
+<p><em>Fingerprinting</em></p>
+<p>Fingerprinting is useful to determine the type of VPN device and correct version of code released installed. By accurately fingerprinting the device, proper research and analysis can then be conducted against the target system.</p>
+<p>指纹对确定VPN设备的类型和已安装的已发布代码的正确版本很有用。 通过对设备进行准确的指纹识别，可以对目标系统进行适当的研究和分析。</p>
+<p><em>Authentication</em></p>
+<p>VPN devices can operate with various forms of authentication. Using VPN toolkits that are not part of conventional vulnerability assessment tools allow for proper identification of the authentication mechanisms and determine weaknesses that may exist such as pre-shared keys or default group IDs.</p>
+<p>VPN设备可以使用各种形式的身份验证进行操作。 使用不属于常规漏洞评估工具的VPN工具包，可以正确识别身份验证机制并确定可能存在的弱点，例如预共享密钥或默认组ID。</p>
+<p><strong>Citrix</strong></p>
+<p><em>Enumeration</em></p>
+<p>Many default installations and poorly configured Citrix appliances provide a means to enumerate published applications and determine valid usernames that are configured to authenticate to the device. This information becomes crucial during brute force attacks and attempts to break out of predefined profiles for authorized users.</p>
+<p>许多默认安装和配置不佳的Citrix设备提供了一种枚举已发布的应用程序并确定配置为对设备进行身份验证的有效用户名的方法。 该信息在蛮力攻击期间很重要，并试图突破授权用户的预定义配置文件。</p>
+<p><strong>DNS</strong></p>
+<p>Domain Name Systems can offer an abundance of information to an attacker when they are not properly hardened. Version information allow for proper identification and accurate research analysis. Weaknesses such as zone transfers provide an exhaustive list of additional targets for attack as well as information leakage of potentially sensitive data pertaining to the target organization.</p>
+<p>如果域名系统未得到适当的加固，它们可以向攻击者提供大量信息。 版本信息允许正确识别和准确的研究分析。 诸如区域传输之类的弱点提供了针对攻击的其他目标的详尽列表，以及与目标组织有关的潜在敏感数据的信息泄漏。</p>
+<p><strong>Web</strong></p>
+<p>Web services provide a large landscape for an attacker. Unlike most other protocols and services, web services are often found running on multiple ports of a single system. Administrators may focus their hardening on the common ports for web services or published directories and neglect to properly harden additional attributes. Web services should always be reviewed in a manual fashion as automated assessment tools are not capable of identifying most weaknesses in their services.</p>
+<p>Web服务为攻击者提供了广阔的前景。 与大多数其他协议和服务不同，通常可以在单个系统的多个端口上运行Web服务。 管理员可能会将其强化工作集中在Web服务或已发布目录的通用端口上，而忽略了适当强化其他属性的情况。 Web服务应始终以手动方式进行检查，因为自动评估工具无法识别其服务中的大多数弱点。</p>
+<p><strong>Mail</strong></p>
+<p>Mail servers can provide an abundance of information about a target organization. Using inherent functions in the target device, confirmation of valid accounts can be conducted as well as developing a list of potential usernames for additional attacks on other systems. Vulnerabilities such as mail relaying can be leveraged for additional attacks on the organization such as phishing. Often, mail servers will provide a web interface for remote access that can be targeted in brute force campaigns.</p>
+<p>邮件服务器可以提供有关目标组织的大量信息。 使用目标设备中的固有功能，可以进行有效帐户的确认以及为其他系统上的其他攻击开发潜在用户名的列表。 可以利用诸如邮件中继之类的漏洞来对组织进行其他攻击，例如网络钓鱼。 通常，邮件服务器会为远程访问提供一个Web界面，该界面可用于暴力活动。</p>
+<p><strong>Attack Avenues</strong></p>
+<p><strong>Creation of attack trees</strong></p>
+<p>During a security assessment, it is crucial to the accuracy of the final report to develop an attack tree as testing progresses throughout the engagement. As new systems, services and potential vulnerabilities are identified; an attack tree should be developed and regularly updated. This is especially important during the exploitation phases of the engagement as one point of entry that materializes could be repeated across other vectors mapped out during the development of the attack tree.</p>
+<p>在安全评估期间，随着测试在整个参与过程中的进展，制定攻击树对于最终报告的准确性至关重要。 随着新系统，服务和潜在漏洞的发现； 应该开发攻击树并定期更新。 在参与的开发阶段，这一点尤其重要，因为可以在攻击树的开发过程中跨制定的其他向量上重复实现的一个入口点。</p>
+<p><strong>Isolated Lab Testing</strong></p>
+<p>The accuracy of vulnerability analysis and exploitation is substantially greater when replicated environments are setup in an isolated lab. Often times, systems may be hardened with specific control sets or additional protection mechanisms. By designing a lab that mimics that of the target organization, the consultant can ensure that the vulnerabilities identified and exploits attempted against the desired targets are reliable and lessen the opportunity for inaccurate results or system inoperability.</p>
+<p>在隔离的实验室中设置复制环境时，漏洞分析和利用的准确性会大大提高。 通常，系统可以使用特定的控制集或其他保护机制进行加固。 通过设计一个模仿目标组织的实验室，顾问可以确保所发现的漏洞和针对期望目标的攻击是可靠的，并减少了获得不准确结果或系统无法操作的机会。</p>
+<p><strong>Visual Confirmation</strong></p>
+<p><em>Manual Connection with Review</em></p>
+<p>While proper correlation can help reduce false findings and increase overall accuracy, there is no substitute for visually inspecting a target system. Assessment tools are designed to review the results of a protocol/service connection or the response and compare to known signatures of vulnerabilities. However, tools are not always accurate in identifying services on uncommon ports or custom logic that may be built into an application. By manually assessing a target system, its services available and the applications that provide functionality for those services, a tester can ensure that proper validation and vulnerability identification have been completed.</p>
+<p>尽管适当的相关性可以帮助减少错误的发现并提高总体准确性，但是没有替代方法可以目视检查目标系统。 评估工具旨在检查协议/服务连接或响应的结果，并与已知的漏洞签名进行比较。 但是，在识别不常见端口上的服务或应用程序中可能内置的自定义逻辑时，工具并不总是准确的。 通过手动评估目标系统，可用的服务以及为这些服务提供功能的应用程序，测试人员可以确保已完成正确的验证和漏洞识别。</p>
+<h1 id="0x04-漏洞研究"><a href="#0x04-漏洞研究" class="headerlink" title="0x04 漏洞研究"></a>0x04 漏洞研究</h1><p><strong>Public Research</strong></p>
+<p>Once a vulnerability has been reported in a target system, it is necessary to determine the accuracy of the identification of the issue, and to research the potential exploitability of the vulnerability within the scope of the penetration test. In many cases, the vulnerability will be a reported software vulnerability in a commercial or open source software package, and in other cases the vulnerability can be a flaw in a business process, or a common administrative error like misconfiguration or default password usage.</p>
+<p>一旦在目标系统中报告了漏洞，就必须确定问题标识的准确性，并研究在渗透测试范围内漏洞的潜在利用性。 在许多情况下，该漏洞将是商业或开源软件包中的已报告软件漏洞，而在其他情况下，该漏洞可能是业务流程中的缺陷，或者是常见的管理错误，例如配置错误或默认密码使用。</p>
+<p><em>Vulnerability Databases</em></p>
+<p>Vulnerability databases can be used to verify an issue reported by an automated tool, or to manually review the vulnerability of a target application. Most tools will use the CVE identifier for a given vulnerability, which can be used to access the summary information and links to other sources in the CVE database. The CVE can also be used to search for the issue in vulnerability databases like OSVDB and Bugtraq, or in exploit databases and frameworks.</p>
+<p>漏洞数据库可用于验证自动化工具报告的问题，或手动查看目标应用程序的漏洞。 大多数工具将针对给定漏洞使用CVE标识符，该标识符可用于访问摘要信息以及指向CVE数据库中其他来源的链接。 CVE还可以用于在漏洞数据库（例如OSVDB和Bugtraq）或漏洞利用数据库和框架中搜索问题。</p>
+<p>Vulnerability databases should be used to verify the accuracy of a reported issue. For example, an Apache web server flaw can exist on Windows, but not on Linux, which may not be taken into account by an automated scanner.</p>
+<p>应该使用漏洞数据库来验证所报告问题的准确性。 例如，Apache Web服务器漏洞可能在Windows上存在，但在Linux上不存在，自动扫描程序可能不会考虑到这一缺陷。</p>
+<p><em>Vendor Advisories</em></p>
+<p>Vendor-issued security advisories and change logs can provide pointers to vulnerability information that may not be reported by any automated tools. Many major software vendors report limited details on internally discovered issues and issues where an independent researcher coordinates the disclosure of a vulnerability. If the researcher chooses to remain silent on the details of the vulnerability, the vendor advisory is frequently the only data available. In these cases, other researchers may discover more details independently, and add the details to vulnerability databases. Searching for the CVE used in a vendor advisory may turn up more detail on a potentially exploitable issue.</p>
+<p>供应商发布的安全公告和更改日志可以提供指向漏洞信息的指针，这些漏洞信息可能无法通过任何自动化工具进行报告。 许多主要软件供应商报告的内部发现问题以及独立研究人员协调漏洞披露的问题的详细信息有限。 如果研究人员选择对漏洞的详细信息保持沉默，则供应商咨询通常是唯一可用的数据。 在这些情况下，其他研究人员可能会独立发现更多详细信息，并将这些详细信息添加到漏洞数据库中。 搜索供应商咨询中使用的CVE可能会发现有关潜在可利用问题的更多详细信息。</p>
+<p>Change logs can provide guidance for additional research, especially in open source products, where a diff between versions can reveal a vulnerability which was fixed but not widely known, and perhaps not prioritized for upgrade or installation as a result.</p>
+<p>变更日志可以为其他研究提供指导，尤其是在开源产品中，在这些产品之间，版本之间的差异可以揭示一个已修复但尚未广为人知的漏洞，因此可能不优先考虑进行升级或安装。</p>
+<p><strong>Exploit Databases and Framework Modules</strong></p>
+<p>Many exploit databases are actively maintained and publicly accessible on the Internet. Security researchers and exploit writers do not always submit their exploit code to multiple sites, so it is advisable to become familiar with several sites, and check each one for exploit code to use against potentially vulnerable applications. While some vulnerability databases track exploit availability, their coverage is usually incomplete and should not be considered exhaustive.</p>
+<p>许多漏洞利用数据库都得到了积极维护，可以在Internet上公开访问。 安全研究人员和漏洞利用者并不总是将其漏洞利用代码提交到多个站点，因此建议您熟悉多个站点，并检查每个站点的漏洞利用代码以用于潜在的易受攻击的应用程序。 尽管某些漏洞数据库跟踪漏洞利用程序的可用性，但它们的覆盖范围通常不完整，不应视为详尽无遗。</p>
+<p>Commercial and open source exploit frameworks can also prove useful in researching vulnerabilities. In most cases, available exploit modules are listed on their public web sites, and can be a valuable indication of the exploitability of an issue.</p>
+<p>商业和开源漏洞利用框架也可以证明对研究漏洞有用。 在大多数情况下，可用的漏洞利用模块会在其公共网站上列出，并且可以很好地表明问题的可利用性。</p>
+<p><strong>Common/default Passwords</strong></p>
+<p>Frequently, administrators and technicians choose weak passwords, never change the default or do not set any password at all. Manuals for most software and hardware can be easily found online, and will provide the default credentials. Internet forums and official vendor mailing lists can provide information on undocumented accounts, commonly-used passwords and frequently misconfigured accounts. Finally, many web sites document default/backdoor passwords and should be checked for every identified system.</p>
+<p>通常，管理员和技术人员会选择弱密码，永远不要更改默认密码或根本不设置任何密码。 可以在网上轻松找到大多数软件和硬件的手册，并将提供默认凭据。 Internet论坛和官方供应商邮件列表可以提供有关未记录帐户，常用密码和经常配置错误的帐户的信息。 最后，许多网站都记录了默认密码/后门密码，应该对每个已识别的系统进行检查。</p>
+<p><strong>Hardening Guides/Common Misconfigurations</strong></p>
+<p>One of the primary goals of penetration testing is to simulate the tactics and behavior of an actual attacker. While automated scanning can reduce the time window of a test, no scanner can behave like a human being. Hardening guides can be an invaluable reference for a penetration tester. They not only highlight the weakest parts of a system, but you can gain a sense of the diligence of an administrator by validating how many recommendations have been implemented. During every penetration test, time should be taken to review every major system and its recommended hardening settings, in order to discover vulnerabilities left in place by the administrator.</p>
+<p>渗透测试的主要目标之一是模拟实际攻击者的战术和行为。 尽管自动扫描可以减少测试的时间范围，但没有扫描仪可以像人类一样工作。 硬化指南可能是渗透测试仪的宝贵参考。 它们不仅突出了系统中最薄弱的部分，而且您可以通过验证已实施了多少建议来了解管理员的勤奋。 在每个渗透测试期间，应花时间检查每个主要系统及其建议的强化设置，以发现管理员留下的漏洞。</p>
+<p>User forums and mailing lists can provide valuable information about systems and the various issues administrators have in configuring and securing them. A tester should research target systems as if he were installing one himself, and discover where the pain points and probable configuration errors will lie.</p>
+<p>用户论坛和邮件列表可以提供有关系统以及管理员在配置和保护系统方面遇到的各种问题的有价值的信息。 测试人员应该像在自己安装一样研究目标系统，并发现问题所在和可能的配置错误。</p>
+<p><strong>Private Research</strong></p>
+<p><em>Setting up a replica environment</em></p>
+<p>Virtualization technologies allow a security researcher to run a wide variety of operating systems and applications, without requiring dedicated hardware. When a target operating system or application has been identified, a virtual machine (VM) environment can be quickly created to mimic the target. The tester can use this VM to explore to configuration parameters and behaviors of the application, without directly connecting to the target.</p>
+<p>虚拟化技术使安全研究人员无需专用硬件即可运行多种操作系统和应用程序。 确定目标操作系统或应用程序后，可以快速创建虚拟机（VM）环境来模拟目标。 测试人员可以使用此VM探索应用程序的配置参数和行为，而无需直接连接到目标。</p>
+<p><em>Testing Configurations</em></p>
+<p>A testing VM lab should contain base images for all common operating systems, including Windows XP, Vista, 7, Server 2003 and Server 2008, Debian, Ubuntu, Red Hat and Mac OS X, where possible. Maintaining separate images for each service pack level will streamline the process of recreating the target’s environment. A complete VM library in combination with a VM environment that supports cloning will allow a tester to bring up a new target VM in minutes. Additionally, using a snapshot feature will allow to work more efficiently and to reproduce bugs.</p>
+<p>测试VM实验室应尽可能包含所有常见操作系统的基础映像，包括Windows XP，Vista，7，Server 2003和Server 2008，Debian，Ubuntu，Red Hat和Mac OSX。 为每个Service Pack级别维护单独的映像将简化重新创建目标环境的过程。 完整的VM库与支持克隆的VM环境相结合，可使测试人员在几分钟内启动新的目标VM。 此外，使用快照功能将使工作效率更高并重现错误。</p>
+<p><em>Fuzzing</em></p>
+<p>Fuzzing, or fault injection, is a brute-force technique for finding application flaws by programmatically submitting valid, random or unexpected input to the application. The basic process involves attaching a debugger to the target application, and then running the fuzzing routine against specific areas of input and then analyzing the program state following any crashes. Many fuzzing applications are available, although some testers write their own fuzzers for specific targets.</p>
+<p>模糊测试或故障注入是一种蛮力技术，可通过以编程方式向应用程序提交有效，随机或意外的输入来查找应用程序缺陷。 基本过程包括将调试器附加到目标应用程序，然后针对特定的输入区域运行模糊测试例程，然后在发生任何崩溃后分析程序状态。 尽管有些测试人员为特定目标编写了自己的模糊器，但仍有许多模糊处理应用程序可用。</p>
+<p><strong>Identifying potential avenues/vectors</strong></p>
+<p>Log in or connect to a target network application to identify commands and other areas of input. If the target is a desktop application that reads files and/or web pages, analyze the accepted file formats for avenues of data input. Some simple tests involve submitting invalid characters, or very long strings of characters to cause a crash. Attach a debugger to analyze the program state in the event of a successful crash.</p>
+<p>登录或连接到目标网络应用程序以标识命令和其他输入区域。 如果目标是读取文件和/或网页的桌面应用程序，请分析接受的文件格式以获取数据输入途径。 一些简单的测试涉及提交无效字符或很长的字符串以导致崩溃。 如果成功崩溃，请附加调试器以分析程序状态。</p>
+<p><strong>Disassembly and code analysis</strong></p>
+<p>Some programming languages allow for decompilation, and some specific applications are compiled with symbols for debugging. A tester can take advantage of these features to analyze program flow and identify potential vulnerabilities. Source code for open source applications should be analyzed for flaws. Web applications written in PHP share many of the same vulnerabilities, and their source code should be examined as part of any test.</p>
+<p>一些编程语言允许反编译，而某些特定的应用程序则用符号进行编译以进行调试。 测试人员可以利用这些功能来分析程序流并识别潜在的漏洞。 应该分析开源应用程序的源代码是否存在缺陷。 用PHP编写的Web应用程序具有许多相同的漏洞，它们的源代码应作为任何测试的一部分进行检查。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A0%87%E5%87%86/">标准</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Google%E7%BF%BB%E8%AF%91/">Google翻译</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E4%BA%94%E3%80%81%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">五、漏洞利用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/29/%E4%B8%89%E3%80%81%E5%A8%81%E8%83%81%E5%BB%BA%E6%A8%A1/">
+                        <span class="hidden-mobile">三、威胁建模</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
